@@ -1,0 +1,14 @@
+{
+  "name": "selenium-java-visual-audit-bootcamp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline single-file learning app: Selenium Java visual audit bootcamp (simulation only, no real Selenium execution).",
+  "scripts": {
+    "build": "node source/build.js index.html",
+    "test:data": "node tests/test-data.js source",
+    "test:e2e": "node tests/e2e.js"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^23.0.0"
+  }
+}
