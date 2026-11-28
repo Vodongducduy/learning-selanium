@@ -1,5 +1,18 @@
 # QA_REPORT — Kết quả kiểm thử thực tế
 
+## Cập nhật 28/11/2026 — mở rộng theo bảng kỹ năng và bảng đánh giá phỏng vấn
+
+Phần này mới nhất. Số liệu ở các mục phía dưới là của đợt 26/11/2026.
+
+- **Thêm:** bài 21–47, chia 7 nhóm; bảng yêu cầu → bài ở mỗi nhóm; trang Đánh giá phỏng vấn (tổng tỷ trọng 100%).
+- **Bỏ:** Selenium Grid, Cross-browser testing (không có trong hai bảng); lộ trình Day 1–4.
+- **Tổng:** 47 bài, 60 mô phỏng, 141 flashcard, 141 quiz, 60 câu audit, 28 dòng cheat sheet, 76 thuật ngữ.
+- **Kiểm thử:** `test-data.js` đạt; `e2e.js` đạt 35/35; `sync-test.js` đạt 4/4.
+- **Link bài 21–47:** trả về HTTP 200; trang JLPT lúc kiểm tra đang chuyển sang trang bảo trì.
+- **Giới hạn:** bài 21–47 không có mô phỏng. Nội dung mới được viết từ kiến thức và phần lớn chưa đối chiếu với nội dung nguồn. Ví dụ Java, SQL, curl, JMeter, Hoppscotch, Git chưa được chạy thử. Nội dung tiếng Việt và tiếng Anh chưa được người khác rà soát.
+
+---
+
 - **Ngày kiểm thử:** 26/11/2026
 - **Sản phẩm:** `index.html` (khoảng 371 KB trên đĩa, một file, không phụ thuộc bên ngoài)
 - **Môi trường:** Windows 11 Pro, Google Chrome (headless, bản cài sẵn trên máy), Node.js 22.15.1

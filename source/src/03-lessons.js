@@ -1,5 +1,5 @@
 /* ===== LESSON CONTENT (20 core lessons) ===== */
-var REF_VERIFIED = '26/11/2026';
+var REF_VERIFIED = '28/11/2026';
 var SEL = 'https://www.selenium.dev/documentation/webdriver/';
 var SELAPI = 'https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/';
 var LESSONS = [
@@ -93,5 +93,5 @@ var GLOSSARY = [
 ['TestNG', 'Framework chạy và báo cáo test Java', 17], ['Annotation', 'Ghi chú @ điều khiển cách chạy', 17], ['Lifecycle', 'Thứ tự chạy các bước trước/sau test', 17],
 ['Hard assert', 'Assert dừng test ngay khi sai', 18], ['Soft assert', 'Gom lỗi, báo bằng assertAll()', 18], ['Page Object Model', 'Mẫu thiết kế tách locator và hành động theo trang', 19],
 ['PageFactory', 'Tiện ích khởi tạo Page Object với @FindBy', 19], ['DataProvider', 'Cung cấp nhiều bộ dữ liệu cho một test', 20], ['Data-driven', 'Test điều khiển bằng dữ liệu', 20],
-['Maven', 'Công cụ quản lý dependency và build dự án Java (pom.xml)', 17], ['Selenium Grid', 'Chạy test trên nhiều máy/trình duyệt từ xa', 1], ['JavaScriptExecutor', 'Chạy JavaScript trong trang, dùng hạn chế', 15]
+['Maven', 'Công cụ quản lý dependency và build dự án Java (pom.xml)', 17], ['JavaScriptExecutor', 'Chạy JavaScript trong trang, dùng hạn chế', 15]
 ];

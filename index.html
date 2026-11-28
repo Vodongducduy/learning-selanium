@@ -235,7 +235,7 @@ textarea{min-height:90px}
 </div>
 <script>
 /* ===== LESSON CONTENT (20 core lessons) ===== */
-var REF_VERIFIED = '26/11/2026';
+var REF_VERIFIED = '28/11/2026';
 var SEL = 'https://www.selenium.dev/documentation/webdriver/';
 var SELAPI = 'https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/';
 var LESSONS = [
@@ -329,7 +329,7 @@ var GLOSSARY = [
 ['TestNG', 'Framework chạy và báo cáo test Java', 17], ['Annotation', 'Ghi chú @ điều khiển cách chạy', 17], ['Lifecycle', 'Thứ tự chạy các bước trước/sau test', 17],
 ['Hard assert', 'Assert dừng test ngay khi sai', 18], ['Soft assert', 'Gom lỗi, báo bằng assertAll()', 18], ['Page Object Model', 'Mẫu thiết kế tách locator và hành động theo trang', 19],
 ['PageFactory', 'Tiện ích khởi tạo Page Object với @FindBy', 19], ['DataProvider', 'Cung cấp nhiều bộ dữ liệu cho một test', 20], ['Data-driven', 'Test điều khiển bằng dữ liệu', 20],
-['Maven', 'Công cụ quản lý dependency và build dự án Java (pom.xml)', 17], ['Selenium Grid', 'Chạy test trên nhiều máy/trình duyệt từ xa', 1], ['JavaScriptExecutor', 'Chạy JavaScript trong trang, dùng hạn chế', 15]
+['Maven', 'Công cụ quản lý dependency và build dự án Java (pom.xml)', 17], ['JavaScriptExecutor', 'Chạy JavaScript trong trang, dùng hạn chế', 15]
 ];
 
 /* ===== SIMULATIONS — Bài 1–10 (30 mô phỏng) ===== */
@@ -1262,11 +1262,9 @@ SIMS.push({ id: 'L20-M2', lesson: 20, level: 'Trung bình', title: 'Dữ liệu 
 /* ===== KIẾN THỨC BỔ SUNG (giới thiệu ngắn, không thuộc 20 bài chính) ===== */
 var EXTRA_TOPICS = [
 { title: 'Maven — quản lý thư viện và cấu trúc dự án', what: 'Maven đọc file pom.xml để tải thư viện (dependency) và chạy test theo cấu hình.', why: 'Không phải tự tải từng file .jar; khi nâng phiên bản Selenium chỉ sửa một dòng.', how: 'Khai báo dependency trong pom.xml; "mvn test" biên dịch và chạy test (plugin surefire).', code: ['<!-- pom.xml -->', '<dependency>', '    <groupId>org.seleniumhq.selenium</groupId>', '    <artifactId>selenium-java</artifactId>', '    <version>&lt;phiên bản Selenium 4 bạn đang dùng&gt;</version>', '</dependency>', '<!-- Cấu trúc thường gặp -->', '// src/main/java      : mã của framework (Page Object, tiện ích)', '// src/test/java      : mã test (@Test)', '// src/test/resources : file cấu hình, dữ liệu test'], note: 'Thay phần trong &lt;&gt; bằng phiên bản cụ thể bạn đang dùng; không tự đoán số phiên bản.', refs: [['Maven Guides', 'Hướng dẫn Maven chính thức (pom.xml, vòng đời build)', 'https://maven.apache.org/guides/']] },
-{ title: 'Selenium Grid — chạy test trên máy từ xa', what: 'Grid cho phép phân phối phiên WebDriver tới nhiều máy/trình duyệt, điều khiển qua một địa chỉ chung.', why: 'Chạy song song nhiều trình duyệt và hệ điều hành mà không cần cài trên máy test.', how: 'Test dùng RemoteWebDriver trỏ tới địa chỉ Grid thay vì ChromeDriver cục bộ.', code: ['WebDriver driver = new RemoteWebDriver(', '        new URL("http://grid-host:4444"),', '        new ChromeOptions());', 'driver.get("https://shop.example.com");'], note: 'grid-host:4444 là ví dụ; địa chỉ thật do đội hạ tầng cung cấp.', refs: [['Selenium Grid', 'Tổng quan và cách chạy Grid', 'https://www.selenium.dev/documentation/grid/']] },
 { title: 'JavaScriptExecutor — chạy JavaScript trong trang', what: 'Cho phép Java chạy đoạn JavaScript ngay trong trang đang mở.', why: 'Dùng khi thao tác chuẩn không làm được (ví dụ cuộn đến phần tử) hoặc đọc giá trị đặc biệt.', how: 'Ép kiểu driver sang JavascriptExecutor rồi gọi executeScript(); arguments[0] là phần tử truyền vào.', code: ['JavascriptExecutor js = (JavascriptExecutor) driver;', 'WebElement banner = driver.findElement(By.id("footer"));', 'js.executeScript("arguments[0].scrollIntoView(true);", banner);'], note: 'Đây là giải pháp cuối cùng. Click bằng JavaScript không tương đương với click thật của người dùng (xem bài 16).', refs: [['JavascriptExecutor (Javadoc)', 'Interface JavascriptExecutor và executeScript', 'https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/JavascriptExecutor.html']] },
 { title: 'Chụp ảnh màn hình (screenshot)', what: 'Lưu ảnh trạng thái trang tại thời điểm test lỗi.', why: 'Ảnh giúp điều tra lỗi nhanh, đặc biệt khi test chạy trên máy khác.', how: 'Ép kiểu driver sang TakesScreenshot rồi gọi getScreenshotAs(OutputType.FILE).', code: ['File src = ((TakesScreenshot) driver)', '        .getScreenshotAs(OutputType.FILE);', '// Sao chép src tới thư mục báo cáo bằng java.nio.file.Files (ví dụ trong @AfterMethod khi test FAILED)'], note: 'Thường đặt trong @AfterMethod khi kết quả là FAILURE (xem bài 17).', refs: [['TakesScreenshot (Javadoc)', 'getScreenshotAs và OutputType', 'https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/TakesScreenshot.html']] },
-{ title: 'Upload file', what: 'Chọn file từ máy để tải lên trang web.', why: 'Nhiều form có nút tải tệp; test cần đưa một file thật vào.', how: 'Với thẻ input type="file", gọi sendKeys() với đường dẫn tuyệt đối tới file.', code: ['WebElement upload = driver.findElement(By.cssSelector("input[type=\'file\']"));', 'upload.sendKeys("C:\\\\data\\\\avatar.png");   // đường dẫn tuyệt đối'], note: 'Đường dẫn phải tồn tại trên máy chạy test. Không cần mở hộp thoại chọn file.', refs: [['File upload', 'Hướng dẫn upload file trong Selenium', 'https://www.selenium.dev/documentation/webdriver/elements/file_upload/']] },
-{ title: 'Cross-browser testing', what: 'Chạy cùng kịch bản trên nhiều trình duyệt (Chrome, Firefox, Edge).', why: 'Ứng dụng có thể hiển thị hoặc hoạt động khác nhau giữa các trình duyệt.', how: 'Mỗi trình duyệt có driver riêng (ChromeDriver, GeckoDriver, EdgeDriver); chọn driver theo tham số cấu hình.', code: ['WebDriver driver = switch (browser) {', '    case "firefox" -> new FirefoxDriver();', '    case "edge"    -> new EdgeDriver();', '    default        -> new ChromeDriver();', '};'], note: 'Chỉ nên kiểm tra trên các trình duyệt mà người dùng thật sử dụng. Không cần test mọi trình duyệt.', refs: [['Supported browsers', 'Danh sách trình duyệt và driver được hỗ trợ', 'https://www.selenium.dev/documentation/webdriver/browsers/']] }
+{ title: 'Upload file', what: 'Chọn file từ máy để tải lên trang web.', why: 'Nhiều form có nút tải tệp; test cần đưa một file thật vào.', how: 'Với thẻ input type="file", gọi sendKeys() với đường dẫn tuyệt đối tới file.', code: ['WebElement upload = driver.findElement(By.cssSelector("input[type=\'file\']"));', 'upload.sendKeys("C:\\\\data\\\\avatar.png");   // đường dẫn tuyệt đối'], note: 'Đường dẫn phải tồn tại trên máy chạy test. Không cần mở hộp thoại chọn file.', refs: [['File upload', 'Hướng dẫn upload file trong Selenium', 'https://www.selenium.dev/documentation/webdriver/elements/file_upload/']] }
 ];
 
 /* ===== FLASHCARDS — 60 thẻ (3 thẻ / bài) ===== */
@@ -1429,6 +1427,612 @@ var AUDIT = [
 { id: 'A30', lesson: 20, cat: 'Định nghĩa', en: 'What is data-driven testing?', vi: 'Kiểm thử điều khiển bằng dữ liệu là gì?', model: 'Data-driven testing runs the same test logic with multiple sets of input data, so each data set is tested independently.', viExp: 'Logic cố định, dữ liệu thay đổi; mỗi bộ dữ liệu là một lần chạy.', kw: ['same logic', 'multiple data sets', 'independent'], follow: 'How does TestNG pass each data row to a test method?', mistake: 'Nghĩ data-driven là copy test cho mỗi dữ liệu.' }
 ];
 
+/* ===== Khai báo gọn cho bài 21+ : một object sinh ra bài học, flashcard, quiz và câu audit =====
+   quiz : [câu hỏi, đáp án đúng, giải thích, sai1, lý do1, sai2, lý do2, sai3, lý do3]
+          Vị trí đáp án đúng được xoay vòng A-D.
+   cards: [độ khó, câu hỏi EN, đáp án EN, giải thích VI, 'từ khóa|từ khóa']
+   audit: [loại, EN, VI, model answer, giải thích VI, 'từ khóa|từ khóa', câu hỏi tiếp, lỗi thường gặp] */
+var QUIZ_ROTATE = 0;
+function addLesson(d) {
+  LESSONS.push({
+    id: d.id, title: d.title, sub: d.sub, obj: d.obj,
+    theory: { what: d.theory[0], why: d.theory[1], when: d.theory[2], how: d.theory[3], whenNot: d.theory[4] },
+    beginner: { analogy: d.analogy, text: d.text, terms: d.terms },
+    code: d.code, codeTitle: d.codeTitle, codeExplain: d.explain, mistakes: d.mistakes, refs: d.refs
+  });
+  d.cards.forEach(function (c, i) {
+    CARDS.push({ id: 'C' + d.id + '-' + (i + 1), lesson: d.id, diff: c[0], q: c[1], a: c[2], vi: c[3], kw: c[4].split('|') });
+  });
+  d.quiz.forEach(function (q, i) {
+    var pos = (QUIZ_ROTATE + Math.floor(QUIZ_ROTATE / 4)) % 4;
+    QUIZ_ROTATE++;
+    var opts = [q[3], q[5], q[7]], why = [q[4], q[6], q[8]];
+    opts.splice(pos, 0, q[1]);
+    why.splice(pos, 0, 'Đúng: ' + q[2]);
+    QUIZ.push({ id: 'Q' + d.id + '-' + (i + 1), lesson: d.id, q: q[0], opts: opts, ans: pos, exp: q[2], why: why });
+  });
+  d.audit.forEach(function (a) {
+    AUDIT.push({ id: 'A' + (AUDIT.length + 1), lesson: d.id, cat: a[0], en: a[1], vi: a[2], model: a[3], viExp: a[4], kw: a[5].split('|'), follow: a[6], mistake: a[7] });
+  });
+}
+
+/* ===== Nhóm 1: Programming & Unit Test + OOP + tạo automation project (bài 21–27) ===== */
+var JAVADOC = 'https://docs.oracle.com/javase/tutorial/java/';
+
+addLesson({ id: 21, title: 'Java cơ bản: kiểu dữ liệu, điều kiện, vòng lặp, String', sub: 'Nền tảng để đọc và viết test',
+  obj: ['Phân biệt kiểu nguyên thủy và kiểu tham chiếu.', 'Dùng if, switch, for, for-each, while.', 'So sánh String đúng cách và viết được method.'],
+  theory: ['Java là ngôn ngữ kiểu tĩnh: mỗi biến có kiểu cố định. Có 8 kiểu nguyên thủy (byte, short, int, long, float, double, char, boolean); còn lại là kiểu tham chiếu (String, mảng, object).', 'Test Selenium Java là code Java. Không đọc được biến, vòng lặp, method thì không viết và không sửa được test.', 'Dùng trong mọi test: lưu dữ liệu, lặp qua danh sách phần tử, rẽ nhánh theo cấu hình.', 'Code nằm trong class. javac biên dịch file .java thành bytecode .class, JVM chạy bytecode. Method có kiểu trả về, tên, tham số.', 'Không đặt nhiều if/else trong @Test để "cho qua" nhiều kết quả; một test nên có một kỳ vọng rõ ràng.'],
+  analogy: 'Biến giống hộp có dán nhãn kiểu: hộp "số" chỉ đựng số. Method giống công thức nấu ăn: đưa nguyên liệu (tham số), nhận món (giá trị trả về).',
+  text: 'Điểm hay bị hỏi nhất: == so sánh giá trị với kiểu nguyên thủy, nhưng với object thì so sánh tham chiếu. So sánh nội dung String phải dùng equals().',
+  terms: [['JDK / JRE / JVM', 'JDK để phát triển (có javac); JRE là môi trường chạy; JVM là máy ảo thực thi bytecode.'], ['Primitive', 'Kiểu nguyên thủy, giữ trực tiếp giá trị.'], ['Reference', 'Biến giữ tham chiếu tới object.'], ['Method', 'Khối code có tên, gọi lại được.']],
+  code: ['int count = 3;', 'boolean isReady = true;', 'String expected = "Dashboard";', 'String actual = driver.getTitle();', '', 'if (actual.equals(expected)) {', '    System.out.println("Đúng trang");', '}', '', 'String[] users = { "an", "binh" };', 'for (String u : users) {', '    System.out.println(greet(u));', '}', '', 'static String greet(String name) {', '    return "Hello " + name;', '}'],
+  explain: [['int / boolean', 'Kiểu nguyên thủy: số nguyên và đúng/sai.'], ['actual.equals(expected)', 'So sánh nội dung chuỗi.'], ['for (String u : users)', 'for-each: lặp qua từng phần tử.'], ['static String greet(String name)', 'Method nhận String và trả về String.']],
+  mistakes: [['So sánh String bằng ==.', 'Dùng equals() hoặc equalsIgnoreCase().'], ['Truy cập users[users.length].', 'Chỉ số chạy từ 0 đến length - 1, nếu vượt sẽ ném ArrayIndexOutOfBoundsException.'], ['Gọi method trên biến null.', 'Khởi tạo hoặc kiểm tra null để tránh NullPointerException.']],
+  refs: [['Java Tutorials — Language Basics', 'Biến, toán tử, điều kiện, vòng lặp', JAVADOC + 'nutsandbolts/index.html'], ['Java Tutorials — Strings', 'Làm việc với String', JAVADOC + 'data/strings.html']],
+  cards: [['Dễ', 'What is the difference between == and equals() for Strings?', '== compares references; equals() compares the text content.', 'Với String phải dùng equals() để so sánh nội dung.', 'reference|equals|content'], ['Dễ', 'What is the difference between JDK, JRE and JVM?', 'The JVM runs bytecode; the JRE is the JVM plus libraries; the JDK adds development tools such as javac.', 'JDK để phát triển, JRE để chạy, JVM thực thi bytecode.', 'JDK|JRE|JVM|bytecode'], ['Vừa', 'What is the difference between int and Integer?', 'int is a primitive; Integer is a wrapper object that can be null and can be stored in collections.', 'Integer là lớp bao của int, có thể null và dùng trong collection.', 'primitive|wrapper|null']],
+  quiz: [['Biến actual đọc từ trang có nội dung "OK". Cách so sánh nào đúng với kỳ vọng "OK"?', 'actual.equals("OK")', 'equals() so sánh nội dung chuỗi.', 'actual == "OK"', '== so sánh tham chiếu, có thể false dù nội dung giống nhau.', 'actual = "OK"', 'Đây là phép gán, không phải so sánh.', 'actual.compare("OK")', 'String không có method compare().'],
+    ['Mảng String[] a = {"x","y","z"}. Chỉ số hợp lệ lớn nhất là bao nhiêu?', '2', 'chỉ số bắt đầu từ 0 nên phần tử cuối là length - 1.', '3', 'a[3] vượt quá mảng và ném exception.', '1', 'Còn phần tử ở chỉ số 2.', '0', '0 là chỉ số đầu tiên.'],
+    ['Kiểu nào sau đây là kiểu nguyên thủy?', 'boolean', 'boolean là một trong 8 kiểu nguyên thủy.', 'String', 'String là class, tức kiểu tham chiếu.', 'Integer', 'Integer là lớp bao.', 'int[]', 'Mảng là object.']],
+  audit: [['So sánh', 'What is the difference between == and equals() in Java?', 'Khác nhau giữa == và equals() trong Java là gì?', 'For objects, == checks whether two variables point to the same object, while equals() checks logical equality. For Strings I use equals().', 'Nêu rõ: tham chiếu và nội dung.', 'same object|equals|content', 'How do you compare two strings ignoring case?', 'Nói == và equals() giống nhau.']] });
+
+addLesson({ id: 22, title: 'Java: Collections và Exception Handling', sub: 'List, Set, Map, try / catch / finally',
+  obj: ['Chọn đúng List, Set hoặc Map.', 'Dùng try, catch, finally, throw và throws.', 'Phân biệt checked và unchecked exception.'],
+  theory: ['Collection là cấu trúc chứa nhiều object: List (có thứ tự, cho trùng), Set (không trùng), Map (cặp key – value). Exception là sự kiện lỗi làm gián đoạn luồng chạy.', 'findElements trả về List; dữ liệu test thường nằm trong Map. Xử lý lỗi đúng giúp dọn dẹp tài nguyên và báo lỗi rõ ràng.', 'List khi cần thứ tự; Set khi cần loại trùng; Map khi tra theo khóa.', 'Code trong try ném exception thì nhảy sang catch phù hợp. finally chạy dù có lỗi hay không (trừ trường hợp đặc biệt như System.exit). throw ném một exception; throws khai báo method có thể ném.', 'Không catch Exception rồi bỏ trống: test sẽ PASS giả.'],
+  analogy: 'List giống hàng người xếp theo thứ tự; Set giống danh sách khách mời không ghi trùng; Map giống danh bạ: tên → số điện thoại.',
+  text: 'Checked exception (ví dụ IOException) bị trình biên dịch bắt phải xử lý hoặc khai báo throws. Unchecked exception (RuntimeException, gồm hầu hết exception của Selenium) thì không bắt buộc.',
+  terms: [['ArrayList', 'List thường dùng nhất.'], ['HashMap', 'Map tra cứu theo key, không đảm bảo thứ tự.'], ['Checked', 'Phải catch hoặc khai báo throws.'], ['Unchecked', 'Lớp con của RuntimeException.']],
+  code: ['List<String> names = new ArrayList<>();', 'names.add("An");', 'names.add("An");              // List cho phép trùng', 'Set<String> unique = new HashSet<>(names);   // còn 1 phần tử', '', 'Map<String, String> user = new HashMap<>();', 'user.put("email", "qa@shop.vn");', '', 'try {', '    String text = Files.readString(Path.of("data.txt")); // IOException: checked', '} catch (IOException e) {', '    throw new RuntimeException("Không đọc được data.txt", e);', '} finally {', '    System.out.println("Luôn chạy");', '}'],
+  explain: [['new HashSet<>(names)', 'Tạo Set từ List để loại phần tử trùng.'], ['user.put(key, value)', 'Thêm hoặc ghi đè giá trị theo key.'], ['catch (IOException e)', 'Bắt đúng loại exception mong đợi.'], ['new RuntimeException(msg, e)', 'Ném lại kèm nguyên nhân gốc, không nuốt lỗi.']],
+  mistakes: [['catch (Exception e) {} để trống.', 'Ghi log và ném lại, hoặc đừng catch.'], ['Nghĩ HashMap giữ thứ tự thêm vào.', 'Cần thứ tự thêm thì dùng LinkedHashMap.'], ['Xóa phần tử trong vòng for-each.', 'Dùng removeIf() hoặc Iterator.']],
+  refs: [['Java Tutorials — Collections', 'List, Set, Map', JAVADOC.replace('java/', 'collections/') + 'index.html'], ['Java Tutorials — Exceptions', 'try, catch, finally, throw, throws', 'https://docs.oracle.com/javase/tutorial/essential/exceptions/index.html']],
+  cards: [['Dễ', 'What is the difference between List, Set and Map?', 'A List is ordered and allows duplicates; a Set has no duplicates; a Map stores key-value pairs with unique keys.', 'List có thứ tự, Set không trùng, Map lưu cặp key-value.', 'ordered|duplicates|key-value'], ['Vừa', 'What is the difference between checked and unchecked exceptions?', 'Checked exceptions must be caught or declared; unchecked exceptions extend RuntimeException and need not be.', 'Checked bị compiler bắt buộc xử lý; unchecked thì không.', 'checked|unchecked|RuntimeException'], ['Vừa', 'What is the difference between throw and throws?', 'throw actually throws an exception object; throws declares in the method signature which exceptions it may throw.', 'throw để ném; throws để khai báo.', 'throw|throws|signature']],
+  quiz: [['Bạn cần lưu danh sách mã đơn hàng và tự động loại mã trùng. Chọn gì?', 'Set', 'Set không chứa phần tử trùng.', 'List', 'List cho phép trùng.', 'Mảng', 'Mảng không tự loại trùng.', 'String', 'String không phải cấu trúc chứa nhiều mã.'],
+    ['Khối finally chạy khi nào trong luồng thông thường?', 'Cả khi có exception và khi không', 'finally dùng cho việc dọn dẹp luôn phải làm.', 'Chỉ khi có exception', 'Đó là vai trò của catch.', 'Chỉ khi không có exception', 'finally không phụ thuộc kết quả try.', 'Chỉ khi catch được gọi thủ công', 'catch không được gọi thủ công.'],
+    ['Test có try { click } catch (Exception e) {} rồi kết thúc. Rủi ro lớn nhất là gì?', 'Click lỗi nhưng test vẫn PASS', 'exception bị nuốt nên TestNG không biết có lỗi.', 'Code không biên dịch được', 'Cú pháp này hợp lệ.', 'Trình duyệt tự đóng', 'catch trống không đóng trình duyệt.', 'TestNG tự chạy lại test', 'Chạy lại cần cấu hình retry.']],
+  audit: [['Xử lý lỗi', 'How do you handle exceptions in your test code?', 'Bạn xử lý exception trong code test như thế nào?', 'I catch only the exceptions I can handle, keep the original cause, and use finally or @AfterMethod for cleanup. I never swallow an exception, because the test could pass falsely.', 'Nhấn mạnh không nuốt lỗi.', 'specific|cause|finally|swallow', 'What is the difference between final, finally and finalize?', 'Bọc mọi thứ trong try/catch để test không fail.']] });
+
+addLesson({ id: 23, title: 'Lập trình hướng đối tượng (OOP)', sub: '4 tính chất và cách dùng trong test framework',
+  obj: ['Giải thích class và object.', 'Nêu 4 tính chất OOP kèm ví dụ Selenium.', 'Phân biệt overload / override, abstract class / interface.'],
+  theory: ['OOP tổ chức chương trình thành object gồm dữ liệu (field) và hành vi (method). Bốn tính chất: đóng gói, kế thừa, đa hình, trừu tượng.', 'Framework automation (BasePage, BaseTest, Page Object) dựa trên OOP để tái sử dụng và dễ bảo trì.', 'Khi thiết kế Page Object, lớp cơ sở dùng chung, tiện ích thao tác phần tử.', 'Đóng gói: field private, truy cập qua method. Kế thừa: extends. Đa hình: override (cùng chữ ký, lớp con viết lại) và overload (cùng tên, khác tham số). Trừu tượng: interface hoặc abstract class.', 'Không tạo cây kế thừa sâu chỉ để dùng lại vài dòng; cân nhắc composition (chứa object khác).'],
+  analogy: 'Class là bản vẽ xe, object là chiếc xe cụ thể. Người lái chỉ cần vô lăng và chân ga (trừu tượng), không cần biết động cơ bên trong (đóng gói).',
+  text: 'Ví dụ dễ nhớ: WebDriver driver = new ChromeDriver(); WebDriver là interface (trừu tượng), ChromeDriver là lớp cài đặt; cùng lệnh get() chạy được với driver khác (đa hình).',
+  terms: [['Encapsulation', 'Đóng gói dữ liệu, giấu chi tiết.'], ['Inheritance', 'Lớp con dùng lại lớp cha.'], ['Polymorphism', 'Một giao diện, nhiều cách thực hiện.'], ['Abstraction', 'Chỉ lộ phần cần dùng.']],
+  code: ['public abstract class BasePage {                 // trừu tượng', '    protected final WebDriver driver;', '    protected BasePage(WebDriver driver) { this.driver = driver; }', '    public abstract boolean isLoaded();', '}', '', 'public class LoginPage extends BasePage {        // kế thừa', '    private final By user = By.id("username");   // đóng gói', '    public LoginPage(WebDriver driver) { super(driver); }', '', '    @Override', '    public boolean isLoaded() {                  // override', '        return !driver.findElements(user).isEmpty();', '    }', '    public void type(String name) { type(name, false); }        // overload', '    public void type(String name, boolean clear) {', '        if (clear) driver.findElement(user).clear();', '        driver.findElement(user).sendKeys(name);', '    }', '}'],
+  explain: [['abstract class BasePage', 'Không tạo object trực tiếp; định nghĩa phần chung.'], ['extends BasePage', 'LoginPage thừa hưởng field driver.'], ['private final By user', 'Bên ngoài không truy cập được locator.'], ['@Override', 'Viết lại method của lớp cha.'], ['type(String) / type(String, boolean)', 'Overload: cùng tên, khác danh sách tham số.']],
+  mistakes: [['Nhầm overload với override.', 'Overload: khác tham số. Override: lớp con viết lại cùng chữ ký.'], ['Để mọi field public.', 'Dùng private/protected và cung cấp method.'], ['Nói class chỉ extends được nhiều class.', 'Java chỉ cho extends một class, nhưng implements được nhiều interface.']],
+  refs: [['Java Tutorials — OOP Concepts', 'Object, class, inheritance, interface', JAVADOC + 'concepts/index.html'], ['Java Tutorials — Interfaces and Inheritance', 'Interface, abstract, override', JAVADOC + 'IandI/index.html']],
+  cards: [['Dễ', 'Name the four pillars of OOP.', 'Encapsulation, inheritance, polymorphism and abstraction.', 'Đóng gói, kế thừa, đa hình, trừu tượng.', 'encapsulation|inheritance|polymorphism|abstraction'], ['Vừa', 'What is the difference between overloading and overriding?', 'Overloading uses the same method name with different parameters; overriding redefines an inherited method with the same signature.', 'Overload khác tham số; override viết lại method kế thừa.', 'parameters|signature|subclass'], ['Khó', 'What is the difference between an abstract class and an interface?', 'A class extends only one abstract class, which can hold state and constructors; a class can implement many interfaces, which cannot hold instance fields.', 'Abstract class có trạng thái và constructor, chỉ kế thừa một; interface cài đặt được nhiều.', 'extends|implements|state']],
+  quiz: [['WebDriver driver = new FirefoxDriver(); và test vẫn gọi driver.get() như với Chrome. Đây chủ yếu là tính chất nào?', 'Đa hình', 'cùng lời gọi qua interface nhưng mỗi lớp thực hiện theo cách riêng.', 'Đóng gói', 'Đóng gói nói về việc giấu dữ liệu.', 'Overload', 'Không có hai method khác tham số ở đây.', 'Khởi tạo tĩnh', 'Đây không phải tính chất OOP.'],
+    ['Đặt locator là private trong Page Object thể hiện tính chất nào?', 'Đóng gói', 'chi tiết bên trong được giấu, test chỉ gọi method.', 'Kế thừa', 'Không có lớp con tham gia.', 'Đa hình', 'Không có nhiều cách thực hiện.', 'Đệ quy', 'Đệ quy không phải tính chất OOP.'],
+    ['Phát biểu nào đúng trong Java?', 'Một class implements được nhiều interface', 'Java cho phép cài đặt nhiều interface.', 'Một class extends được nhiều class', 'Java chỉ cho một lớp cha trực tiếp.', 'Có thể new trực tiếp một abstract class', 'Abstract class không khởi tạo trực tiếp được.', 'Method private được lớp con override', 'Method private không được kế thừa để override.']],
+  audit: [['Ứng dụng', 'How do you apply OOP in your automation framework?', 'Bạn áp dụng OOP trong automation framework thế nào?', 'I encapsulate locators in page classes, inherit common code from a BasePage, use the WebDriver interface for polymorphism, and hide technical details behind readable methods.', 'Mỗi tính chất kèm một ví dụ cụ thể.', 'encapsulate|inherit|interface|polymorphism', 'When would you prefer composition over inheritance?', 'Chỉ đọc tên 4 tính chất mà không có ví dụ.']] });
+
+addLesson({ id: 24, title: 'TestNG: Groups, Filter và Parameterized Test', sub: 'Chọn test cần chạy và truyền tham số từ testng.xml',
+  obj: ['Gắn group cho test và lọc bằng testng.xml.', 'Truyền tham số bằng @Parameters và @Optional.', 'Phân biệt @Parameters và @DataProvider.'],
+  theory: ['Group là nhãn gắn cho test (ví dụ smoke, regression). @Parameters nhận giá trị khai báo trong testng.xml.', 'Cùng một bộ code nhưng chạy tập test khác nhau, môi trường khác nhau mà không sửa Java.', 'Chạy smoke sau mỗi lần deploy; chạy regression ban đêm; đổi browser hoặc URL theo môi trường.', '@Test(groups = {"smoke"}) gắn nhãn. testng.xml dùng <groups><run><include/exclude> để lọc. <parameter> cấp giá trị cho @Parameters.', 'Không dùng @Parameters cho nhiều bộ dữ liệu; đó là việc của @DataProvider.'],
+  analogy: 'Group giống nhãn màu dán trên hồ sơ: hôm nay chỉ lấy hồ sơ nhãn đỏ. Parameter giống tờ cấu hình đưa cho người thực hiện trước khi làm.',
+  text: 'Lưu ý hay gặp: khi lọc theo group, @BeforeMethod không thuộc group đó có thể bị bỏ qua. Thêm alwaysRun = true cho method chuẩn bị và dọn dẹp.',
+  terms: [['Group', 'Nhãn phân loại test.'], ['include / exclude', 'Chọn hoặc loại group.'], ['@Parameters', 'Nhận tham số từ testng.xml.'], ['@Optional', 'Giá trị mặc định khi thiếu tham số.']],
+  code: ['@Parameters({ "browser" })', '@BeforeMethod(alwaysRun = true)', 'public void setUp(@Optional("chrome") String browser) { /* tạo driver */ }', '', '@Test(groups = { "smoke", "regression" })', 'public void login() { }', '', '@Test(groups = { "regression" })', 'public void changePassword() { }', '', '<!-- testng.xml -->', '<suite name="Shop">', '  <test name="Smoke">', '    <parameter name="browser" value="firefox"/>', '    <groups><run><include name="smoke"/></run></groups>', '    <classes><class name="tests.AccountTest"/></classes>', '  </test>', '</suite>'],
+  explain: [['groups = { "smoke", "regression" }', 'Một test có thể thuộc nhiều group.'], ['alwaysRun = true', 'Method cấu hình vẫn chạy khi lọc theo group.'], ['@Optional("chrome")', 'Dùng khi không có tham số browser, ví dụ chạy trực tiếp từ IDE.'], ['<include name="smoke"/>', 'Chỉ chạy test thuộc group smoke: login() chạy, changePassword() không chạy.']],
+  mistakes: [['Lọc group làm driver bị null.', 'Thêm alwaysRun = true cho @Before/@After.'], ['Tên parameter trong XML khác trong @Parameters.', 'Hai tên phải khớp chính xác.'], ['Gõ sai tên group nên không test nào chạy.', 'Kiểm tra số test đã chạy trong báo cáo.']],
+  refs: [['TestNG — Test groups', 'groups, include, exclude', 'https://testng.org/#_test_groups'], ['TestNG — Parameters', '@Parameters, @Optional, testng.xml', 'https://testng.org/#_parameters']],
+  cards: [['Dễ', 'What are TestNG groups used for?', 'To label tests so a subset such as smoke or regression can be run or excluded.', 'Gắn nhãn để chọn tập test cần chạy.', 'groups|smoke|regression|include'], ['Vừa', 'Why do you set alwaysRun = true on configuration methods?', 'So they still run when tests are filtered by group.', 'Để method chuẩn bị/dọn dẹp vẫn chạy khi lọc group.', 'alwaysRun|filter|setup'], ['Vừa', 'What is the difference between @Parameters and @DataProvider?', '@Parameters reads simple values from testng.xml; @DataProvider supplies multiple data sets from Java code.', '@Parameters lấy giá trị từ XML; DataProvider cấp nhiều bộ dữ liệu từ Java.', 'testng.xml|multiple data sets']],
+  quiz: [['testng.xml chỉ include group "smoke". login() thuộc smoke, search() chỉ thuộc regression. Test nào chạy?', 'Chỉ login()', 'chỉ test thuộc group được include mới chạy.', 'Chỉ search()', 'search() không thuộc smoke.', 'Cả hai', 'Bộ lọc loại search().', 'Không test nào', 'login() khớp group smoke.'],
+    ['Bạn muốn đổi browser mà không sửa code Java. Cách phù hợp?', 'Dùng <parameter> trong testng.xml và @Parameters', 'giá trị nằm trong cấu hình, code chỉ đọc.', 'Sửa tên class test', 'Tên class không liên quan đến browser.', 'Dùng dependsOnMethods', 'Thuộc tính này khai báo phụ thuộc.', 'Dùng @AfterSuite', 'Annotation này chạy sau cùng.'],
+    ['@Optional dùng để làm gì?', 'Cho giá trị mặc định khi tham số không được cung cấp', 'tránh lỗi khi chạy không có tham số trong XML.', 'Đánh dấu test có thể fail', 'Không liên quan đến kết quả test.', 'Bỏ qua test', 'Muốn tắt test dùng enabled = false.', 'Chạy test song song', 'Song song cấu hình bằng parallel.']],
+  audit: [['Ứng dụng', 'How do you run only smoke tests in TestNG?', 'Bạn chạy riêng smoke test trong TestNG thế nào?', 'I tag tests with groups = "smoke" and include that group in testng.xml. I mark setup and teardown with alwaysRun = true.', 'Nêu cả hai phía: annotation và XML.', 'groups|include|testng.xml|alwaysRun', 'How do you exclude flaky tests from a run?', 'Comment code các test không muốn chạy.']] });
+
+addLesson({ id: 25, title: 'TestNG: Exception, Timeout và Retry', sub: 'expectedExceptions, timeOut, IRetryAnalyzer',
+  obj: ['Kiểm tra code ném đúng exception.', 'Giới hạn thời gian chạy của test.', 'Cấu hình retry và hiểu rủi ro của nó.'],
+  theory: ['expectedExceptions khai báo exception mà test mong đợi. timeOut giới hạn thời gian (mili giây). IRetryAnalyzer quyết định có chạy lại test fail hay không.', 'Có kịch bản đúng là phải ném lỗi; có test bị treo; có lỗi chập chờn do môi trường.', 'Test hàm kiểm tra dữ liệu, chặn test treo, retry giới hạn cho lỗi môi trường đã biết.', 'Test PASS nếu ném đúng loại đã khai báo; không ném hoặc ném loại khác thì FAIL. Quá timeOut thì FAIL. retry() trả về true thì TestNG chạy lại.', 'Không dùng retry để che test flaky hoặc bug thật; phải điều tra nguyên nhân.'],
+  analogy: 'expectedExceptions giống diễn tập chuông báo cháy: chuông kêu mới là đạt. timeOut giống đồng hồ giới hạn giờ thi. Retry giống được thi lại có giới hạn số lần.',
+  text: 'Retry phải có giới hạn. Một test chỉ pass ở lần thứ hai vẫn là tín hiệu cần điều tra.',
+  terms: [['expectedExceptions', 'Exception mong đợi.'], ['timeOut', 'Giới hạn thời gian, đơn vị ms.'], ['IRetryAnalyzer', 'Interface quyết định chạy lại.'], ['Flaky', 'Test lúc pass lúc fail dù code không đổi.']],
+  code: ['@Test(expectedExceptions = ArithmeticException.class)', 'public void divideByZero() { int x = 1 / 0; }', '', '@Test(timeOut = 2000)', 'public void mustFinishIn2s() { /* ... */ }', '', 'public class Retry implements IRetryAnalyzer {', '    private int count = 0;', '    private static final int MAX = 2;', '', '    @Override', '    public boolean retry(ITestResult result) {', '        if (count < MAX) { count++; return true; }', '        return false;', '    }', '}', '', '@Test(retryAnalyzer = Retry.class)', 'public void checkout() { /* ... */ }'],
+  explain: [['expectedExceptions = ArithmeticException.class', 'Test pass khi đúng exception này được ném.'], ['timeOut = 2000', 'Quá 2 giây thì test fail.'], ['return true', 'Yêu cầu TestNG chạy lại.'], ['MAX = 2', 'Tối đa 2 lần chạy lại, tổng cộng 3 lần chạy.']],
+  mistakes: [['Retry không giới hạn.', 'Luôn có bộ đếm và MAX.'], ['Nhầm timeOut tính bằng giây.', 'Đơn vị là mili giây.'], ['Dùng expectedExceptions = Exception.class.', 'Khai báo loại cụ thể để không pass nhầm.']],
+  refs: [['TestNG — Annotations', 'Thuộc tính expectedExceptions, timeOut, retryAnalyzer của @Test', 'https://testng.org/#_annotations'], ['TestNG — Rerunning failed tests', 'IRetryAnalyzer và chạy lại test fail', 'https://testng.org/#_rerunning_failed_tests'], ['TestNG — Parallelism and time-outs', 'Giới hạn thời gian chạy', 'https://testng.org/#_parallelism_and_time_outs']],
+  cards: [['Dễ', 'How does expectedExceptions work?', 'The test passes only if the method throws one of the declared exception types.', 'Test pass chỉ khi ném đúng loại đã khai báo.', 'expectedExceptions|throws|pass'], ['Vừa', 'How do you retry a failed test in TestNG?', 'Implement IRetryAnalyzer, return true from retry() up to a limit, and set retryAnalyzer on the test.', 'Cài đặt IRetryAnalyzer có giới hạn rồi gắn vào @Test.', 'IRetryAnalyzer|retry|retryAnalyzer|limit'], ['Dễ', 'What unit does the timeOut attribute use?', 'Milliseconds.', 'Mili giây.', 'milliseconds|timeOut']],
+  quiz: [['@Test(expectedExceptions = IllegalArgumentException.class) nhưng method chạy xong không ném gì. Kết quả?', 'FAIL', 'exception mong đợi không xảy ra.', 'PASS', 'Pass chỉ khi exception được ném.', 'SKIP', 'Không có lý do để skip.', 'Lỗi biên dịch', 'Khai báo hoàn toàn hợp lệ.'],
+    ['retry() cho phép chạy lại tối đa 2 lần. Một test luôn fail được chạy tổng cộng mấy lần?', '3', 'một lần gốc cộng hai lần chạy lại.', '2', 'Chưa tính lần chạy gốc.', '1', 'Retry làm test chạy thêm.', 'Không giới hạn', 'Bộ đếm đã giới hạn.'],
+    ['Một test thỉnh thoảng fail do bug race condition của ứng dụng. Cách làm đúng?', 'Điều tra, báo defect; không chỉ dựa vào retry', 'retry sẽ che một bug thật.', 'Tăng số retry thật cao', 'Càng che bug kỹ hơn.', 'Xóa test', 'Mất khả năng phát hiện lỗi.', 'Bọc try/catch trống', 'Test sẽ pass giả.']],
+  audit: [['Xử lý lỗi', 'How do you deal with flaky tests?', 'Bạn xử lý test flaky thế nào?', 'I find the root cause first, such as timing, test data or environment. I fix waits and isolate data. I use a limited retry only for known environment issues and still report them.', 'Nguyên nhân gốc trước, retry sau.', 'root cause|wait|data|limited retry', 'How would you implement retry for all tests?', 'Chỉ trả lời "thêm retry".']] });
+
+addLesson({ id: 26, title: 'TestNG: Parallel Test và ITestContext', sub: 'Chạy song song an toàn và chia sẻ thông tin trong một <test>',
+  obj: ['Cấu hình parallel và thread-count.', 'Dùng ThreadLocal<WebDriver> để tránh dùng chung driver.', 'Dùng ITestContext để lưu, đọc thuộc tính và thông tin lần chạy.'],
+  theory: ['Parallel là chạy nhiều test cùng lúc trên nhiều thread. ITestContext chứa thông tin của một thẻ <test> đang chạy và cho phép đặt attribute dùng chung.', 'Rút ngắn thời gian regression; chia sẻ dữ liệu như token hoặc tên môi trường giữa các method.', 'Parallel khi các test độc lập. ITestContext khi nhiều method trong cùng <test> cần chung thông tin.', 'testng.xml đặt parallel="methods | classes | tests | instances" và thread-count. TestNG tiêm ITestContext vào tham số method; ITestListener.onStart cũng nhận nó.', 'Không chạy song song khi test dùng chung tài khoản, dữ liệu hoặc một driver static.'],
+  analogy: 'Parallel giống mở nhiều quầy thu ngân: nhanh hơn, nhưng mỗi quầy cần ngăn tiền riêng. ITestContext giống bảng thông báo chung của một ca làm.',
+  text: 'Biến static WebDriver dùng chung giữa các thread sẽ khiến test giẫm lên nhau. ThreadLocal cho mỗi thread một driver riêng.',
+  terms: [['Thread', 'Luồng thực thi.'], ['thread-count', 'Số thread tối đa.'], ['ThreadLocal', 'Biến có bản riêng cho từng thread.'], ['ITestContext', 'Ngữ cảnh của một thẻ <test>.']],
+  code: ['<suite name="Shop" parallel="methods" thread-count="3">', '', 'private static final ThreadLocal<WebDriver> DRIVER = new ThreadLocal<>();', '', '@BeforeMethod', 'public void setUp() { DRIVER.set(new ChromeDriver()); }', '', '@AfterMethod(alwaysRun = true)', 'public void tearDown() { DRIVER.get().quit(); DRIVER.remove(); }', '', '@Test', 'public void createOrder(ITestContext ctx) {', '    ctx.setAttribute("orderId", "OD-1001");', '}', '', '@Test(dependsOnMethods = "createOrder")', 'public void checkOrder(ITestContext ctx) {', '    String id = (String) ctx.getAttribute("orderId");', '}'],
+  explain: [['parallel="methods" thread-count="3"', 'Tối đa 3 method chạy đồng thời.'], ['DRIVER.set(...)', 'Lưu driver cho riêng thread hiện tại.'], ['DRIVER.remove()', 'Dọn giá trị, tránh rò rỉ khi thread được dùng lại.'], ['ctx.setAttribute / getAttribute', 'Chia sẻ dữ liệu trong cùng <test>.'], ['dependsOnMethods', 'Đảm bảo createOrder chạy trước; nếu nó fail thì checkOrder bị SKIP.']],
+  mistakes: [['Dùng static WebDriver khi chạy song song.', 'Dùng ThreadLocal<WebDriver>.'], ['Đọc attribute mà không đảm bảo thứ tự.', 'Khai báo dependsOnMethods hoặc chuẩn bị dữ liệu trong @BeforeClass.'], ['Tăng thread-count thật cao.', 'Giới hạn theo tài nguyên máy và hệ thống đích.']],
+  refs: [['TestNG — Parallelism', 'parallel, thread-count', 'https://testng.org/#_parallelism_and_time_outs'], ['TestNG — Dependency injection', 'Tiêm ITestContext vào method', 'https://testng.org/#_dependency_injection'], ['ITestContext (TestNG 7.9.0 Javadoc)', 'Thông tin lần chạy và attribute', 'https://javadoc.io/static/org.testng/testng/7.9.0/org/testng/ITestContext.html']],
+  cards: [['Vừa', 'How do you run TestNG tests in parallel?', 'Set the parallel attribute and thread-count in testng.xml.', 'Đặt parallel và thread-count trong testng.xml.', 'parallel|thread-count|testng.xml'], ['Khó', 'Why use ThreadLocal<WebDriver>?', 'It gives each thread its own driver so parallel tests do not interfere.', 'Mỗi thread có driver riêng, không giẫm lên nhau.', 'ThreadLocal|thread|own driver'], ['Vừa', 'What is ITestContext?', 'An object with information about the current <test> run; it can also store shared attributes.', 'Chứa thông tin của lần chạy <test> và attribute dùng chung.', 'context|attributes|test']],
+  quiz: [['Chạy parallel="methods" với một static WebDriver dùng chung. Triệu chứng dễ gặp nhất?', 'Các test điều khiển lẫn nhau, fail ngẫu nhiên', 'nhiều thread cùng ra lệnh cho một trình duyệt.', 'TestNG từ chối biên dịch', 'Trình biên dịch không kiểm tra điều này.', 'Test luôn chạy tuần tự', 'static không làm test chạy tuần tự.', 'Mỗi test tự có driver riêng', 'static nghĩa là dùng chung.'],
+    ['createOrder fail, checkOrder khai báo dependsOnMethods = "createOrder". checkOrder sẽ thế nào?', 'SKIP', 'TestNG bỏ qua test khi phụ thuộc của nó fail.', 'PASS', 'Method không được chạy nên không thể pass.', 'FAIL', 'Mặc định được đánh dấu skip chứ không fail.', 'Chạy bình thường', 'Phụ thuộc đã fail.'],
+    ['ITestContext.setAttribute dùng để làm gì?', 'Lưu dữ liệu để method khác trong cùng <test> đọc lại', 'attribute gắn với ngữ cảnh của <test>.', 'Đổi thứ tự annotation', 'Thứ tự annotation do lifecycle quy định.', 'Tăng thread-count', 'thread-count cấu hình trong suite.', 'Lưu vĩnh viễn xuống database', 'Attribute chỉ tồn tại trong lần chạy.']],
+  audit: [['Ứng dụng', 'How do you make Selenium tests safe to run in parallel?', 'Làm sao để test Selenium chạy song song an toàn?', 'I give each thread its own WebDriver with ThreadLocal, keep tests independent, use separate test data and always quit and remove the driver.', 'Bốn ý: driver riêng, test độc lập, dữ liệu riêng, dọn dẹp.', 'ThreadLocal|independent|test data|quit', 'What are the parallel levels in testng.xml?', 'Chỉ nói tăng thread-count.']] });
+
+addLesson({ id: 27, title: 'Tạo Automation Test Project', sub: 'Maven + Selenium + TestNG: cấu trúc và cách chạy',
+  obj: ['Tạo project Maven và khai báo dependency.', 'Tổ chức thư mục pages, tests, resources.', 'Chạy test bằng mvn test và testng.xml.'],
+  theory: ['Automation project là mã nguồn có cấu trúc gồm thư viện, Page Object, test, dữ liệu, cấu hình và báo cáo.', 'Cấu trúc chuẩn giúp cả nhóm chạy được trên máy khác và trên CI.', 'Khi bắt đầu automation cho một sản phẩm.', 'Maven đọc pom.xml để tải dependency. Plugin Surefire chạy test, có thể trỏ tới testng.xml. Test dùng Page Object trong cùng project.', 'Không đưa mật khẩu thật, thư mục target/ hoặc file .jar tải tay vào repository.'],
+  analogy: 'Giống bộ dụng cụ có ngăn rõ ràng: ai mở ra cũng biết đồ nằm đâu. pom.xml là danh sách đồ cần mua.',
+  text: 'Quy trình: tạo project Maven → thêm selenium-java và testng → viết BaseTest → viết Page Object → viết test → cấu hình testng.xml → chạy mvn test → xem báo cáo.',
+  terms: [['pom.xml', 'File cấu hình Maven.'], ['Dependency', 'Thư viện project cần.'], ['Surefire', 'Plugin Maven chạy test.'], ['BaseTest', 'Lớp cha lo mở và đóng driver.']],
+  codeTitle: 'Ví dụ cấu trúc project (minh họa)',
+  code: ['shop-automation/', '  pom.xml', '  testng.xml', '  .gitignore                 # target/, file bí mật', '  src/test/java/', '    base/BaseTest.java', '    pages/LoginPage.java', '    tests/LoginTest.java', '    data/LoginData.java      # @DataProvider', '  src/test/resources/', '    config.properties        # baseUrl, browser', '', '<dependency>', '  <groupId>org.testng</groupId>', '  <artifactId>testng</artifactId>', '  <version><!-- phiên bản nhóm bạn dùng --></version>', '  <scope>test</scope>', '</dependency>', '', '# Chạy:', 'mvn test'],
+  explain: [['src/test/java', 'Vị trí chuẩn của code test trong Maven.'], ['config.properties', 'Giá trị thay đổi theo môi trường để ngoài code.'], ['<scope>test</scope>', 'Dependency chỉ dùng cho test.'], ['mvn test', 'Biên dịch và chạy test qua Surefire. Khai báo selenium-java tương tự (xem Kiến thức bổ sung).']],
+  mistakes: [['Đặt test trong src/main/java.', 'Đặt trong src/test/java để Surefire tìm thấy.'], ['Ghi cứng URL và mật khẩu trong test.', 'Đưa ra file cấu hình hoặc biến môi trường.'], ['Commit thư mục target/.', 'Thêm vào .gitignore.']],
+  refs: [['Maven — Standard Directory Layout', 'Cấu trúc thư mục chuẩn', 'https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html'], ['Install a Selenium library', 'Khai báo Selenium cho project', 'https://www.selenium.dev/documentation/webdriver/getting_started/install_library/'], ['Surefire — TestNG', 'Chạy TestNG bằng Maven', 'https://maven.apache.org/surefire/maven-surefire-plugin/examples/testng.html']],
+  cards: [['Dễ', 'What is pom.xml?', 'The Maven configuration file that declares dependencies, plugins and project information.', 'File cấu hình Maven: dependency, plugin, thông tin project.', 'Maven|dependencies|plugins'], ['Dễ', 'Where do test classes go in a Maven project?', 'In src/test/java.', 'Trong src/test/java.', 'src/test/java'], ['Vừa', 'What does your BaseTest class do?', 'It creates the driver before a test and quits it afterwards so test classes do not repeat that code.', 'Mở và đóng driver dùng chung cho các test.', 'setup|teardown|driver|reuse']],
+  quiz: [['Mã Page Object và test trong project chỉ phục vụ kiểm thử nên thường đặt ở đâu?', 'src/test/java', 'đây là vị trí chuẩn của code test.', 'target/', 'target/ chứa kết quả build.', 'src/test/resources', 'Nơi này dành cho cấu hình và dữ liệu.', 'Thư mục gốc cạnh pom.xml', 'Maven không biên dịch file ở đó theo mặc định.'],
+    ['Thư mục nào không nên commit lên Git?', 'target/', 'đây là kết quả build, tạo lại được.', 'src/test/java', 'Đây là mã nguồn.', 'src/test/resources', 'Cấu hình và dữ liệu test cần được quản lý (trừ bí mật).', 'pages/', 'Đây là mã nguồn Page Object.'],
+    ['Máy đồng nghiệp cần có Selenium và TestNG giống bạn. Cách đúng?', 'Khai báo dependency trong pom.xml', 'Maven tải đúng phiên bản đã khai báo.', 'Gửi file .jar qua chat', 'Khó quản lý phiên bản.', 'Cài tay vào thư mục JDK', 'Không được quản lý theo project.', 'Chép thư mục target/', 'target/ là kết quả build.']],
+  audit: [['Ứng dụng', 'How do you structure an automation project from scratch?', 'Bạn tổ chức một automation project từ đầu thế nào?', 'I create a Maven project, add Selenium and TestNG, separate base classes, page objects, tests and test data, keep configuration outside the code, run it with testng.xml and mvn test, and store it in Git.', 'Kể theo trình tự, có lý do tách lớp.', 'Maven|page objects|test data|configuration|Git', 'How would you run it on a CI server?', 'Chỉ nói "tạo class rồi viết test".']] });
+
+/* ===== Nhóm 6: Software Testing Foundation (bài 28–32) ===== */
+var ISTQB = 'https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/';
+var GLOSS_ISTQB = 'https://glossary.istqb.org/';
+
+addLesson({ id: 28, title: 'Năng lực Tester và khái niệm kiểm thử', sub: 'QA/QC, error – defect – failure, 7 nguyên tắc',
+  obj: ['Nêu mục tiêu kiểm thử và năng lực cần có của tester.', 'Phân biệt error, defect, failure; QA và QC; verification và validation.', 'Nhớ 7 nguyên tắc kiểm thử (ISTQB).'],
+  theory: ['Kiểm thử là các hoạt động đánh giá sản phẩm để tìm defect và cung cấp thông tin về chất lượng. Con người mắc error (mistake), tạo ra defect (bug) trong sản phẩm; defect khi được thực thi có thể gây failure.', 'Giảm rủi ro lỗi đến người dùng và giúp nhóm quyết định có phát hành hay không.', 'Trong suốt vòng đời, bắt đầu từ lúc rà soát yêu cầu.', '7 nguyên tắc: (1) kiểm thử cho thấy có defect, không chứng minh không có; (2) không thể kiểm thử vét cạn; (3) kiểm thử sớm tiết kiệm chi phí; (4) defect tập trung thành cụm; (5) test lặp lại mãi sẽ mòn hiệu quả; (6) kiểm thử phụ thuộc ngữ cảnh; (7) hết lỗi chưa chắc đáp ứng nhu cầu.', 'Không coi tester là người duy nhất chịu trách nhiệm chất lượng.'],
+  analogy: 'Giống khám sức khỏe: phát hiện được bệnh, nhưng không phát hiện gì không có nghĩa chắc chắn hoàn toàn khỏe.',
+  text: 'Năng lực tester gồm: kiến thức kiểm thử, hiểu nghiệp vụ, kỹ năng kỹ thuật (SQL, API, automation), tư duy phản biện, chú ý chi tiết và giao tiếp rõ ràng.',
+  terms: [['QA', 'Đảm bảo chất lượng, tập trung vào quy trình, phòng ngừa.'], ['QC', 'Kiểm soát chất lượng, tập trung kiểm tra sản phẩm; testing là một phần.'], ['Verification', 'Có làm đúng theo đặc tả không?'], ['Validation', 'Có đúng cái người dùng cần không?']],
+  codeTitle: 'Ví dụ chuỗi error → defect → failure',
+  code: ['Yêu cầu : Giảm 10% cho đơn TỪ 500.000đ trở lên', '', 'Error   : Developer hiểu thành "TRÊN 500.000đ"', 'Defect  : code viết  if (total > 500000)', '          đúng ra     if (total >= 500000)', 'Failure : đơn đúng 500.000đ không được giảm giá', '', 'Chưa ai đặt đơn đúng 500.000đ  -> defect vẫn tồn tại, failure chưa xảy ra'],
+  explain: [['Error', 'Sai sót của con người.'], ['Defect', 'Chỗ sai nằm trong sản phẩm (code, tài liệu).'], ['Failure', 'Hành vi sai quan sát được khi chạy.'], ['Dòng cuối', 'Có defect chưa chắc đã thấy failure.']],
+  mistakes: [['Nói test pass hết nghĩa là phần mềm không còn lỗi.', 'Kiểm thử chỉ cho thấy sự hiện diện của defect.'], ['Đồng nhất QA và QC.', 'QA hướng quy trình; QC hướng sản phẩm.'], ['Chạy mãi một bộ test không cập nhật.', 'Rà soát và bổ sung test case định kỳ.']],
+  refs: [['ISTQB CTFL v4.0', 'Syllabus Foundation Level', ISTQB], ['ISTQB Glossary', 'Thuật ngữ kiểm thử chuẩn', GLOSS_ISTQB]],
+  cards: [['Dễ', 'What is the difference between error, defect and failure?', 'A human makes an error, which introduces a defect; executing the defect may cause a failure.', 'Người mắc error, tạo defect, defect chạy có thể gây failure.', 'error|defect|failure'], ['Vừa', 'What is the difference between QA and QC?', 'QA is process-oriented and preventive; QC is product-oriented and includes testing.', 'QA hướng quy trình, phòng ngừa; QC hướng sản phẩm.', 'process|product|prevent'], ['Vừa', 'Name the seven testing principles.', 'Testing shows the presence of defects; exhaustive testing is impossible; early testing saves time and money; defects cluster; tests wear out; testing is context dependent; absence-of-defects fallacy.', 'Bảy nguyên tắc ISTQB.', 'presence|exhaustive|early|cluster|context']],
+  quiz: [['Tất cả 500 test case đều pass. Kết luận nào đúng?', 'Không phát hiện failure với các test đã chạy, nhưng vẫn có thể còn defect', 'kiểm thử không chứng minh được là không có lỗi.', 'Phần mềm chắc chắn không còn lỗi', 'Trái với nguyên tắc 1.', 'Đã kiểm thử vét cạn', 'Vét cạn gần như không khả thi.', 'Người dùng chắc chắn hài lòng', 'Đây là ngộ nhận về việc hết lỗi.'],
+    ['Phân tích cho thấy 80% bug nằm ở module thanh toán. Nguyên tắc nào?', 'Defect tập trung thành cụm', 'defect thường dồn vào một số ít module.', 'Test mòn hiệu quả', 'Nguyên tắc này nói về việc lặp lại cùng bộ test.', 'Kiểm thử phụ thuộc ngữ cảnh', 'Nói về cách tiếp cận theo loại sản phẩm.', 'Kiểm thử sớm', 'Nói về thời điểm bắt đầu.'],
+    ['Rà soát yêu cầu để phát hiện mâu thuẫn trước khi code thể hiện điều gì?', 'Kiểm thử sớm', 'lỗi tìm được sớm rẻ hơn để sửa.', 'Kiểm thử vét cạn', 'Rà soát không bao phủ mọi đầu vào.', 'Retesting', 'Chưa có bản sửa lỗi nào để kiểm tra lại.', 'Acceptance testing', 'Chấp nhận diễn ra trên sản phẩm.']],
+  audit: [['Định nghĩa', 'What skills does a good tester need?', 'Một tester giỏi cần năng lực gì?', 'Testing fundamentals, domain knowledge, technical skills such as SQL, API and automation, critical thinking, attention to detail and clear communication.', 'Nêu cả kỹ thuật và kỹ năng mềm, thêm ví dụ của bản thân.', 'testing|domain|technical|critical thinking|communication', 'Which of these do you want to improve and how?', 'Chỉ nói "cẩn thận".']] });
+
+addLesson({ id: 29, title: 'Test Process và Test Plan', sub: 'Các hoạt động kiểm thử và nội dung kế hoạch',
+  obj: ['Nêu 7 hoạt động trong quy trình kiểm thử.', 'Biết Test Plan gồm những gì.', 'Hiểu entry criteria và exit criteria.'],
+  theory: ['Quy trình kiểm thử cơ bản (ISTQB v4.0): Planning; Monitoring & Control; Analysis; Design; Implementation; Execution; Completion. Các hoạt động có thể chồng lấn và lặp lại.', 'Có quy trình thì biết test cái gì, ai làm, khi nào xong và dựa vào đâu để kết luận.', 'Áp dụng cho mọi dự án, mức chi tiết tùy quy mô và mô hình phát triển.', 'Analysis trả lời "test cái gì"; Design trả lời "test như thế nào"; Implementation chuẩn bị testware, dữ liệu, môi trường; Execution chạy và ghi kết quả; Completion tổng kết và rút kinh nghiệm.', 'Không viết Test Plan dài rồi bỏ đó; kế hoạch phải được cập nhật khi tình hình đổi.'],
+  analogy: 'Giống tổ chức chuyến đi: lên kế hoạch, theo dõi tiến độ, xác định điểm đến, lập lịch trình, chuẩn bị hành lý, đi, rồi tổng kết.',
+  text: 'Test Plan trả lời: phạm vi (trong và ngoài), mục tiêu, cách tiếp cận, nguồn lực, lịch, môi trường, rủi ro, tiêu chí bắt đầu và kết thúc, sản phẩm bàn giao.',
+  terms: [['Test Plan', 'Tài liệu mô tả mục tiêu, phạm vi, cách làm, lịch, nguồn lực.'], ['Entry criteria', 'Điều kiện để được bắt đầu.'], ['Exit criteria', 'Điều kiện để coi là hoàn thành.'], ['Testware', 'Sản phẩm kiểm thử: test case, dữ liệu, script, báo cáo.']],
+  codeTitle: 'Ví dụ khung Test Plan rút gọn',
+  code: ['TEST PLAN - Chức năng Đăng nhập, Sprint 12', '1. Phạm vi      : đăng nhập email/mật khẩu. Ngoài phạm vi: đăng nhập Google', '2. Mục tiêu     : xác nhận AC của US-101', '3. Cách tiếp cận: manual + API + automation smoke', '4. Môi trường   : staging, Chrome', '5. Nhân lực/lịch: 2 tester, 3 ngày', '6. Entry        : build đã deploy, smoke pass, có dữ liệu test', '7. Exit         : chạy 100% TC ưu tiên cao, không còn bug Critical/Major mở', '8. Rủi ro       : staging hay gián đoạn -> báo DevOps, lịch dự phòng', '9. Bàn giao     : test case, danh sách bug, test summary report'],
+  explain: [['Ngoài phạm vi', 'Ghi rõ để tránh hiểu nhầm.'], ['Entry', 'Chưa đạt thì chưa bắt đầu test chính thức.'], ['Exit', 'Căn cứ khách quan để dừng.'], ['Rủi ro', 'Mỗi rủi ro nên có cách ứng phó.']],
+  mistakes: [['Không ghi phạm vi loại trừ.', 'Luôn liệt kê out of scope.'], ['Exit criteria mơ hồ như "test đủ".', 'Dùng tiêu chí đo được.'], ['Coi quy trình là các bước cứng, tuần tự tuyệt đối.', 'Trong Agile các hoạt động lặp lại trong mỗi iteration.']],
+  refs: [['ISTQB CTFL v4.0', 'Test activities và test planning', ISTQB], ['ISTQB Glossary', 'Test plan, entry criteria, exit criteria', GLOSS_ISTQB]],
+  cards: [['Vừa', 'What are the main test activities?', 'Planning, monitoring and control, analysis, design, implementation, execution and completion.', 'Bảy hoạt động của quy trình kiểm thử.', 'planning|analysis|design|execution|completion'], ['Dễ', 'What does a test plan contain?', 'Scope, objectives, approach, resources, schedule, environment, risks, entry and exit criteria and deliverables.', 'Phạm vi, mục tiêu, cách làm, nguồn lực, lịch, rủi ro, tiêu chí.', 'scope|approach|schedule|risks|criteria'], ['Dễ', 'What are entry and exit criteria?', 'Entry criteria are conditions to start an activity; exit criteria are conditions to declare it complete.', 'Điều kiện bắt đầu và điều kiện kết thúc.', 'start|complete|conditions']],
+  quiz: [['"Chạy 100% test case ưu tiên cao và không còn bug Critical mở" là gì?', 'Exit criteria', 'đây là điều kiện để kết thúc kiểm thử.', 'Entry criteria', 'Entry là điều kiện để bắt đầu.', 'Test data', 'Đây không phải dữ liệu.', 'Test condition', 'Test condition là điều cần được kiểm tra.'],
+    ['Hoạt động nào trả lời câu hỏi "cần test cái gì"?', 'Test analysis', 'phân tích test basis để xác định test condition.', 'Test execution', 'Execution là chạy test.', 'Test completion', 'Completion là tổng kết.', 'Test implementation', 'Implementation chuẩn bị testware và môi trường.'],
+    ['Giữa sprint, tiến độ chậm hơn kế hoạch và lead điều chỉnh thứ tự ưu tiên. Hoạt động nào?', 'Monitoring và control', 'theo dõi thực tế và đưa ra hành động điều chỉnh.', 'Test design', 'Không thiết kế test case ở đây.', 'Acceptance testing', 'Đây là test level, không phải hoạt động quản lý.', 'Regression testing', 'Đây là loại kiểm thử.']],
+  audit: [['Định nghĩa', 'Describe your testing process from receiving a requirement to closing the test.', 'Mô tả quy trình test từ khi nhận yêu cầu đến khi kết thúc.', 'I review the requirement, plan scope and risks, identify test conditions, design test cases, prepare data and environment, execute and report defects, retest, run regression and write a summary.', 'Trả lời theo trình tự, gắn với dự án đã làm.', 'requirement|plan|design|execute|report|regression', 'What do you do when requirements are unclear?', 'Chỉ nói "viết test case rồi test".']] });
+
+addLesson({ id: 30, title: 'Test Levels và Test Types', sub: 'Mức kiểm thử, loại kiểm thử, smoke, regression',
+  obj: ['Phân biệt các test level.', 'Phân biệt functional, non-functional, black-box, white-box.', 'Phân biệt retesting, regression, smoke và sanity.'],
+  theory: ['Test level là mức kiểm thử gắn với giai đoạn phát triển (ISTQB v4.0): component, component integration, system, system integration, acceptance. Test type là nhóm kiểm thử theo mục tiêu: functional, non-functional, black-box, white-box.', 'Mỗi level và type tìm một loại lỗi khác nhau.', 'Chọn theo đối tượng test và rủi ro. Một test type có thể áp dụng ở nhiều level.', 'Confirmation testing (retesting) kiểm tra defect đã sửa. Regression testing kiểm tra thay đổi không làm hỏng chỗ khác. Smoke kiểm tra nhanh chức năng chính để biết build có đủ ổn định để test tiếp; sanity (thuật ngữ thực tế) kiểm tra hẹp quanh phần vừa đổi.', 'Không dồn mọi kiểm thử lên giao diện; lỗi logic nên bắt ở level thấp hơn.'],
+  analogy: 'Làm ô tô: kiểm tra từng linh kiện, kiểm tra lắp ghép, chạy thử cả xe, rồi khách hàng lái thử để nhận xe.',
+  text: 'Level trả lời "test ở tầng nào". Type trả lời "test nhằm mục đích gì".',
+  terms: [['Component test', 'Test từng thành phần (unit).'], ['UAT', 'User Acceptance Testing.'], ['Non-functional', 'Hiệu năng, bảo mật, khả dụng...'], ['Regression', 'Phát hiện ảnh hưởng phụ của thay đổi.']],
+  codeTitle: 'Ví dụ trên chức năng Đặt hàng',
+  code: ['Component             : hàm tính tổng tiền', 'Component integration : service đơn hàng <-> service kho', 'System                : người dùng đặt hàng đầu-cuối trên web', 'System integration    : hệ thống shop <-> cổng thanh toán bên ngoài', 'Acceptance            : nghiệp vụ/khách hàng xác nhận đáp ứng nhu cầu', '', 'Functional     : đặt hàng tạo đúng đơn', 'Non-functional : 500 người đặt cùng lúc, phản hồi < 2s', 'Confirmation   : chạy lại đúng bước gây bug đã sửa', 'Regression     : chạy lại giỏ hàng, thanh toán sau khi sửa'],
+  explain: [['Component', 'Thường do developer thực hiện, ví dụ unit test.'], ['System integration', 'Tích hợp với hệ thống bên ngoài.'], ['Non-functional', 'Kiểm tra "hệ thống tốt đến mức nào".'], ['Confirmation / Regression', 'Hai việc khác nhau, thường làm sau khi sửa bug.']],
+  mistakes: [['Nhầm retesting với regression.', 'Retesting kiểm tra chính bug đã sửa; regression kiểm tra phần còn lại.'], ['Coi smoke là test toàn bộ.', 'Smoke chỉ rộng và nông trên chức năng chính.'], ['Coi functional testing là một test level.', 'Đó là test type.']],
+  refs: [['ISTQB CTFL v4.0', 'Test levels và test types', ISTQB], ['ISTQB Glossary', 'Confirmation testing, regression testing, smoke test', GLOSS_ISTQB]],
+  cards: [['Dễ', 'What are the test levels?', 'Component, component integration, system, system integration and acceptance testing.', 'Năm mức kiểm thử theo ISTQB v4.0.', 'component|integration|system|acceptance'], ['Dễ', 'What is the difference between retesting and regression testing?', 'Retesting confirms a fixed defect; regression checks that a change did not break other functions.', 'Retest xác nhận bug đã sửa; regression kiểm tra ảnh hưởng phụ.', 'fixed defect|change|break'], ['Vừa', 'What is the difference between smoke and sanity testing?', 'Smoke is a broad, shallow check of key functions on a build; sanity is a narrow check around a specific change.', 'Smoke rộng và nông; sanity hẹp quanh thay đổi.', 'broad|narrow|build']],
+  quiz: [['Developer sửa bug "không áp được mã giảm giá". Bạn chạy lại đúng các bước gây lỗi. Đây là?', 'Confirmation testing (retesting)', 'mục tiêu là xác nhận defect đã được sửa.', 'Regression testing', 'Regression kiểm tra phần khác bị ảnh hưởng.', 'Performance testing', 'Không đo hiệu năng.', 'Component testing', 'Đây không phải xác định level theo thành phần.'],
+    ['Kiểm tra trang chịu được 1000 người dùng đồng thời thuộc loại nào?', 'Non-functional', 'đây là kiểm thử hiệu năng.', 'Functional', 'Functional kiểm tra chức năng làm gì.', 'White-box', 'Không dựa trên cấu trúc code.', 'Confirmation', 'Không có defect nào đang được xác nhận.'],
+    ['Build mới vừa deploy. Việc đầu tiên hợp lý?', 'Chạy smoke test', 'xác định build có đủ ổn định để test sâu.', 'Chạy toàn bộ test thủ công ngay', 'Có thể lãng phí nếu build hỏng cơ bản.', 'Làm UAT', 'UAT diễn ra sau khi hệ thống đã được test.', 'Đóng sprint', 'Chưa có thông tin chất lượng.']],
+  audit: [['So sánh', 'What is the difference between test levels and test types?', 'Khác nhau giữa test level và test type?', 'Test levels relate to the stage and test object, such as component or system testing. Test types relate to the objective, such as functional or performance testing, and can apply at any level.', 'Level: tầng nào; type: mục đích gì.', 'level|type|objective|object', 'Which tests would you automate first for regression?', 'Liệt kê lẫn lộn level và type.']] });
+
+addLesson({ id: 31, title: 'Test Case và Test Design Techniques', sub: 'EP, BVA, Decision Table, State Transition',
+  obj: ['Viết test case đủ thành phần.', 'Áp dụng phân vùng tương đương và phân tích giá trị biên.', 'Dùng bảng quyết định và chuyển trạng thái.'],
+  theory: ['Test case mô tả tiền điều kiện, dữ liệu, bước thực hiện và kết quả mong đợi. Kỹ thuật thiết kế giúp chọn ít test nhưng bao phủ tốt.', 'Không thể thử mọi giá trị, nên cần chọn có phương pháp.', 'EP cho miền dữ liệu; BVA cho miền có thứ tự và ngưỡng; Decision Table cho nhiều điều kiện kết hợp; State Transition cho đối tượng có trạng thái.', 'Black-box: EP, BVA, decision table, state transition. White-box: statement, branch coverage. Experience-based: error guessing, exploratory, checklist-based.', 'Không dùng BVA cho tập giá trị không có thứ tự, ví dụ danh sách màu.'],
+  analogy: 'Thử cổng soát vé cho trẻ dưới 6 tuổi miễn phí: không cần thử mọi đứa trẻ, chỉ cần đại diện mỗi nhóm và đúng quanh mốc 6 tuổi.',
+  text: 'Ví dụ ô tuổi hợp lệ 18–60 (số nguyên): EP có 3 phân vùng (<18, 18–60, >60). BVA 2 giá trị: 17, 18, 60, 61. BVA 3 giá trị: 17, 18, 19, 59, 60, 61.',
+  terms: [['EP', 'Equivalence Partitioning: mỗi phân vùng chọn đại diện.'], ['BVA', 'Boundary Value Analysis: test tại và cạnh biên.'], ['Test basis', 'Nguồn để thiết kế test: yêu cầu, AC...'], ['Traceability', 'Liên kết yêu cầu với test case.']],
+  codeTitle: 'Ví dụ test case và bảng quyết định',
+  code: ['ID          : TC_LOGIN_003', 'Title       : Đăng nhập thất bại khi sai mật khẩu', 'Priority    : High        Req: US-101 / AC2', 'Precondition: tài khoản qa@shop.vn đang hoạt động', 'Test data   : qa@shop.vn / Sai@123', 'Steps       : 1. Mở trang login  2. Nhập dữ liệu  3. Bấm Đăng nhập', 'Expected    : ở lại trang login, hiện "Email hoặc mật khẩu không đúng"', '', 'Decision table - miễn phí ship', 'Thành viên VIP   | Y | Y | N | N', 'Đơn >= 500k      | Y | N | Y | N', 'Miễn phí ship    | Y | Y | Y | N'],
+  explain: [['Req', 'Giúp truy vết về yêu cầu.'], ['Precondition', 'Trạng thái cần có trước khi chạy.'], ['Expected', 'Phải cụ thể và kiểm chứng được.'], ['Bảng quyết định', 'Mỗi cột là một luật, thường thành ít nhất một test case. Quy tắc ví dụ: VIP hoặc đơn từ 500k thì miễn phí.']],
+  mistakes: [['Expected ghi "chạy đúng".', 'Mô tả kết quả quan sát được.'], ['Chỉ có positive case.', 'Thêm negative và biên.'], ['Một test case kiểm tra quá nhiều mục tiêu.', 'Mỗi test case một mục tiêu rõ.']],
+  refs: [['ISTQB CTFL v4.0', 'Test analysis and design techniques', ISTQB], ['ISTQB Glossary', 'Equivalence partitioning, boundary value analysis', GLOSS_ISTQB]],
+  cards: [['Dễ', 'What are the parts of a test case?', 'ID, title, preconditions, test data, steps and expected results, often with priority and requirement link.', 'Các thành phần chính của test case.', 'precondition|data|steps|expected'], ['Vừa', 'Explain equivalence partitioning and boundary value analysis.', 'EP divides data into groups handled the same way and tests a representative; BVA tests values at and next to partition boundaries.', 'EP chọn đại diện; BVA test tại biên.', 'partition|representative|boundary'], ['Vừa', 'When do you use a decision table?', 'When the outcome depends on combinations of several conditions.', 'Khi kết quả phụ thuộc tổ hợp nhiều điều kiện.', 'combinations|conditions|rules']],
+  quiz: [['Số lượng mua hợp lệ 1–10 (số nguyên). Bộ giá trị BVA 2 giá trị là?', '0, 1, 10, 11', 'mỗi biên lấy giá trị biên và giá trị kề ở phân vùng bên cạnh.', '1, 5, 10', 'Thiếu giá trị ngoài miền.', '-100, 5, 100', 'Đây là đại diện phân vùng, không phải biên.', '2, 3, 8, 9', 'Không có giá trị biên.'],
+    ['Cùng miền 1–10, số phân vùng tương đương cơ bản là?', '3', 'nhỏ hơn 1, từ 1 đến 10, lớn hơn 10.', '10', 'Các giá trị 1–10 được xử lý như nhau.', '2', 'Có hai vùng không hợp lệ và một vùng hợp lệ.', '12', 'EP không liệt kê từng giá trị.'],
+    ['Đơn hàng đi qua New → Paid → Shipped → Delivered, một số chuyển đổi bị cấm. Kỹ thuật phù hợp?', 'State transition testing', 'tập trung vào trạng thái và chuyển đổi hợp lệ, không hợp lệ.', 'Chỉ BVA', 'Không có ngưỡng số.', 'Statement coverage', 'Đây là kỹ thuật white-box.', 'Load testing', 'Đây là kiểm thử hiệu năng.']],
+  audit: [['Ứng dụng', 'How would you design test cases for an age field that accepts 18 to 60?', 'Thiết kế test case cho ô tuổi nhận 18–60?', 'Using equivalence partitioning I pick values below, inside and above the range. With boundary value analysis I test 17, 18, 60 and 61. I also test empty, non-numeric, decimal and negative input.', 'Nêu kỹ thuật, giá trị cụ thể, rồi ca bất thường.', 'equivalence|boundary|17|61|invalid', 'How do you prioritise test cases when time is short?', 'Chỉ thử vài số ngẫu nhiên.']] });
+
+addLesson({ id: 32, title: 'Test Execution và quản lý Defect', sub: 'Chạy test, ghi kết quả, báo bug, vòng đời bug',
+  obj: ['Biết các trạng thái kết quả khi thực thi.', 'Viết bug report tái hiện được.', 'Phân biệt severity và priority.'],
+  theory: ['Test execution là chạy test, so sánh actual với expected, ghi kết quả và báo defect.', 'Kết quả được ghi rõ là bằng chứng để đánh giá chất lượng.', 'Khi đạt entry criteria: build, môi trường và dữ liệu sẵn sàng.', 'Trạng thái thường gặp: Pass, Fail, Blocked, Not Run, Skipped. Vòng đời bug tùy dự án, ví dụ New → Assigned/Open → Fixed → Retest → Closed hoặc Reopened; có thể Rejected, Duplicate, Deferred.', 'Không đánh dấu Pass khi chưa chạy hoặc chỉ chạy một phần.'],
+  analogy: 'Bug report giống đơn trình báo: càng rõ ai, ở đâu, làm gì, thấy gì thì càng xử lý nhanh.',
+  text: 'Severity là mức ảnh hưởng kỹ thuật/nghiệp vụ. Priority là mức cần sửa sớm. Ví dụ sai chính tả tên công ty ở trang chủ: severity thấp nhưng priority cao.',
+  terms: [['Blocked', 'Không chạy được do bị chặn.'], ['Severity', 'Mức nghiêm trọng.'], ['Priority', 'Mức ưu tiên xử lý.'], ['Test summary report', 'Báo cáo tổng kết kiểm thử.']],
+  codeTitle: 'Ví dụ bug report',
+  code: ['Title    : [Checkout] Bấm "Đặt hàng" 2 lần tạo 2 đơn trùng', 'Env      : staging, build 1.4.2, Chrome, Windows 11', 'Precond  : giỏ có 1 sản phẩm', 'Steps    : 1. Mở Checkout', '           2. Bấm "Đặt hàng" 2 lần liên tiếp', 'Actual   : tạo 2 đơn OD-1001 và OD-1002', 'Expected : chỉ tạo 1 đơn', 'Severity : Major      Priority: High', 'Evidence : video, request/response, ID đơn', 'Rate     : 5/5 lần'],
+  explain: [['Title', 'Ngắn gọn: ở đâu, làm gì, sai gì.'], ['Env', 'Thiếu môi trường thì khó tái hiện.'], ['Actual / Expected', 'Tách rõ thực tế và mong đợi.'], ['Rate', 'Cho biết lỗi luôn xảy ra hay chập chờn.']],
+  mistakes: [['Tiêu đề "bị lỗi".', 'Nêu chức năng và hiện tượng.'], ['Gộp nhiều lỗi vào một ticket.', 'Mỗi defect một ticket.'], ['Đóng bug khi developer nói đã sửa.', 'Retest trên build có bản sửa rồi mới đóng.']],
+  refs: [['ISTQB CTFL v4.0', 'Defect management và test reporting', ISTQB], ['ISTQB Glossary', 'Defect report, severity, priority', GLOSS_ISTQB]],
+  cards: [['Dễ', 'What is the difference between severity and priority?', 'Severity is the impact of the defect; priority is how urgently it should be fixed.', 'Severity là mức ảnh hưởng; priority là độ gấp.', 'impact|urgency'], ['Vừa', 'What makes a good bug report?', 'A clear title, environment, steps to reproduce, actual and expected results, severity, priority and evidence.', 'Rõ ràng và tái hiện được.', 'steps|actual|expected|environment|evidence'], ['Dễ', 'What does a Blocked test status mean?', 'The test cannot be executed because something prevents it, such as a defect or an unavailable environment.', 'Không chạy được vì bị chặn.', 'cannot execute|prevent']],
+  quiz: [['Không thể test thanh toán vì trang giỏ hàng bị crash. Trạng thái test case thanh toán?', 'Blocked', 'có yếu tố ngăn không cho thực thi.', 'Pass', 'Test chưa được chạy.', 'Fail', 'Chưa quan sát được kết quả của thanh toán.', 'Closed', 'Closed thường là trạng thái của bug.'],
+    ['Logo công ty sai trên trang chủ ngay trước sự kiện ra mắt. Đánh giá hợp lý?', 'Severity thấp, Priority cao', 'không hỏng chức năng nhưng cần sửa gấp.', 'Severity cao, Priority thấp', 'Chức năng không bị ảnh hưởng nặng.', 'Cả hai đều thấp', 'Thời điểm ra mắt làm việc sửa trở nên gấp.', 'Không phải defect', 'Sai so với yêu cầu thì là defect.'],
+    ['Developer không tái hiện được bug của bạn. Nên làm gì trước?', 'Bổ sung bước, dữ liệu, môi trường, log hoặc video', 'thông tin tái hiện giúp thu hẹp nguyên nhân.', 'Đóng bug ngay', 'Lỗi có thể vẫn tồn tại.', 'Tăng severity', 'Không giúp tái hiện.', 'Tạo thêm 5 ticket giống nhau', 'Chỉ tạo trùng lặp.']],
+  audit: [['Xử lý lỗi', 'A developer rejects your bug and says it is not a bug. What do you do?', 'Developer từ chối bug của bạn, bạn làm gì?', 'I check the requirement again, show reproduction steps and evidence, discuss calmly, and involve the BA or product owner if the requirement is unclear. I accept the result when I am wrong.', 'Dựa trên yêu cầu và bằng chứng, không tranh cãi cá nhân.', 'requirement|evidence|discuss|product owner', 'What if there is no time to fix it before release?', 'Cãi đến cùng hoặc im lặng đóng bug.']] });
+
+/* ===== Nhóm 3: API Testing (bài 33–37) ===== */
+var MDN_HTTP = 'https://developer.mozilla.org/en-US/docs/Web/HTTP/';
+
+addLesson({ id: 33, title: 'API Testing cơ bản: Request và Response', sub: 'HTTP method, URL, headers, body, cookies, status code',
+  obj: ['Hiểu API, REST, request và response.', 'Đọc URL, header, body, cookie.', 'Hiểu các nhóm status code thường gặp.'],
+  theory: ['API là giao diện để các phần mềm trao đổi với nhau. API web thường dùng HTTP: client gửi request (method, URL, headers, body), server trả response (status code, headers, body).', 'API chứa phần lớn nghiệp vụ; test ở tầng này sớm, nhanh và ổn định hơn UI.', 'Khi backend đã có endpoint, kể cả khi giao diện chưa xong.', 'Method: GET đọc, POST tạo hoặc xử lý, PUT thay toàn bộ, PATCH sửa một phần, DELETE xóa. Status: 2xx thành công, 3xx chuyển hướng, 4xx lỗi phía request, 5xx lỗi phía server.', 'Test API không thay thế việc kiểm tra giao diện người dùng.'],
+  analogy: 'Giống gọi món: phiếu gọi món là request, bếp là server, món ăn kèm lời báo "hết món" hay "xong" là response.',
+  text: 'Phải nhớ: 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 chưa xác thực, 403 không có quyền, 404 không tìm thấy, 409 xung đột, 500 lỗi server.',
+  terms: [['Endpoint', 'Địa chỉ của một chức năng API.'], ['Header', 'Thông tin kèm theo, ví dụ Content-Type, Authorization.'], ['Cookie', 'Dữ liệu server gửi để client gửi lại ở request sau.'], ['Idempotent', 'Gửi lặp lại cho cùng tác động như gửi một lần (GET, PUT, DELETE).']],
+  codeTitle: 'Ví dụ một request và response HTTP',
+  code: ['POST /api/v1/users?notify=true HTTP/1.1', 'Host: api.shop.example.com', 'Content-Type: application/json', 'Authorization: Bearer <token>', 'Cookie: lang=vi', '', '{ "email": "an@shop.vn", "name": "An" }', '', 'HTTP/1.1 201 Created', 'Content-Type: application/json', 'Location: /api/v1/users/15', 'Set-Cookie: sid=abc123; HttpOnly; Secure', '', '{ "id": 15, "email": "an@shop.vn", "name": "An" }'],
+  explain: [['/api/v1/users', 'Path trỏ tới tài nguyên.'], ['?notify=true', 'Query parameter.'], ['Content-Type', 'Định dạng của body.'], ['Authorization', 'Thông tin xác thực.'], ['201 Created', 'Tạo tài nguyên thành công.'], ['Set-Cookie', 'Server yêu cầu client lưu cookie.']],
+  mistakes: [['Chỉ kiểm tra status 200.', 'Kiểm tra cả body, header, dữ liệu lưu và lỗi nghiệp vụ.'], ['Nhầm 401 và 403.', '401: chưa xác thực hợp lệ; 403: bị từ chối quyền.'], ['Đưa mật khẩu hoặc token vào URL.', 'URL dễ bị ghi log; dùng header hoặc body qua HTTPS.']],
+  refs: [['MDN — An overview of HTTP', 'Request, response', MDN_HTTP + 'Guides/Overview'], ['MDN — HTTP response status codes', 'Danh sách status code', MDN_HTTP + 'Reference/Status'], ['MDN — HTTP cookies', 'Cookie và Set-Cookie', MDN_HTTP + 'Guides/Cookies']],
+  cards: [['Dễ', 'What are the parts of an HTTP request?', 'Method, URL, headers and an optional body.', 'Method, URL, header và body (tùy chọn).', 'method|URL|headers|body'], ['Dễ', 'What is the difference between 401 and 403?', '401 means authentication is missing or invalid; 403 means the server refuses access, typically for lack of permission.', '401 chưa xác thực; 403 không đủ quyền.', 'authentication|permission'], ['Vừa', 'What is the difference between PUT and PATCH?', 'PUT replaces the whole resource; PATCH applies a partial update.', 'PUT thay toàn bộ; PATCH sửa một phần.', 'replace|partial']],
+  quiz: [['Tạo user mới thành công, status phù hợp nhất theo ngữ nghĩa HTTP?', '201 Created', '201 báo tài nguyên mới đã được tạo.', '204 No Content', '204 dùng khi thành công mà không trả body; không nói rõ đã tạo mới.', '302 Found', 'Đây là chuyển hướng.', '409 Conflict', '409 báo xung đột.'],
+    ['Đã đăng nhập bằng tài khoản thường nhưng gọi API xóa user của admin. Status mong đợi?', '403 Forbidden', 'đã xác thực nhưng không có quyền.', '401 Unauthorized', '401 dùng khi thiếu hoặc sai xác thực.', '200 OK', 'Như vậy là lỗi phân quyền nghiêm trọng.', '500 Internal Server Error', 'Từ chối quyền không phải lỗi server.'],
+    ['Gửi JSON sai cú pháp mà server trả 500. Nhận xét hợp lý?', 'Nên báo defect: lỗi đầu vào thường phải trả 4xx', 'server cần xử lý đầu vào sai thay vì lỗi nội bộ.', 'Đúng, vì dữ liệu sai thì server phải lỗi', '5xx cho thấy server không xử lý được tình huống.', '500 nghĩa là thành công', '5xx là lỗi.', 'Không cần test dữ liệu sai', 'Negative test là phần quan trọng.']],
+  audit: [['Định nghĩa', 'What do you verify in an API response?', 'Bạn kiểm tra gì trong response của API?', 'Status code, response body values and schema, headers and cookies, response time, error messages, and the data change in the database or through another API.', 'Không dừng ở status code.', 'status|body|schema|headers|database', 'What is the difference between API testing and UI testing?', 'Chỉ nói kiểm tra 200.']] });
+
+addLesson({ id: 34, title: 'cURL: gửi request từ dòng lệnh', sub: 'Đọc và viết lệnh curl; xem request, response',
+  obj: ['Đọc được lệnh curl copy từ trình duyệt.', 'Dùng -X, -H, -d, -i, -v, -b, -c.', 'Phân biệt query, path và body.'],
+  theory: ['curl là công cụ dòng lệnh gửi request qua nhiều giao thức, trong đó có HTTP.', 'Dùng để tái hiện lỗi API, chia sẻ request cho đồng đội và import vào công cụ test.', 'Khi cần gọi nhanh một API hoặc đính kèm cách tái hiện vào bug report.', 'Mặc định là GET. -d gửi body (và khiến method mặc định thành POST). -H thêm header. -i in cả response header; -v in chi tiết trao đổi. -b gửi cookie; -c lưu cookie ra file.', 'Không dán lệnh còn token hoặc cookie thật vào ticket, chat công khai.'],
+  analogy: 'Lệnh curl giống tờ phiếu gửi hàng ghi đủ mọi thông tin: đưa cho ai họ cũng gửi lại được y hệt.',
+  text: 'Trong DevTools, tab Network cho phép "Copy as cURL". Nhớ che token trước khi chia sẻ. Cú pháp dưới đây viết cho shell kiểu bash; trên Windows cách đặt dấu nháy và xuống dòng khác.',
+  terms: [['-H', 'Thêm header.'], ['-d', 'Dữ liệu body.'], ['-i / -v', 'Hiện response header / chi tiết.'], ['-b / -c', 'Gửi cookie / lưu cookie.']],
+  codeTitle: 'Ví dụ lệnh curl (bash)',
+  code: ['# GET kèm query và xem response header', 'curl -i "https://api.shop.example.com/products?page=1&size=10"', '', '# POST JSON, lưu cookie', 'curl -v -X POST "https://api.shop.example.com/login" \\', '  -H "Content-Type: application/json" \\', "  -d '{\"email\":\"qa@shop.vn\",\"password\":\"<mật khẩu>\"}' \\", '  -c cookies.txt', '', '# Gửi lại cookie', 'curl -b cookies.txt "https://api.shop.example.com/me"', '', '# Chỉ in status code', 'curl -s -o /dev/null -w "%{http_code}\\n" "https://api.shop.example.com/health"'],
+  explain: [['-i', 'In status và header cùng body.'], ['-X POST', 'Chỉ định method (ở đây -d đã đủ để thành POST).'], ['-H / -d', 'Khai báo kiểu dữ liệu và nội dung body.'], ['-c / -b', 'Lưu rồi gửi lại cookie phiên đăng nhập.'], ['-w "%{http_code}"', 'In mã trạng thái.']],
+  mistakes: [['Gửi JSON mà thiếu Content-Type.', 'Thêm -H "Content-Type: application/json"; mặc định của -d là dạng form.'], ['Không đặt URL có & trong dấu nháy.', 'Shell sẽ hiểu & là chạy nền và cắt URL.'], ['Chia sẻ lệnh chứa token thật.', 'Thay bằng <token>.']],
+  refs: [['curl — man page', 'Toàn bộ tùy chọn', 'https://curl.se/docs/manpage.html'], ['curl — HTTP scripting', 'Hướng dẫn dùng curl với HTTP', 'https://curl.se/docs/httpscripting.html']],
+  cards: [['Dễ', 'What do curl -H and -d do?', '-H adds a request header; -d sends data in the request body.', '-H thêm header; -d gửi body.', 'header|body'], ['Vừa', 'What is the difference between curl -i and -v?', '-i includes response headers in the output; -v shows detailed request and response information.', '-i thêm response header; -v xem chi tiết cả request.', 'response headers|verbose'], ['Vừa', 'How do you keep a login session with curl?', 'Save cookies with -c and send them back with -b, or pass the token in an Authorization header.', 'Dùng -c, -b hoặc header Authorization.', 'cookie|-c|-b|Authorization']],
+  quiz: [['Lệnh curl -d "a=1" https://x.example.com (không có -X) dùng method nào?', 'POST', '-d khiến curl gửi POST.', 'GET', 'Mặc định là GET chỉ khi không gửi dữ liệu (hoặc dùng -G).', 'PUT', 'Cần -X PUT.', 'DELETE', 'Cần -X DELETE.'],
+    ['Muốn thêm header Authorization, dùng tùy chọn nào?', '-H', '-H dùng cho header.', '-d', '-d là body.', '-o', '-o ghi output ra file.', '-c', '-c lưu cookie.'],
+    ['curl https://x.example.com/p?a=1&b=2 (không có nháy) trên bash có vấn đề gì?', 'Shell cắt lệnh tại dấu &', '& là ký tự điều khiển của shell.', 'curl cấm query parameter', 'curl hỗ trợ bình thường.', 'Server luôn trả 500', 'Vấn đề xảy ra trước khi request được gửi đúng.', 'Method đổi thành POST', '& không đổi method.']],
+  audit: [['Ứng dụng', 'How do you use cURL in API testing?', 'Bạn dùng cURL trong API testing thế nào?', 'I copy a request as cURL from browser DevTools, replay it with changed headers or body, check status and response, and attach it to bug reports after removing secrets.', 'Nhắc việc che thông tin bí mật.', 'DevTools|replay|headers|status|secrets', 'How do you send a bearer token with cURL?', 'Nói chưa cần biết vì đã có tool.']] });
+
+addLesson({ id: 35, title: 'Thiết kế Test Case cho API', sub: 'Positive, negative, biên, xác thực, phân quyền',
+  obj: ['Đọc API spec để rút ra test condition.', 'Thiết kế positive, negative, boundary, auth.', 'Kiểm tra cả response lẫn dữ liệu.'],
+  theory: ['Test case API gồm request cụ thể và kết quả mong đợi về status, body, header, tác động dữ liệu.', 'API nhận được mọi dữ liệu, không bị giao diện chặn, nên phải tự bảo vệ.', 'Ngay khi có spec (ví dụ OpenAPI/Swagger).', 'Nhóm kiểm tra: happy path; thiếu/sai kiểu/ngoài biên từng field; trùng dữ liệu; thiếu hoặc sai token; sai quyền, truy cập dữ liệu người khác; method sai; schema response; gọi lặp.', 'Không tự đoán kết quả mong đợi khi spec không nói; hỏi BA hoặc developer.'],
+  analogy: 'Giống kiểm tra quầy tiếp nhận hồ sơ: đưa hồ sơ đúng, thiếu giấy, sai mẫu, giả danh người khác — quầy phải xử lý đúng từng trường hợp.',
+  text: 'Mẫu nghĩ nhanh cho mỗi field: bỏ trống, thiếu hẳn, null, sai kiểu, quá ngắn/quá dài, ký tự đặc biệt, giá trị biên.',
+  terms: [['API spec', 'Tài liệu mô tả endpoint, tham số, response.'], ['Schema', 'Cấu trúc và kiểu dữ liệu mong đợi.'], ['Authentication', 'Xác định bạn là ai.'], ['Authorization', 'Xác định bạn được làm gì.']],
+  codeTitle: 'Ví dụ bộ test case cho POST /users (giả định theo spec mẫu)',
+  code: ['Spec: email bắt buộc, duy nhất; age số nguyên 18..60; cần token admin', '', 'ID  | Trường hợp               | Mong đợi', 'A01 | Dữ liệu hợp lệ           | 201, body đúng, có bản ghi mới', 'A02 | Thiếu email              | 400, báo lỗi field email', 'A03 | Email đã tồn tại         | 409, không tạo bản ghi', 'A04 | age = 17 / 61            | 400', 'A05 | age = 18 / 60            | 201', 'A06 | age = "abc"              | 400', 'A07 | Không gửi token          | 401', 'A08 | Token user thường        | 403', 'A09 | GET /users/{id} vừa tạo  | 200, dữ liệu khớp'],
+  explain: [['A01', 'Happy path kiểm tra cả tác động dữ liệu.'], ['A03', 'Mã lỗi cụ thể phải theo spec của dự án.'], ['A04–A05', 'Áp dụng BVA.'], ['A07–A08', 'Tách xác thực và phân quyền.'], ['A09', 'Xác minh chéo bằng API đọc.']],
+  mistakes: [['Chỉ test happy path.', 'Negative và phân quyền thường lộ nhiều lỗi quan trọng.'], ['Test phụ thuộc dữ liệu có sẵn.', 'Tự tạo và dọn dữ liệu test.'], ['Không kiểm tra rằng request lỗi không làm đổi dữ liệu.', 'Truy vấn lại để xác nhận.']],
+  refs: [['OpenAPI Specification', 'Chuẩn mô tả API', 'https://spec.openapis.org/oas/latest.html'], ['OWASP API Security Top 10', 'Rủi ro bảo mật API thường gặp', 'https://owasp.org/API-Security/']],
+  cards: [['Vừa', 'Which test cases do you design for an API?', 'Happy path, validation and boundary cases, duplicates, authentication, authorization, wrong methods, response schema and data verification.', 'Các nhóm test case chính cho API.', 'happy path|negative|boundary|auth|schema'], ['Dễ', 'What is the difference between authentication and authorization?', 'Authentication verifies who you are; authorization decides what you may do.', 'Xác thực: bạn là ai; phân quyền: được làm gì.', 'who|allowed'], ['Vừa', 'What is schema validation?', 'Checking that the response has the expected fields and data types.', 'Kiểm tra cấu trúc và kiểu dữ liệu của response.', 'fields|types|structure']],
+  quiz: [['User A đổi id trong URL thành id đơn hàng của user B và xem được đơn đó. Đây là lỗi gì?', 'Lỗi phân quyền', 'server không kiểm tra quyền trên từng đối tượng.', 'Lỗi giao diện', 'Lỗi nằm ở API.', 'Lỗi hiệu năng', 'Không liên quan tốc độ.', 'Hành vi đúng vì id hợp lệ', 'Id hợp lệ không có nghĩa là được phép xem.'],
+    ['API tạo đơn trả 400 cho dữ liệu sai. Còn nên kiểm tra gì?', 'Không có đơn nào được tạo trong dữ liệu', 'response lỗi nhưng dữ liệu vẫn có thể bị thay đổi.', 'Không cần gì thêm', 'Status chưa chứng minh tác động dữ liệu.', 'Màu nút trên giao diện', 'Không thuộc test API này.', 'Phiên bản trình duyệt', 'Không liên quan đến API.'],
+    ['Spec không nói mã lỗi khi email trùng. Nên làm gì?', 'Hỏi BA/developer để thống nhất rồi ghi vào spec', 'expected result phải có căn cứ.', 'Tự chọn 200', 'Không có căn cứ và sai ngữ nghĩa.', 'Bỏ test case', 'Đây là nghiệp vụ quan trọng.', 'Chấp nhận mọi mã', 'Test sẽ không phát hiện được lỗi.']],
+  audit: [['Ứng dụng', 'How do you design test cases for a login API?', 'Thiết kế test case cho API login thế nào?', 'I test valid credentials, wrong password, unknown user, missing and invalid fields, locked accounts, repeated failed attempts, the token or cookie returned, and that errors do not reveal sensitive information.', 'Positive, negative, bảo mật và nội dung trả về.', 'valid|invalid|missing|token|sensitive', 'How would you test token expiry?', 'Chỉ nêu đúng mật khẩu và sai mật khẩu.']] });
+
+addLesson({ id: 36, title: 'Hoppscotch: tạo request và viết script', sub: 'Collection, environment, test script, import cURL',
+  obj: ['Tạo request và lưu vào collection.', 'Dùng biến environment.', 'Viết script kiểm tra status và body.'],
+  theory: ['Hoppscotch là công cụ mã nguồn mở để gửi và kiểm thử API, dùng trên web, desktop hoặc CLI.', 'Gọi API trực quan, lưu lại thành bộ test và chạy lại được.', 'Kiểm thử thăm dò API và dựng bộ kiểm tra nhẹ.', 'Chọn method, nhập URL, params, headers, body rồi Send. Biến environment viết dạng <<tên>>. Pre-request script chạy trước khi gửi; script test chạy sau khi có response, dùng pw.test, pw.expect, pw.response, pw.env.set. Bản mới còn có namespace hopp.*. Có thể import từ cURL và chạy collection.', 'Giao diện và tính năng đổi theo phiên bản; kiểm tra tài liệu đúng phiên bản trước khi dùng tính năng nạp file dữ liệu CSV. Cần tải lớn thì dùng JMeter.'],
+  analogy: 'Giống sổ công thức có sẵn nút "làm thử" và tự chấm món vừa nấu.',
+  text: 'Chuỗi quen thuộc: gọi login → script lấy token lưu vào biến → request sau dùng <<token>>.',
+  terms: [['Collection', 'Nhóm request được lưu.'], ['Environment', 'Bộ biến theo môi trường.'], ['pw.test', 'Khai báo một kiểm tra.'], ['pw.response', 'Response vừa nhận.']],
+  codeTitle: 'Ví dụ script sau response (Hoppscotch, JavaScript)',
+  code: ['// Request: POST <<baseUrl>>/login', 'pw.test("Status là 200", () => {', '  pw.expect(pw.response.status).toBe(200);', '});', '', 'pw.test("Body có token", () => {', '  pw.expect(pw.response.body.token).toBeType("string");', '});', '', 'pw.env.set("token", pw.response.body.token);', '', '// Request sau: header Authorization: Bearer <<token>>'],
+  explain: [['<<baseUrl>>', 'Biến environment, đổi môi trường không phải sửa request.'], ['pw.test(...)', 'Một kiểm tra có tên, hiện Pass/Fail.'], ['pw.response.body.token', 'Đọc dữ liệu từ JSON response.'], ['pw.env.set', 'Lưu giá trị cho request sau.']],
+  mistakes: [['Dán cứng URL và token vào từng request.', 'Dùng biến environment.'], ['Chỉ nhìn response bằng mắt.', 'Viết assertion để chạy lại được.'], ['Export collection kèm token thật rồi chia sẻ.', 'Xóa giá trị bí mật trước khi chia sẻ.']],
+  refs: [['Hoppscotch Docs', 'Trang chủ tài liệu chính thức', 'https://docs.hoppscotch.io/documentation/getting-started/introduction'], ['Hoppscotch — Scripts', 'pw.* và hopp.* trong pre-request, post-request script', 'https://docs.hoppscotch.io/documentation/features/scripts'], ['Hoppscotch — Tests', 'Viết test sau response', 'https://docs.hoppscotch.io/documentation/getting-started/rest/tests']],
+  cards: [['Dễ', 'How do you use variables in Hoppscotch?', 'Define them in an environment and reference them as <<name>>.', 'Khai báo trong environment, dùng <<tên>>.', 'environment|variable'], ['Vừa', 'How do you check a status code in a Hoppscotch script?', 'Inside pw.test, use pw.expect(pw.response.status).toBe(200).', 'Dùng pw.test và pw.expect.', 'pw.test|pw.expect|status'], ['Vừa', 'How do you pass a login token to the next request?', 'Save it with pw.env.set in the login script and reference <<token>> later.', 'Lưu bằng pw.env.set rồi dùng lại.', 'pw.env.set|token|environment']],
+  quiz: [['Cần chạy cùng bộ request trên dev và staging. Cách tốt?', 'Dùng hai environment với biến baseUrl', 'đổi environment là đổi địa chỉ.', 'Nhân đôi mọi request', 'Khó bảo trì.', 'Sửa tay URL trước mỗi lần chạy', 'Dễ sai và tốn công.', 'Viết URL vào tên collection', 'Tên không ảnh hưởng request.'],
+    ['Script pw.env.set("token", ...) trong request login để làm gì?', 'Lưu token cho các request sau dùng lại', 'giá trị trở thành biến environment.', 'Đăng xuất', 'Không gửi lệnh đăng xuất.', 'Kiểm tra status', 'Kiểm tra status dùng pw.expect.', 'Mã hóa mật khẩu', 'Hàm này không mã hóa.'],
+    ['Bạn có lệnh curl từ developer. Cách nhanh để thử trong Hoppscotch?', 'Import cURL', 'công cụ chuyển lệnh thành request.', 'Gõ lại từng ký tự vào tên request', 'Tên request không được thực thi.', 'Đính kèm làm ảnh', 'Ảnh không tạo request.', 'Không thể làm được', 'Hoppscotch hỗ trợ import cURL.']],
+  audit: [['Ứng dụng', 'How do you chain API requests in your testing tool?', 'Bạn nối các API request thế nào?', 'I extract values such as a token or an id from one response in a script, store them as variables, and use them in the next request, with assertions at every step.', 'Trích xuất → lưu biến → dùng lại → assert.', 'extract|variable|next request|assert', 'What happens if the first request fails?', 'Copy token bằng tay mỗi lần.']] });
+
+addLesson({ id: 37, title: 'JMeter: API test, CSV data, assertion và report', sub: 'Test Plan, Thread Group, Sampler, Extractor, HTML report',
+  obj: ['Dựng Test Plan gọi API.', 'Nạp dữ liệu CSV, trích giá trị và assert.', 'Chạy non-GUI và tạo HTML report.'],
+  theory: ['Apache JMeter là công cụ mã nguồn mở để kiểm thử chức năng API và đo tải, hiệu năng.', 'Một công cụ vừa chạy data-driven vừa tạo tải và báo cáo.', 'Khi cần chạy nhiều bộ dữ liệu, nhiều người dùng ảo, hoặc đo thời gian phản hồi.', 'Cây Test Plan: Thread Group → HTTP Request (sampler). CSV Data Set Config cấp biến ${...}; JSON Extractor lấy giá trị; Response Assertion / JSON Assertion kiểm tra; JSR223 (Groovy) viết script; Listener xem kết quả.', 'Không chạy tải ở chế độ GUI và không bắn tải vào hệ thống khi chưa được phép.'],
+  analogy: 'Thread Group là đội khách hàng giả; CSV là danh sách thông tin mỗi khách; Assertion là người kiểm hàng; Report là sổ tổng kết.',
+  text: 'GUI để soạn và debug (View Results Tree). Chạy chính thức bằng dòng lệnh: jmeter -n -t plan.jmx -l result.jtl -e -o report.',
+  terms: [['Thread Group', 'Số user ảo, ramp-up, số vòng lặp.'], ['Sampler', 'Phần tử gửi request.'], ['Listener', 'Phần tử xem/ghi kết quả.'], ['JTL', 'File kết quả.']],
+  codeTitle: 'Ví dụ cấu trúc Test Plan và lệnh chạy',
+  code: ['Test Plan', '  Thread Group (threads=3, ramp-up=3, loop=1)', '    CSV Data Set Config   users.csv -> email,password,expected', '    HTTP Header Manager   Content-Type: application/json', '    HTTP Request          POST /login', '        body: {"email":"${email}","password":"${password}"}', '      Response Assertion  response code = ${expected}', '      JSON Extractor      token <- $.token', '    View Results Tree     (chỉ khi debug)', '', '# users.csv', '# email,password,expected', '# qa@shop.vn,<mật khẩu đúng>,200', '# qa@shop.vn,wrong,401', '', 'jmeter -n -t login.jmx -l result.jtl -e -o report'],
+  explain: [['threads / ramp-up / loop', 'Số user ảo, thời gian khởi động đủ số user, số lần lặp.'], ['${email}', 'Biến lấy từ cột CSV (khi để trống Variable Names, dòng đầu của file là tên biến).'], ['Response Assertion', 'Với mã 4xx mong đợi, bật "Ignore Status" để JMeter không tự đánh fail trước khi assert.'], ['JSON Extractor', 'Lưu token vào biến để dùng tiếp.'], ['-n -t -l -e -o', 'Non-GUI, file plan, file kết quả, tạo HTML report vào thư mục (phải trống).']],
+  mistakes: [['Chạy load test trong GUI.', 'Dùng non-GUI mode.'], ['Để View Results Tree khi chạy tải.', 'Tắt vì tốn bộ nhớ.'], ['Không có assertion.', 'Status 2xx chưa chắc body đúng.']],
+  refs: [['JMeter — Elements of a Test Plan', 'Thread Group, sampler, assertion, listener', 'https://jmeter.apache.org/usermanual/test_plan.html'], ['JMeter — Component Reference', 'CSV Data Set Config, JSON Extractor', 'https://jmeter.apache.org/usermanual/component_reference.html'], ['JMeter — Generating Dashboard Report', 'HTML report', 'https://jmeter.apache.org/usermanual/generating-dashboard.html']],
+  cards: [['Dễ', 'What is a Thread Group in JMeter?', 'It defines the virtual users, ramp-up period and loop count.', 'Cấu hình user ảo, ramp-up, số vòng.', 'users|ramp-up|loop'], ['Vừa', 'How do you do data-driven API testing in JMeter?', 'Add a CSV Data Set Config and reference its columns as ${variableName} in requests and assertions.', 'Dùng CSV Data Set Config và biến.', 'CSV Data Set Config|variables'], ['Vừa', 'How do you generate an HTML report in JMeter?', 'Run in non-GUI mode with -n -t plan.jmx -l result.jtl -e -o reportFolder.', 'Chạy non-GUI với -e -o.', 'non-GUI|-e|-o|jtl']],
+  quiz: [['Cần chạy API login với 50 tài khoản trong file. Phần tử nào?', 'CSV Data Set Config', 'đọc file và gán từng dòng vào biến.', 'View Results Tree', 'Chỉ để xem kết quả.', 'Constant Timer', 'Chỉ tạo độ trễ.', 'HTTP Cookie Manager', 'Chỉ quản lý cookie.'],
+    ['Lấy token từ JSON response để dùng cho request sau. Dùng gì?', 'JSON Extractor', 'trích giá trị theo JSONPath vào biến.', 'JSON Assertion', 'Assertion kiểm tra, không dùng để trích biến.', 'Summary Report', 'Listener thống kê.', 'Thread Group', 'Cấu hình user ảo.'],
+    ['Cách chạy phù hợp cho load test chính thức?', 'Non-GUI mode bằng dòng lệnh', 'tiết kiệm tài nguyên máy tạo tải.', 'GUI với nhiều View Results Tree', 'Tốn tài nguyên và làm sai kết quả.', 'Chạy trên production không cần xin phép', 'Có thể gây sự cố và vi phạm quy định.', 'Chụp ảnh màn hình thay report', 'Không có số liệu đầy đủ.']],
+  audit: [['Ứng dụng', 'How do you test an API with multiple data sets in JMeter and report the result?', 'Test API nhiều bộ dữ liệu bằng JMeter và báo cáo thế nào?', 'I use a Thread Group with HTTP Request samplers, load data with CSV Data Set Config, extract values with JSON Extractor, add assertions, then run in non-GUI mode and generate the HTML dashboard.', 'Kể đúng trình tự các phần tử.', 'Thread Group|CSV|Extractor|assertion|report', 'Which metrics do you read in the report?', 'Chỉ nói bấm nút Start.']] });
+
+/* ===== Nhóm 4: Database SQL (bài 38–42) ===== */
+var PG = 'https://www.postgresql.org/docs/current/';
+var MSSQL = 'https://learn.microsoft.com/en-us/sql/';
+
+addLesson({ id: 38, title: 'ER Model và khái niệm Database', sub: 'Table, key, quan hệ, ràng buộc',
+  obj: ['Hiểu table, row, column.', 'Phân biệt primary key và foreign key.', 'Đọc quan hệ 1-1, 1-N, N-N trong ER Model.'],
+  theory: ['Database quan hệ lưu dữ liệu trong bảng. ER Model mô tả entity, attribute và relationship.', 'Tester cần đọc được mô hình để kiểm tra dữ liệu lưu đúng.', 'Khi phân tích yêu cầu, chuẩn bị dữ liệu test, xác minh kết quả trong DB.', 'Primary key định danh duy nhất một dòng (không NULL). Foreign key tham chiếu khóa ở bảng khác, giữ toàn vẹn tham chiếu. N-N được tách bằng bảng trung gian. Chuẩn hóa giúp giảm lặp dữ liệu.', 'Không sửa dữ liệu trực tiếp trên database dùng chung khi chưa được phép.'],
+  analogy: 'Mỗi bảng giống một sổ: sổ khách hàng, sổ đơn hàng. Mỗi dòng có số thứ tự riêng (primary key); sổ đơn hàng ghi mã khách (foreign key) để biết đơn của ai.',
+  text: 'Ví dụ: 1 khách hàng có nhiều đơn (1-N). 1 đơn có nhiều sản phẩm và 1 sản phẩm nằm trong nhiều đơn (N-N) → bảng order_items.',
+  terms: [['Entity', 'Đối tượng cần lưu, thường thành bảng.'], ['Primary key', 'Khóa chính.'], ['Foreign key', 'Khóa ngoại.'], ['Constraint', 'Ràng buộc: NOT NULL, UNIQUE, CHECK...']],
+  codeTitle: 'Ví dụ ER Model của shop',
+  code: ['customers (id PK, email UNIQUE NOT NULL, name)', 'orders    (id PK, customer_id FK -> customers.id, created_at, status)', 'products  (id PK, name, price CHECK >= 0)', 'order_items (order_id FK, product_id FK, quantity,', '             PK (order_id, product_id))', '', 'customers 1 ---< N orders', 'orders    1 ---< N order_items >--- 1 products', '=> orders N --- N products  (qua order_items)'],
+  explain: [['PK', 'Khóa chính.'], ['FK -> customers.id', 'Đơn hàng phải trỏ tới khách hàng tồn tại (nếu cột có giá trị).'], ['PK (order_id, product_id)', 'Khóa chính ghép gồm hai cột.'], ['1 ---< N', 'Quan hệ một – nhiều.']],
+  mistakes: [['Nghĩ foreign key phải duy nhất.', 'FK có thể lặp, như nhiều đơn cùng một khách.'], ['Lưu danh sách sản phẩm trong một cột chuỗi.', 'Dùng bảng trung gian.'], ['Nhầm UNIQUE với primary key.', 'Một bảng chỉ có một primary key nhưng nhiều ràng buộc UNIQUE.']],
+  refs: [['PostgreSQL — Constraints', 'Primary key, foreign key, unique, check', PG + 'ddl-constraints.html'], ['SQL Server — Primary and foreign key constraints', 'Khóa trong SQL Server', MSSQL + 'relational-databases/tables/primary-and-foreign-key-constraints']],
+  cards: [['Dễ', 'What is the difference between a primary key and a foreign key?', 'A primary key uniquely identifies a row; a foreign key references a key in another table to link data.', 'PK định danh dòng; FK liên kết bảng.', 'unique|reference|link'], ['Vừa', 'How do you model a many-to-many relationship?', 'With a junction table holding foreign keys to both tables.', 'Dùng bảng trung gian.', 'junction table|foreign keys'], ['Vừa', 'What is an ER model?', 'A model that describes entities, their attributes and the relationships between them.', 'Mô tả entity, attribute, relationship.', 'entity|attribute|relationship']],
+  quiz: [['Quan hệ sinh viên – môn học (một sinh viên học nhiều môn, một môn có nhiều sinh viên) nên thiết kế thế nào?', 'Thêm bảng trung gian enrollments', 'quan hệ N-N cần bảng liên kết.', 'Thêm cột subject_id duy nhất vào students', 'Mỗi sinh viên chỉ học được một môn.', 'Thêm cột student_id duy nhất vào subjects', 'Mỗi môn chỉ có một sinh viên.', 'Gộp thành một cột chuỗi', 'Khó truy vấn và không có toàn vẹn dữ liệu.'],
+    ['Phát biểu nào đúng về primary key?', 'Duy nhất và không NULL', 'đó là định nghĩa của khóa chính.', 'Được phép trùng', 'Trùng thì không định danh được.', 'Bắt buộc là kiểu chuỗi', 'Có thể là nhiều kiểu.', 'Mỗi bảng có thể có nhiều primary key', 'Chỉ một, có thể gồm nhiều cột.'],
+    ['Thêm đơn với customer_id không tồn tại, bảng có foreign key. Kết quả?', 'Database từ chối', 'vi phạm toàn vẹn tham chiếu.', 'Tự tạo khách hàng mới', 'FK không tự tạo dữ liệu.', 'Lưu bình thường', 'FK ngăn dữ liệu mồ côi.', 'Xóa bảng customers', 'Không có hành vi này.']],
+  audit: [['Định nghĩa', 'Explain primary key, foreign key and the types of relationships.', 'Giải thích khóa chính, khóa ngoại và các loại quan hệ.', 'A primary key uniquely identifies a row. A foreign key references another table. Relationships can be one-to-one, one-to-many or many-to-many, the last one using a junction table.', 'Kèm ví dụ khách hàng – đơn hàng.', 'primary key|foreign key|one-to-many|many-to-many', 'Why do we normalise data?', 'Không đưa được ví dụ.']] });
+
+addLesson({ id: 39, title: 'PostgreSQL và SQL Server: cài đặt, kiểu dữ liệu', sub: 'Làm quen hai hệ quản trị và chọn datatype',
+  obj: ['Nêu được RDBMS, PostgreSQL, SQL Server.', 'Biết các bước cài và kết nối PostgreSQL.', 'Chọn kiểu dữ liệu phù hợp.'],
+  theory: ['PostgreSQL (mã nguồn mở) và Microsoft SQL Server là hai hệ quản trị cơ sở dữ liệu quan hệ. Cùng dùng SQL nhưng khác một số kiểu và cú pháp.', 'Dự án dùng hệ nào thì tester phải kết nối và truy vấn được hệ đó.', 'Khi dựng môi trường học hoặc xác minh dữ liệu.', 'PostgreSQL: tải bộ cài từ postgresql.org, đặt mật khẩu cho user postgres, cổng mặc định 5432; dùng psql hoặc pgAdmin. SQL Server: dùng SSMS hoặc công cụ khác, cổng TCP mặc định của default instance là 1433.', 'Không dùng tài khoản quản trị cho công việc test hằng ngày trên môi trường dùng chung.'],
+  analogy: 'Hai hãng xe cùng luật giao thông (SQL) nhưng nút bấm vài chỗ khác nhau.',
+  text: 'Đối chiếu nhanh (PostgreSQL ↔ SQL Server): tự tăng identity ↔ IDENTITY; boolean ↔ bit; timestamp ↔ datetime2; giới hạn số dòng LIMIT ↔ TOP; chuỗi Unicode: varchar/text (UTF-8) ↔ thường dùng nvarchar.',
+  terms: [['RDBMS', 'Hệ quản trị CSDL quan hệ.'], ['Port', 'Cổng kết nối.'], ['psql', 'Công cụ dòng lệnh của PostgreSQL.'], ['Datatype', 'Kiểu dữ liệu của cột.']],
+  codeTitle: 'Ví dụ kết nối và kiểu dữ liệu (PostgreSQL)',
+  code: ['psql -h localhost -p 5432 -U postgres', 'CREATE DATABASE shop;', '\\c shop', '\\dt                      -- liệt kê bảng', '', 'integer, bigint          -- số nguyên', 'numeric(12,2)            -- số thập phân chính xác (tiền)', 'real, double precision   -- số thực xấp xỉ', "varchar(100), text       -- chuỗi", 'boolean', 'date, timestamp, timestamptz', 'uuid, jsonb'],
+  explain: [['psql -h ... -U postgres', 'Kết nối bằng dòng lệnh.'], ['\\c shop / \\dt', 'Lệnh riêng của psql: chuyển database, liệt kê bảng.'], ['numeric(12,2)', 'Tổng 12 chữ số, 2 chữ số sau dấu phẩy.'], ['timestamptz', 'Thời điểm có xử lý múi giờ.']],
+  mistakes: [['Dùng số thực xấp xỉ cho tiền.', 'Dùng numeric/decimal.'], ['Lưu ngày bằng chuỗi.', 'Dùng date/timestamp.'], ['Nghĩ mọi cú pháp chạy giống nhau trên hai hệ.', 'Kiểm tra tài liệu của đúng hệ (LIMIT và TOP).']],
+  refs: [['PostgreSQL — Data Types', 'Kiểu dữ liệu', PG + 'datatype.html'], ['PostgreSQL — Getting Started', 'Cài đặt và kiến trúc cơ bản', PG + 'tutorial-start.html'], ['SQL Server — Data types (Transact-SQL)', 'Kiểu dữ liệu của SQL Server', MSSQL + 't-sql/data-types/data-types-transact-sql']],
+  cards: [['Dễ', 'What are the default ports of PostgreSQL and SQL Server?', 'PostgreSQL uses 5432; a default SQL Server instance uses 1433.', '5432 và 1433.', '5432|1433'], ['Vừa', 'Which data type do you use for money?', 'An exact numeric type such as numeric or decimal, not floating point.', 'Dùng numeric/decimal.', 'numeric|decimal|exact'], ['Vừa', 'How do you limit rows in PostgreSQL and in SQL Server?', 'PostgreSQL uses LIMIT; SQL Server uses TOP, or OFFSET ... FETCH with ORDER BY.', 'LIMIT và TOP.', 'LIMIT|TOP']],
+  quiz: [['Cột lưu giá tiền nên dùng kiểu nào?', 'numeric(12,2)', 'lưu số thập phân chính xác.', 'real', 'Số thực xấp xỉ gây sai số.', 'varchar(20)', 'Không tính toán và ràng buộc số được.', 'boolean', 'Chỉ đúng/sai.'],
+    ['Lấy 5 dòng đầu trong PostgreSQL?', 'SELECT * FROM orders ORDER BY id LIMIT 5;', 'PostgreSQL dùng LIMIT.', 'SELECT TOP 5 * FROM orders;', 'Đây là cú pháp SQL Server.', 'SELECT * FROM orders FIRST 5;', 'Không phải cú pháp PostgreSQL.', 'SELECT 5 FROM orders;', 'Chỉ trả hằng số 5 cho mỗi dòng.'],
+    ['Cổng mặc định của PostgreSQL là?', '5432', 'đây là cổng mặc định.', '1433', 'Cổng mặc định của SQL Server.', '3306', 'Cổng mặc định của MySQL.', '8080', 'Thường dùng cho web server.']],
+  audit: [['So sánh', 'Which databases have you used and what differences do you know between PostgreSQL and SQL Server?', 'Bạn đã dùng database nào và biết khác biệt gì giữa PostgreSQL và SQL Server?', 'Both are relational databases using SQL. PostgreSQL is open source and uses LIMIT and boolean; SQL Server is a Microsoft product and uses TOP and bit. I state honestly how much I have used each.', 'Trung thực về kinh nghiệm thật.', 'relational|LIMIT|TOP|boolean|bit', 'How do you verify data after an API call?', 'Bịa kinh nghiệm chưa có.']] });
+
+addLesson({ id: 40, title: 'SQL cơ bản: DDL và DML', sub: 'CREATE, ALTER, DROP, SELECT, INSERT, UPDATE, DELETE',
+  obj: ['Phân loại DDL và DML.', 'Tạo bảng và thao tác dữ liệu.', 'Dùng transaction và phân biệt DELETE, TRUNCATE, DROP.'],
+  theory: ['DDL định nghĩa cấu trúc: CREATE, ALTER, DROP, TRUNCATE. DML thao tác dữ liệu: INSERT, UPDATE, DELETE; SELECT thường được học cùng DML (có tài liệu xếp riêng là DQL).', 'Tester dùng SQL để chuẩn bị và xác minh dữ liệu.', 'Kiểm tra dữ liệu sau thao tác trên UI/API; dựng dữ liệu test trên môi trường được phép.', 'SELECT chọn cột từ bảng, WHERE lọc, ORDER BY sắp xếp, GROUP BY nhóm, HAVING lọc nhóm. BEGIN ... COMMIT / ROLLBACK gom thay đổi.', 'Không chạy UPDATE/DELETE khi chưa kiểm tra điều kiện WHERE.'],
+  analogy: 'DDL là đóng, sửa, dỡ cái tủ; DML là bỏ đồ vào, đổi đồ, lấy đồ ra khỏi tủ.',
+  text: 'DELETE xóa dòng (lọc được bằng WHERE). TRUNCATE xóa toàn bộ dòng, giữ cấu trúc bảng. DROP xóa cả bảng.',
+  terms: [['DDL', 'Data Definition Language.'], ['DML', 'Data Manipulation Language.'], ['Transaction', 'Nhóm thao tác cùng thành công hoặc cùng hủy.'], ['Aggregate', 'Hàm gộp: COUNT, SUM, AVG, MIN, MAX.']],
+  codeTitle: 'Ví dụ SQL (PostgreSQL)',
+  code: ['CREATE TABLE customers (', '    id    integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,', '    email varchar(100) NOT NULL UNIQUE,', '    name  varchar(100)', ');', 'ALTER TABLE customers ADD COLUMN phone varchar(20);', '', "INSERT INTO customers (email, name) VALUES ('an@shop.vn', 'An');", "SELECT id, email FROM customers WHERE name = 'An';", '', 'BEGIN;', "UPDATE customers SET name = 'An Nguyen' WHERE email = 'an@shop.vn';", "SELECT name FROM customers WHERE email = 'an@shop.vn';", 'ROLLBACK;   -- hoặc COMMIT', '', "SELECT status, COUNT(*) FROM orders GROUP BY status HAVING COUNT(*) > 5;"],
+  explain: [['GENERATED ALWAYS AS IDENTITY', 'Cột tự tăng.'], ['ALTER TABLE ... ADD COLUMN', 'Thay đổi cấu trúc.'], ['BEGIN ... ROLLBACK', 'Thử thay đổi rồi hủy.'], ['HAVING COUNT(*) > 5', 'Lọc sau khi nhóm; câu cuối giả định có bảng orders.']],
+  mistakes: [['UPDATE thiếu WHERE.', 'Mọi dòng sẽ bị sửa; chạy SELECT với cùng WHERE trước.'], ['Dùng WHERE để lọc theo COUNT(*).', 'Dùng HAVING.'], ['Nhầm DELETE với DROP.', 'DELETE xóa dữ liệu, DROP xóa bảng.']],
+  refs: [['PostgreSQL — Data Definition', 'DDL', PG + 'ddl.html'], ['PostgreSQL — Data Manipulation', 'DML', PG + 'dml.html'], ['PostgreSQL — Aggregate Functions tutorial', 'GROUP BY và HAVING', PG + 'tutorial-agg.html']],
+  cards: [['Dễ', 'What is the difference between DDL and DML?', 'DDL defines structure such as CREATE, ALTER and DROP; DML works with data such as INSERT, UPDATE and DELETE.', 'DDL cấu trúc; DML dữ liệu.', 'structure|data'], ['Vừa', 'What is the difference between DELETE, TRUNCATE and DROP?', 'DELETE removes selected rows; TRUNCATE removes all rows but keeps the table; DROP removes the table itself.', 'Ba mức xóa khác nhau.', 'rows|all rows|table'], ['Vừa', 'What is the difference between WHERE and HAVING?', 'WHERE filters rows before grouping; HAVING filters groups after aggregation.', 'WHERE lọc dòng; HAVING lọc nhóm.', 'rows|groups|aggregation']],
+  quiz: [["Chạy UPDATE users SET status = 'locked'; (không có WHERE). Kết quả?", 'Mọi dòng trong users bị đổi', 'không có điều kiện lọc.', 'Chỉ dòng đầu bị đổi', 'SQL không mặc định chỉ sửa dòng đầu.', 'Báo lỗi cú pháp', 'Câu lệnh hợp lệ.', 'Không dòng nào đổi', 'Tất cả dòng đều khớp.'],
+    ['Lệnh nào thuộc DDL?', 'ALTER TABLE', 'thay đổi cấu trúc bảng.', 'INSERT', 'Thuộc DML.', 'UPDATE', 'Thuộc DML.', 'DELETE', 'Thuộc DML.'],
+    ['Tìm khách có hơn 3 đơn hàng. Điều kiện về số đơn đặt ở đâu?', 'HAVING COUNT(*) > 3', 'lọc kết quả sau khi GROUP BY.', 'WHERE COUNT(*) > 3', 'WHERE không dùng hàm gộp theo cách này.', 'ORDER BY COUNT(*) > 3', 'ORDER BY chỉ sắp xếp.', 'FROM COUNT(*) > 3', 'Sai cú pháp.']],
+  audit: [['Ứng dụng', 'How do you use SQL in your testing work?', 'Bạn dùng SQL trong công việc test thế nào?', 'I query tables to verify that data created from the UI or API is stored correctly, prepare test data in a test environment, and check duplicates and relationships. I run SELECT before any UPDATE or DELETE.', 'Nêu ví dụ xác minh dữ liệu.', 'verify|test data|SELECT|environment', 'Write a query to find duplicate emails.', 'Chỉ nói biết SELECT *.']] });
+
+addLesson({ id: 41, title: 'SQL Operators', sub: 'So sánh, logic, IN, BETWEEN, LIKE, NULL',
+  obj: ['Dùng toán tử so sánh và logic.', 'Dùng IN, BETWEEN, LIKE.', 'Xử lý NULL đúng.'],
+  theory: ['Operator dùng để tạo điều kiện: so sánh (=, <>, >, >=, <, <=), logic (AND, OR, NOT), IN, BETWEEN, LIKE, IS NULL, EXISTS, toán tử số học.', 'Điều kiện sai thì kết quả xác minh sai.', 'Trong WHERE, HAVING, điều kiện JOIN.', 'AND được ưu tiên hơn OR nên cần ngoặc. BETWEEN bao gồm hai đầu. LIKE: % là chuỗi bất kỳ, _ là đúng một ký tự. So với NULL cho kết quả unknown, phải dùng IS NULL.', 'Không dùng NOT IN với danh sách hoặc subquery có thể chứa NULL.'],
+  analogy: 'Operator giống bộ lọc khi mua hàng online: giá trong khoảng, thuộc một trong các hãng, tên có chứa từ khóa.',
+  text: 'Ba bẫy phỏng vấn: = NULL, quên ngoặc khi trộn AND/OR, và NOT IN gặp NULL.',
+  terms: [['NULL', 'Không có/không biết giá trị.'], ['Wildcard', 'Ký tự đại diện % và _.'], ['Precedence', 'Thứ tự ưu tiên.'], ['ILIKE', 'LIKE không phân biệt hoa thường của PostgreSQL.']],
+  codeTitle: 'Ví dụ điều kiện SQL',
+  code: ["SELECT * FROM orders WHERE total BETWEEN 100000 AND 500000;", "SELECT * FROM orders WHERE status IN ('paid', 'shipped');", "SELECT * FROM customers WHERE email LIKE '%@shop.vn';", 'SELECT * FROM customers WHERE phone IS NULL;', '', 'SELECT * FROM orders', "WHERE (status = 'paid' OR status = 'shipped')", '  AND total > 500000;', '', "SELECT * FROM products WHERE price <> 0 AND NOT (name LIKE 'Test_%');"],
+  explain: [['BETWEEN 100000 AND 500000', 'Gồm cả 100000 và 500000.'], ["IN ('paid','shipped')", 'Thay cho nhiều điều kiện OR.'], ["LIKE '%@shop.vn'", 'Kết thúc bằng @shop.vn.'], ['Ngoặc quanh OR', 'Đảm bảo điều kiện total áp dụng cho cả hai trạng thái.'], ["'Test_%'", 'Ở đây _ cũng là wildcard một ký tự.']],
+  mistakes: [['WHERE phone = NULL.', 'Dùng IS NULL.'], ['A OR B AND C mà không có ngoặc.', 'Được hiểu là A OR (B AND C).'], ['Dùng BETWEEN cho timestamp theo ngày.', 'Dùng >= ngày bắt đầu và < ngày kế tiếp ngày kết thúc.']],
+  refs: [['PostgreSQL — Comparison Functions and Operators', 'So sánh, BETWEEN, IS NULL', PG + 'functions-comparison.html'], ['PostgreSQL — Logical Operators', 'AND, OR, NOT và NULL', PG + 'functions-logical.html'], ['PostgreSQL — Pattern Matching', 'LIKE, ILIKE', PG + 'functions-matching.html']],
+  cards: [['Dễ', 'How do you filter rows where a column is NULL?', 'Use IS NULL, because = NULL never evaluates to true.', 'Dùng IS NULL.', 'IS NULL|unknown'], ['Dễ', 'What do % and _ mean in LIKE?', '% matches any sequence of characters; _ matches exactly one character.', '% chuỗi bất kỳ; _ một ký tự.', 'any sequence|one character'], ['Vừa', 'Is BETWEEN inclusive?', 'Yes, it includes both boundary values.', 'Có, gồm cả hai đầu.', 'inclusive|boundaries']],
+  quiz: [['WHERE price BETWEEN 10 AND 20 có lấy dòng price = 20 không?', 'Có', 'BETWEEN bao gồm hai đầu.', 'Không', 'Giá trị biên được lấy.', 'Chỉ lấy giá trị 10', 'Cả khoảng đều được lấy.', 'Báo lỗi', 'Câu lệnh hợp lệ.'],
+    ["WHERE city = 'HN' OR city = 'DN' AND age > 30 nghĩa là gì?", 'Mọi người ở HN, hoặc người ở DN trên 30 tuổi', 'AND được tính trước OR.', 'Người ở HN hoặc DN, và đều trên 30 tuổi', 'Muốn vậy cần ngoặc quanh phần OR.', 'Chỉ người trên 30 tuổi ở HN', 'Điều kiện tuổi gắn với DN.', 'Câu lệnh sai cú pháp', 'Cú pháp hợp lệ.'],
+    ['SELECT * FROM users WHERE deleted_at = NULL; trả về gì (cấu hình chuẩn)?', 'Không có dòng nào', 'so sánh với NULL cho unknown.', 'Mọi dòng có deleted_at NULL', 'Cần IS NULL.', 'Mọi dòng trong bảng', 'Điều kiện không đúng với dòng nào.', 'Các dòng có chuỗi "NULL"', 'NULL không phải chuỗi.']],
+  audit: [['So sánh', 'How does NULL affect SQL conditions?', 'NULL ảnh hưởng điều kiện SQL thế nào?', 'Comparisons with NULL return unknown, so I use IS NULL or IS NOT NULL. I am careful with NOT IN when the list may contain NULL.', 'Nêu IS NULL và bẫy NOT IN.', 'unknown|IS NULL|NOT IN', 'What does COUNT(column) do with NULL values?', 'Nói NULL bằng 0 hoặc chuỗi rỗng.']] });
+
+addLesson({ id: 42, title: 'SQL Joins', sub: 'INNER, LEFT, RIGHT, FULL, CROSS, self join',
+  obj: ['Phân biệt các loại JOIN.', 'Tìm dữ liệu thiếu liên kết bằng LEFT JOIN.', 'Tránh lỗi làm mất hoặc nhân dòng.'],
+  theory: ['JOIN kết hợp dòng từ nhiều bảng theo điều kiện. INNER: chỉ dòng khớp. LEFT: mọi dòng bảng trái, bên phải không khớp là NULL. RIGHT: ngược lại. FULL: giữ cả hai bên. CROSS: tích Descartes. Self join: bảng nối với chính nó.', 'Dữ liệu được tách nhiều bảng nên xác minh thường phải join.', 'Khi cần thông tin liên quan từ nhiều bảng.', 'Viết FROM a JOIN b ON a.id = b.a_id. Dùng alias cho gọn. Anti-join: LEFT JOIN rồi WHERE b.id IS NULL.', 'Không quên điều kiện join, nếu không kết quả bùng nổ số dòng.'],
+  analogy: 'Hai danh sách: khách mời và người đã đến. INNER là người được mời và đã đến; LEFT là mọi khách mời, ghi trống nếu chưa đến.',
+  text: 'Giả sử customers: An, Binh, Chi; orders: An có 2 đơn, Binh có 1, Chi chưa có. INNER JOIN ra 3 dòng; LEFT JOIN ra 4 dòng (Chi với cột đơn hàng NULL).',
+  terms: [['ON', 'Điều kiện nối.'], ['Alias', 'Tên tắt của bảng.'], ['Outer join', 'LEFT, RIGHT, FULL.'], ['Anti-join', 'Tìm dòng không có dòng khớp.']],
+  codeTitle: 'Ví dụ JOIN',
+  code: ['-- Đơn hàng kèm tên khách', 'SELECT c.name, o.id, o.status', 'FROM customers c', 'INNER JOIN orders o ON o.customer_id = c.id;', '', '-- Khách chưa có đơn', 'SELECT c.name', 'FROM customers c', 'LEFT JOIN orders o ON o.customer_id = c.id', 'WHERE o.id IS NULL;', '', '-- Mọi khách và số đơn đã thanh toán', 'SELECT c.name, COUNT(o.id) AS paid_orders', 'FROM customers c', "LEFT JOIN orders o ON o.customer_id = c.id AND o.status = 'paid'", 'GROUP BY c.id, c.name;'],
+  explain: [['INNER JOIN ... ON', 'Chỉ giữ cặp khớp.'], ['WHERE o.id IS NULL', 'Giữ khách không có đơn.'], ['AND o.status trong ON', 'Giữ đủ mọi khách; nếu đặt ở WHERE sẽ mất khách không có đơn paid.'], ['COUNT(o.id)', 'Không đếm NULL nên khách chưa có đơn là 0.']],
+  mistakes: [['Lọc cột bảng phải trong WHERE sau LEFT JOIN.', 'Các dòng NULL bị loại, thành giống INNER JOIN.'], ['Quên điều kiện ON.', 'Kiểm tra số dòng kết quả.'], ['Dùng COUNT(*) sau LEFT JOIN để đếm đơn.', 'Dùng COUNT(o.id).']],
+  refs: [['PostgreSQL — Joins Between Tables', 'Tutorial JOIN', PG + 'tutorial-join.html'], ['PostgreSQL — Table Expressions', 'Các loại join', PG + 'queries-table-expressions.html'], ['SQL Server — Joins', 'Join trong SQL Server', MSSQL + 'relational-databases/performance/joins']],
+  cards: [['Dễ', 'What is the difference between INNER JOIN and LEFT JOIN?', 'INNER JOIN returns only matching rows; LEFT JOIN returns all left rows, with NULLs where there is no match.', 'INNER chỉ khớp; LEFT giữ mọi dòng trái.', 'matching|all left|NULL'], ['Vừa', 'How do you find customers without orders?', 'LEFT JOIN orders and filter where the order id IS NULL.', 'LEFT JOIN rồi lọc IS NULL.', 'LEFT JOIN|IS NULL'], ['Khó', 'What are FULL OUTER JOIN and CROSS JOIN?', 'FULL OUTER JOIN keeps unmatched rows from both sides; CROSS JOIN returns every combination of rows.', 'FULL giữ hai bên; CROSS mọi tổ hợp.', 'both sides|combination']],
+  quiz: [['A có 3 dòng, B có 4 dòng. A CROSS JOIN B trả bao nhiêu dòng?', '12', 'mỗi dòng A ghép với mọi dòng B.', '7', 'Đây là tổng, không phải tích.', '4', 'Không phụ thuộc chỉ bảng lớn hơn.', '3', 'Không phụ thuộc chỉ bảng A.'],
+    ['Cần danh sách MỌI sản phẩm, kể cả sản phẩm chưa từng bán. products đặt bên trái, join nào?', 'LEFT JOIN order_items', 'giữ mọi sản phẩm.', 'INNER JOIN order_items', 'Mất sản phẩm chưa bán.', 'CROSS JOIN order_items', 'Ghép mọi tổ hợp, sai ý nghĩa.', 'RIGHT JOIN order_items', 'Giữ mọi dòng bên phải chứ không phải mọi sản phẩm.'],
+    ["customers LEFT JOIN orders ... WHERE orders.status = 'paid'. Khách chưa có đơn sẽ?", 'Bị loại khỏi kết quả', 'status của họ là NULL nên không thỏa WHERE.', 'Vẫn xuất hiện với NULL', 'WHERE đã loại dòng NULL.', 'Có status paid', 'Database không tự gán dữ liệu.', 'Gây lỗi cú pháp', 'Câu lệnh hợp lệ.']],
+  audit: [['Ứng dụng', 'Explain the types of SQL joins with an example.', 'Giải thích các loại JOIN kèm ví dụ.', 'With customers and orders, INNER JOIN returns customers with orders, LEFT JOIN returns all customers including those without orders, RIGHT JOIN keeps all orders, and FULL OUTER JOIN keeps unmatched rows from both.', 'Dùng một ví dụ xuyên suốt.', 'INNER|LEFT|RIGHT|FULL|NULL', 'How would you find orders that have no customer?', 'Thuộc tên nhưng không nói được kết quả.']] });
+
+/* ===== Nhóm 5: AI for Tester (bài 43–45); Nhóm 7: Git và phỏng vấn (bài 46–47) ===== */
+var PROMPT_DOC = 'https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview';
+var NIST_AI = 'https://www.nist.gov/itl/ai-risk-management-framework';
+var OWASP_LLM = 'https://owasp.org/www-project-top-10-for-large-language-model-applications/';
+var GITDOC = 'https://git-scm.com/docs/';
+
+addLesson({ id: 43, title: 'GenAI cơ bản và Prompt Engineering cho Testing', sub: 'LLM, hallucination, cấu trúc prompt',
+  obj: ['Giải thích GenAI, LLM, token, context, hallucination.', 'Viết prompt có cấu trúc để sinh test case.', 'Kiểm tra kết quả AI và bảo vệ dữ liệu.'],
+  theory: ['Generative AI tạo nội dung mới. LLM là mô hình ngôn ngữ lớn, sinh văn bản bằng cách dự đoán phần tiếp theo dựa trên ngữ cảnh. Prompt là yêu cầu bạn đưa vào.', 'AI giúp soạn nháp nhanh: test case, dữ liệu, script, tóm tắt log.', 'Khi bạn đủ hiểu để kiểm tra lại kết quả.', 'Prompt tốt gồm: vai trò, bối cảnh, nhiệm vụ, đầu vào, ràng buộc, định dạng đầu ra, ví dụ mẫu (few-shot). Lặp: xem kết quả, bổ sung, yêu cầu nêu giả định và điểm chưa rõ.', 'Không đưa dữ liệu khách hàng, mật khẩu, token, mã nguồn mật vào công cụ chưa được công ty cho phép.'],
+  analogy: 'AI giống thực tập sinh làm rất nhanh, đọc rộng, nhưng đôi khi nói sai rất tự tin. Giao việc càng rõ càng tốt và luôn phải duyệt.',
+  text: 'Hallucination là AI tạo thông tin nghe hợp lý nhưng sai, ví dụ bịa tên hàm hoặc quy tắc nghiệp vụ không có trong yêu cầu.',
+  terms: [['LLM', 'Large Language Model.'], ['Token', 'Đơn vị văn bản mô hình xử lý.'], ['Context window', 'Lượng token mô hình xem được trong một lượt.'], ['Few-shot', 'Đưa vài ví dụ mẫu trong prompt.']],
+  codeTitle: 'Ví dụ prompt có cấu trúc',
+  code: ['Vai trò   : Bạn là tester có kinh nghiệm kiểm thử web.', 'Bối cảnh  : Form đăng ký của shop online.', 'Yêu cầu   : email bắt buộc, duy nhất; mật khẩu 8-20 ký tự,', '            có chữ hoa và số.', 'Nhiệm vụ  : Thiết kế test case dùng EP và BVA.', 'Ràng buộc : Chỉ dựa trên yêu cầu trên. Không tự thêm quy tắc.', '            Điểm chưa rõ thì liệt kê thành câu hỏi.', 'Đầu ra    : Bảng gồm ID | Tiêu đề | Dữ liệu | Bước | Kết quả mong đợi', 'Ví dụ     : TC01 | Mật khẩu 7 ký tự | Abc1234 | ... | Báo lỗi độ dài'],
+  explain: [['Vai trò, Bối cảnh', 'Giúp mô hình hiểu góc nhìn và phạm vi.'], ['Ràng buộc', 'Giảm việc bịa quy tắc; vẫn phải tự kiểm tra.'], ['Đầu ra', 'Định dạng rõ thì dễ rà soát.'], ['Ví dụ', 'Few-shot thể hiện mức chi tiết mong muốn.']],
+  mistakes: [['Prompt chung chung "viết test case login".', 'Cung cấp yêu cầu, ràng buộc, định dạng.'], ['Dùng ngay kết quả AI.', 'Đối chiếu yêu cầu, bổ sung ca thiếu, bỏ ca bịa.'], ['Dán dữ liệu thật của khách hàng.', 'Dùng dữ liệu giả hoặc ẩn danh theo quy định công ty.']],
+  refs: [['Prompt engineering overview', 'Tài liệu hướng dẫn prompt (Anthropic)', PROMPT_DOC], ['NIST AI Risk Management Framework', 'Quản lý rủi ro AI', NIST_AI], ['OWASP Top 10 for LLM Applications', 'Rủi ro khi dùng LLM', OWASP_LLM]],
+  cards: [['Dễ', 'What is a hallucination in GenAI?', 'Output that sounds plausible but is false or unsupported.', 'Nội dung nghe hợp lý nhưng sai.', 'plausible|false'], ['Vừa', 'What makes a good prompt for test case generation?', 'Role, context, requirements, task, constraints, output format and examples.', 'Các thành phần của prompt tốt.', 'context|requirements|constraints|format|examples'], ['Dễ', 'What data must you not put into a public AI tool?', 'Secrets, credentials, personal data and confidential company information.', 'Bí mật, tài khoản, dữ liệu cá nhân, thông tin mật.', 'confidential|credentials|personal data']],
+  quiz: [['AI sinh test case "khóa tài khoản sau 5 lần sai" nhưng yêu cầu không hề nhắc. Nên làm gì?', 'Coi là giả định chưa xác nhận và hỏi BA', 'không được tự thêm quy tắc nghiệp vụ.', 'Giữ nguyên vì AI biết rõ hơn', 'AI có thể bịa hoặc suy theo thói quen chung.', 'Sửa yêu cầu theo AI', 'Tester không tự đổi yêu cầu.', 'Báo bug ngay', 'Chưa có căn cứ là lỗi.'],
+    ['Prompt nào cho kết quả dễ kiểm tra hơn?', 'Có yêu cầu, ràng buộc và định dạng bảng đầu ra', 'rõ phạm vi và dễ đối chiếu.', 'Viết test case hay nhất đi', 'Không có bối cảnh.', 'Test giúp tôi', 'Không có nhiệm vụ cụ thể.', 'Hãy trả lời thật dài', 'Độ dài không đảm bảo đúng.'],
+    ['Cần AI phân tích log có email và token thật. Cách đúng?', 'Che hoặc ẩn danh dữ liệu và chỉ dùng công cụ được phép', 'bảo vệ dữ liệu và tuân thủ quy định.', 'Dán nguyên log vào công cụ bất kỳ', 'Lộ dữ liệu và bí mật.', 'Chỉ che email, giữ token', 'Token là bí mật.', 'Đăng log lên diễn đàn hỏi', 'Công khai dữ liệu.']],
+  audit: [['Ứng dụng', 'How do you use GenAI in testing and how do you control its quality?', 'Bạn dùng GenAI trong test thế nào và kiểm soát chất lượng ra sao?', 'I use it to draft test cases, test data and scripts with a structured prompt. I review every result against the requirement, run the code, watch for hallucinations and never share confidential data.', 'Nêu việc dùng, cách kiểm tra, bảo mật.', 'prompt|review|requirement|hallucination|confidential', 'Give an example where AI gave a wrong answer.', 'Nói tin hoàn toàn vào AI hoặc chưa bao giờ kiểm tra.']] });
+
+addLesson({ id: 44, title: 'AI trong Test Monitoring, Defect Analysis và Quality Report', sub: 'Phân tích kết quả, gom lỗi, soạn báo cáo',
+  obj: ['Dùng AI tóm tắt kết quả chạy test.', 'Gom nhóm defect và gợi ý nguyên nhân.', 'Soạn báo cáo chất lượng có số liệu được kiểm chứng.'],
+  theory: ['AI hỗ trợ đọc nhiều log, kết quả và bug: tóm tắt, phân nhóm, phát hiện mẫu lặp, soạn nháp báo cáo.', 'Giảm thời gian tổng hợp để tập trung vào quyết định.', 'Sau các lần chạy lớn, khi triage nhiều bug, khi viết báo cáo sprint.', 'Đưa dữ liệu đã làm sạch và có cấu trúc → yêu cầu AI phân nhóm kèm dẫn chứng → con người xác minh → báo cáo. Số liệu (pass rate, số bug mở) nên tính bằng công cụ, không để AI tự đếm rồi tin ngay.', 'Không để AI tự đóng bug, tự đổi severity hoặc tự quyết định release.'],
+  analogy: 'AI là trợ lý xếp hồ sơ thành từng chồng và ghi chú nghi vấn; người quản lý vẫn là người ký quyết định.',
+  text: 'Gợi ý nguyên nhân của AI chỉ là giả thuyết. Phải kiểm chứng bằng log, tái hiện lỗi hoặc trao đổi với developer.',
+  terms: [['Triage', 'Phân loại và xếp ưu tiên defect.'], ['Pass rate', 'Tỷ lệ test pass trên số đã chạy (theo định nghĩa của nhóm).'], ['Root cause', 'Nguyên nhân gốc.'], ['Duplicate', 'Bug trùng.']],
+  codeTitle: 'Ví dụ prompt phân tích kết quả',
+  code: ['Dữ liệu (đã ẩn danh):', '  run=Sprint12  total=120  passed=104  failed=12  blocked=4', '  failed: TC12 TimeoutException checkout', '          TC18 TimeoutException checkout', '          TC33 500 POST /orders', '          ...', '', 'Nhiệm vụ : Gom lỗi theo nguyên nhân nghi ngờ.', 'Ràng buộc: Mỗi nhóm phải nêu mã TC làm dẫn chứng.', '           Ghi rõ "giả thuyết" nếu chưa chắc. Không tạo số liệu mới.', 'Đầu ra   : Nhóm | TC | Dẫn chứng | Giả thuyết | Bước xác minh', '', '# Kiểm tra tay: pass rate trên TC đã chạy = 104 / (104 + 12) = 89,7%'],
+  explain: [['total=120', '104 + 12 + 4 = 120.'], ['Dẫn chứng', 'Giúp kiểm tra lại từng kết luận.'], ['Giả thuyết', 'Tách sự thật và suy đoán.'], ['Pass rate', 'Ở đây không tính blocked vào mẫu số; báo cáo phải ghi rõ cách tính.']],
+  mistakes: [['Báo cáo số liệu AI tự đếm.', 'Đối chiếu với công cụ quản lý test.'], ['Coi giả thuyết là nguyên nhân.', 'Xác minh trước khi ghi vào bug.'], ['Chỉ báo pass rate.', 'Thêm bug mở theo severity, phạm vi chưa test và rủi ro.']],
+  refs: [['NIST AI Risk Management Framework', 'Giám sát và đánh giá đầu ra AI', NIST_AI], ['OWASP Top 10 for LLM Applications', 'Rủi ro tin cậy quá mức và lộ dữ liệu', OWASP_LLM], ['ISTQB CTFL v4.0', 'Test monitoring và reporting', ISTQB]],
+  cards: [['Dễ', 'How can AI help with defect analysis?', 'By summarising logs, grouping similar defects, flagging possible duplicates and suggesting hypotheses.', 'Tóm tắt, gom nhóm, gợi ý giả thuyết.', 'group|duplicates|hypothesis'], ['Vừa', 'What should a quality report contain?', 'Scope, execution results, open defects by severity, untested areas, risks and a recommendation.', 'Phạm vi, kết quả, bug mở, phần chưa test, rủi ro, khuyến nghị.', 'results|defects|risks|recommendation'], ['Vừa', 'How do you verify an AI-suggested root cause?', 'Check logs, reproduce the issue and confirm with the developer.', 'Kiểm tra log, tái hiện, xác nhận với developer.', 'logs|reproduce|confirm']],
+  quiz: [['Báo cáo do AI soạn ghi pass rate 95%, công cụ quản lý test ghi 89,7%. Làm gì?', 'Dùng số liệu nguồn, kiểm tra cách tính và sửa báo cáo', 'số liệu phải truy về nguồn.', 'Lấy 95% vì đẹp hơn', 'Gây sai lệch quyết định.', 'Lấy trung bình hai số', 'Không có ý nghĩa.', 'Bỏ cả số liệu lẫn rủi ro', 'Báo cáo mất thông tin cần thiết.'],
+    ['AI gom 10 failure vào "lỗi do mạng". Bước tiếp theo đúng?', 'Kiểm chứng bằng log và tái hiện trước khi kết luận', 'đây mới là giả thuyết.', 'Đóng cả 10 bug', 'Có thể bỏ sót lỗi thật.', 'Bật retry vô hạn', 'Che lỗi.', 'Gửi ngay cho khách hàng', 'Chưa được xác minh.'],
+    ['Ai quyết định có release hay không?', 'Người có trách nhiệm trong nhóm, dựa trên dữ liệu đã kiểm chứng', 'AI chỉ hỗ trợ thông tin.', 'AI tự quyết', 'AI không chịu trách nhiệm.', 'Công cụ chạy test tự quyết mọi trường hợp', 'Pass/fail chưa đủ để đánh giá rủi ro.', 'Không ai cần quyết', 'Release là quyết định có rủi ro.']],
+  audit: [['Ứng dụng', 'How can AI support test monitoring and quality reporting?', 'AI hỗ trợ theo dõi và báo cáo chất lượng thế nào?', 'It can summarise execution results, cluster failures, detect duplicate defects and draft reports. I verify numbers against the source tools and treat root causes as hypotheses until confirmed.', 'Lợi ích kèm cách kiểm chứng.', 'summarise|cluster|verify|hypothesis', 'What risks come with relying on AI for this?', 'Chỉ nói AI làm báo cáo tự động.']] });
+
+addLesson({ id: 45, title: 'Ứng dụng AI cho SQL, API và Automation', sub: 'Sinh query, test case API, script Selenium — và cách kiểm tra',
+  obj: ['Dùng AI sinh và giải thích câu SQL.', 'Dùng AI sinh test case và assertion cho API.', 'Dùng AI viết/sửa script automation và review kỹ.'],
+  theory: ['AI hỗ trợ việc kỹ thuật: viết SQL, sinh dữ liệu giả, test case API từ spec, script Selenium/TestNG, giải thích stack trace.', 'Tăng tốc phần lặp lại, giúp học nhanh.', 'Khi bạn có thể chạy và kiểm chứng kết quả ở môi trường an toàn.', 'Cung cấp schema, spec, đoạn HTML liên quan (đã loại bí mật) → AI sinh nháp → đọc từng dòng → chạy trên môi trường test → đối chiếu kỳ vọng → đưa vào Git và review.', 'Không chạy SQL sửa/xóa do AI sinh trên dữ liệu thật; không merge code mà bạn không giải thích được.'],
+  analogy: 'AI viết bản nháp, bạn là người chịu trách nhiệm ký tên.',
+  text: 'Lỗi hay gặp trong code AI sinh: API không tồn tại hoặc đã cũ, locator đoán mò, Thread.sleep, assertion quá yếu (test luôn pass).',
+  terms: [['Schema', 'Cấu trúc bảng hoặc JSON.'], ['Code review', 'Rà soát code.'], ['Mock data', 'Dữ liệu giả.'], ['Self-healing', 'Công cụ tự đề xuất locator thay thế; vẫn cần người xác nhận.']],
+  codeTitle: 'Ví dụ review code AI sinh',
+  code: ['// AI sinh (có vấn đề)', 'Thread.sleep(5000);', 'driver.findElement(By.xpath("/html/body/div[3]/button")).click();', 'Assert.assertTrue(true);', '', '// Sau khi review', 'WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));', 'wait.until(ExpectedConditions.elementToBeClickable(By.id("place-order"))).click();', 'WebElement msg = wait.until(', '    ExpectedConditions.visibilityOfElementLocated(By.id("order-msg")));', 'Assert.assertEquals(msg.getText(), "Đặt hàng thành công");'],
+  explain: [['Thread.sleep(5000)', 'Chờ cố định, thay bằng explicit wait.'], ['Absolute XPath', 'Dễ vỡ; dùng locator ổn định, và phải xác nhận id tồn tại thật.'], ['assertTrue(true)', 'Không kiểm tra gì.'], ['assertEquals(msg.getText(), ...)', 'Kiểm tra kết quả nghiệp vụ; câu thông báo lấy từ yêu cầu.']],
+  mistakes: [['Copy code AI mà không chạy.', 'Chạy và thử cho test fail để chắc nó phát hiện được lỗi.'], ['Không đưa schema nên AI đoán tên cột.', 'Cung cấp schema và kiểm tra tên thật.'], ['Tin query vì chạy không lỗi.', 'Kiểm tra kết quả trên tập dữ liệu nhỏ đã biết đáp án.']],
+  refs: [['Prompt engineering overview', 'Hướng dẫn prompt', PROMPT_DOC], ['Selenium — Encouraged behaviors', 'Chuẩn để review script', 'https://www.selenium.dev/documentation/test_practices/encouraged/'], ['OWASP Top 10 for LLM Applications', 'Xử lý đầu ra không an toàn', OWASP_LLM]],
+  cards: [['Vừa', 'How do you review automation code generated by AI?', 'Read every line, check APIs and locators, remove fixed sleeps, strengthen assertions, run it and confirm it can fail.', 'Đọc, kiểm tra, chạy, chắc chắn test biết fail.', 'locators|sleep|assertions|run'], ['Dễ', 'How can AI help with SQL testing?', 'It can draft and explain queries and test data when given the schema; I verify results on known data.', 'Soạn, giải thích query; phải kiểm chứng.', 'schema|query|verify'], ['Dễ', 'How can AI help with API testing?', 'It can draft test cases and assertions from the API spec, which I review for missing and invented cases.', 'Sinh test case từ spec rồi rà soát.', 'spec|test cases|review']],
+  quiz: [['AI viết test có Assert.assertTrue(true). Vấn đề?', 'Test luôn pass dù chức năng hỏng', 'assertion không kiểm tra gì.', 'Test không biên dịch', 'Câu lệnh hợp lệ.', 'Test chạy quá chậm', 'Không ảnh hưởng đáng kể tốc độ.', 'Không có vấn đề', 'Đây là pass giả.'],
+    ['AI đưa câu DELETE để dọn dữ liệu. Làm gì trước khi chạy?', 'SELECT cùng điều kiện, xác nhận môi trường test và quyền', 'biết chính xác dòng nào sẽ bị xóa.', 'Chạy ngay trên production', 'Rủi ro mất dữ liệu.', 'Bỏ WHERE cho đơn giản', 'Xóa toàn bộ dữ liệu.', 'Chỉ đọc tên bảng', 'Chưa kiểm tra điều kiện.'],
+    ['Cách tốt để AI viết locator đúng?', 'Cung cấp đoạn HTML liên quan rồi xác minh locator trên trang thật', 'giảm đoán mò và có kiểm chứng.', 'Chỉ nói tên nút', 'AI phải đoán thuộc tính.', 'Yêu cầu XPath tuyệt đối', 'Dễ vỡ.', 'Không cần kiểm tra', 'Locator có thể không tồn tại.']],
+  audit: [['Ứng dụng', 'Give an example of applying AI to SQL, API or automation testing.', 'Cho ví dụ áp dụng AI vào test SQL, API hoặc automation.', 'I gave AI the API spec without secrets, asked for positive, negative and authorization cases, removed invented rules, added missing boundaries, then implemented and ran them.', 'Kể một ví dụ thật của bạn: đầu vào, kết quả, phần bạn sửa.', 'spec|review|run|boundaries', 'How did you know the output was correct?', 'Trả lời chung chung, không có ví dụ.']] });
+
+addLesson({ id: 46, title: 'Git cho Tester', sub: 'Commit, branch, merge, conflict, pull request',
+  obj: ['Dùng quy trình clone → branch → commit → push → pull request.', 'Phân biệt fetch và pull, merge và rebase.', 'Xử lý conflict; phân biệt reset và revert.'],
+  theory: ['Git là hệ thống quản lý phiên bản phân tán. Mỗi commit là một mốc thay đổi.', 'Cả nhóm cùng sửa test code, xem lịch sử và quay lại được khi cần.', 'Mọi thay đổi trong automation project.', 'Working directory → git add (staging) → git commit (local) → git push (remote). fetch chỉ tải về; pull là fetch rồi tích hợp (merge hoặc rebase). Conflict xảy ra khi Git không tự gộp được.', 'Không commit mật khẩu, token; không force push hoặc rebase nhánh dùng chung khi chưa thống nhất.'],
+  analogy: 'Commit giống điểm lưu trong game; branch là chơi thử một hướng khác mà không hỏng bản chính.',
+  text: 'reset di chuyển con trỏ nhánh (viết lại lịch sử cục bộ). revert tạo commit mới đảo ngược thay đổi, an toàn hơn cho nhánh đã chia sẻ.',
+  terms: [['Repository', 'Kho mã nguồn cùng lịch sử.'], ['Branch', 'Nhánh phát triển.'], ['Remote', 'Kho từ xa, thường tên origin.'], ['Pull request', 'Đề nghị gộp nhánh để review (tính năng của dịch vụ như GitHub).']],
+  codeTitle: 'Ví dụ luồng làm việc',
+  code: ['git clone <url-repo>', 'git switch -c feature/login-tests', 'git status', 'git add src/test/java/tests/LoginTest.java', 'git commit -m "Add login tests"', 'git push -u origin feature/login-tests', '# tạo Pull Request để review', '', '# cập nhật theo nhánh chính', 'git fetch origin', 'git merge origin/main', '# nếu conflict: sửa file, rồi', 'git add <file>', 'git commit', '', 'git log --oneline', 'git stash        # cất tạm thay đổi chưa commit', 'git stash pop', 'git revert <commit-id>'],
+  explain: [['git switch -c', 'Tạo và chuyển sang nhánh mới.'], ['git add', 'Đưa thay đổi vào staging.'], ['git push -u', 'Đẩy nhánh và đặt upstream.'], ['git fetch + merge', 'Tải về rồi gộp.'], ['git revert', 'Đảo ngược một commit bằng commit mới.']],
+  mistakes: [['Commit thẳng vào main.', 'Tạo nhánh và pull request theo quy trình nhóm.'], ['git add . mà không xem status.', 'Kiểm tra để không thêm file bí mật, target/.'], ['Giải quyết conflict bằng cách xóa phần của người khác.', 'Đọc cả hai phía, hỏi tác giả, chạy lại test.']],
+  refs: [['git — reference', 'Tài liệu lệnh Git', GITDOC + 'git'], ['git-merge', 'Merge và conflict', GITDOC + 'git-merge'], ['git-revert', 'Đảo ngược commit', GITDOC + 'git-revert'], ['Pro Git book', 'Sách Git chính thức', 'https://git-scm.com/book/en/v2']],
+  cards: [['Dễ', 'What is the difference between git fetch and git pull?', 'fetch downloads remote changes without integrating them; pull fetches and then merges or rebases.', 'fetch chỉ tải; pull tải và tích hợp.', 'download|merge|rebase'], ['Vừa', 'What is the difference between merge and rebase?', 'Merge combines histories and may create a merge commit; rebase replays commits onto another base, rewriting them.', 'Merge gộp lịch sử; rebase viết lại commit trên nền mới.', 'merge commit|replay|rewrite'], ['Vừa', 'What is the difference between git reset and git revert?', 'reset moves the branch pointer; revert creates a new commit that undoes a change.', 'reset dời con trỏ; revert thêm commit đảo ngược.', 'pointer|new commit|undo']],
+  quiz: [['Một commit lỗi đã push lên nhánh dùng chung. Cách an toàn để hủy thay đổi?', 'git revert', 'tạo commit mới, không viết lại lịch sử.', 'git reset --hard rồi force push', 'Viết lại lịch sử của cả nhóm.', 'Xóa thư mục .git', 'Mất lịch sử cục bộ.', 'git stash', 'Chỉ cất thay đổi chưa commit.'],
+    ['Lệnh nào đưa thay đổi vào staging?', 'git add', 'add chuẩn bị nội dung cho commit.', 'git push', 'Đẩy commit lên remote.', 'git fetch', 'Tải từ remote.', 'git log', 'Xem lịch sử.'],
+    ['Khi nào xảy ra merge conflict điển hình?', 'Hai nhánh sửa cùng đoạn của một file theo cách khác nhau', 'Git không tự chọn được.', 'Hai người sửa hai file khác nhau', 'Git thường tự gộp được.', 'Chạy git status', 'Lệnh chỉ đọc.', 'Tạo branch mới', 'Tạo nhánh không gộp gì.']],
+  audit: [['Ứng dụng', 'Describe your Git workflow and how you resolve conflicts.', 'Mô tả quy trình Git và cách xử lý conflict.', 'I pull the latest main, create a feature branch, commit small changes, push and open a pull request. For conflicts I read both versions, talk to the author if needed, resolve, run the tests and commit.', 'Có nhánh, review và chạy lại test.', 'branch|commit|push|pull request|conflict', 'What do you put in .gitignore?', 'Chỉ biết add, commit, push thẳng vào main.']] });
+
+addLesson({ id: 47, title: 'Phỏng vấn: thái độ, kỹ năng mềm và tiếng Anh/Nhật', sub: 'Working mindset, Communication, Problem solving, Teamwork, Language',
+  obj: ['Trả lời câu hỏi tình huống theo cấu trúc STAR.', 'Thể hiện thái độ làm việc, giao tiếp, giải quyết vấn đề, làm việc nhóm.', 'Luyện nghe, nói, đọc, viết ở mức phục vụ công việc.'],
+  theory: ['Phỏng vấn còn chấm thái độ làm việc, kỹ năng mềm và ngoại ngữ (xem trang Đánh giá phỏng vấn để biết tỷ trọng).', 'Người phỏng vấn cần biết bạn học hỏi, phối hợp và xử lý vấn đề thế nào.', 'Chuẩn bị trước 3–5 câu chuyện thật từ học tập hoặc công việc.', 'STAR: Situation (bối cảnh), Task (nhiệm vụ), Action (bạn đã làm gì), Result (kết quả, bài học). Ngoại ngữ: nghe – hỏi lại khi chưa rõ; nói – câu ngắn; đọc – tài liệu, log; viết – bug report ngắn gọn.', 'Không bịa kinh nghiệm; không đổ lỗi cho người khác.'],
+  analogy: 'Giống kể một câu chuyện ngắn có mở đầu, việc mình làm và kết cục, thay vì chỉ nói "em chăm chỉ".',
+  text: 'Khi không biết: nói thật, nêu điều bạn biết liên quan và cách bạn sẽ tìm hiểu. Với tiếng Anh, được phép xin nhắc lại: "Could you repeat the question, please?" Nếu phỏng vấn tiếng Nhật, chuẩn bị cùng các nội dung này bằng tiếng Nhật.',
+  terms: [['STAR', 'Situation, Task, Action, Result.'], ['Ownership', 'Chịu trách nhiệm đến cùng.'], ['Feedback', 'Góp ý.'], ['Blocker', 'Điều đang chặn công việc.']],
+  codeTitle: 'Ví dụ câu trả lời STAR và mẫu câu tiếng Anh',
+  code: ['Q: Tell me about a problem you solved.', 'S: Our login test failed randomly in a practice project.', 'T: I had to find out why.', 'A: I read the logs, saw a timing issue and replaced sleep', '   with an explicit wait.', 'R: It passed 20 runs in a row. I learned to check root cause first.', '', 'Mẫu câu:', '- Could you repeat the question, please?', '- I have not used it yet, but I know that ...', '- Yesterday I ... Today I will ... I am blocked by ...'],
+  explain: [['S / T', 'Ngắn gọn, đủ bối cảnh.'], ['A', 'Phần quan trọng nhất: việc chính bạn làm.'], ['R', 'Kết quả đo được và bài học. Hãy thay bằng ví dụ thật của bạn.'], ['Mẫu daily', 'Báo cáo tiến độ: đã làm, sẽ làm, đang vướng.']],
+  mistakes: [['Trả lời chung chung.', 'Đưa ví dụ cụ thể.'], ['Chỉ nói "chúng tôi".', 'Nêu rõ phần việc của bạn.'], ['Im lặng khi bị vướng.', 'Báo sớm kèm những gì đã thử.']],
+  refs: [['British Council — LearnEnglish', 'Luyện nghe, nói, đọc, viết tiếng Anh', 'https://learnenglish.britishcouncil.org/free-resources'], ['JLPT', 'Trang chính thức kỳ thi năng lực tiếng Nhật', 'https://www.jlpt.jp/e/']],
+  cards: [['Dễ', 'What is the STAR method?', 'Situation, Task, Action, Result: a structure for answering behavioural questions.', 'Cấu trúc trả lời câu hỏi tình huống.', 'Situation|Task|Action|Result'], ['Dễ', 'What do you say in a daily stand-up?', 'What I did, what I will do and what is blocking me.', 'Đã làm, sẽ làm, đang vướng.', 'did|will do|blocker'], ['Vừa', 'How do you respond when you do not know an answer?', 'I say so honestly, share related knowledge and explain how I would find out.', 'Trung thực và nêu cách tìm hiểu.', 'honest|related|find out']],
+  quiz: [['Bạn bị vướng một lỗi môi trường đã nửa ngày. Hành động tốt nhất?', 'Báo sớm, nêu lỗi, những gì đã thử và cần hỗ trợ gì', 'nhóm giúp được ngay và đủ thông tin.', 'Im lặng đến hạn nộp', 'Rủi ro bị phát hiện quá muộn.', 'Bỏ qua phần test đó và không nói', 'Che giấu phạm vi chưa test.', 'Đổ lỗi cho DevOps trên nhóm chung', 'Không giải quyết vấn đề và hại hợp tác.'],
+    ['Trong STAR, phần nào cho thấy rõ nhất đóng góp của bạn?', 'Action', 'mô tả việc chính bạn đã làm.', 'Situation', 'Chỉ là bối cảnh.', 'Task', 'Là nhiệm vụ được giao.', 'Tên dự án', 'Không thuộc STAR.'],
+    ['Không nghe rõ câu hỏi tiếng Anh. Nên làm gì?', 'Lịch sự xin nhắc lại', 'trả lời đúng câu hỏi quan trọng hơn.', 'Đoán và trả lời thật dài', 'Dễ lạc đề.', 'Giữ im lặng', 'Người hỏi không biết bạn vướng gì.', 'Chuyển sang chủ đề khác', 'Không trả lời câu hỏi.']],
+  audit: [['Phỏng vấn', 'Tell me about yourself and why you want to be an automation tester.', 'Giới thiệu bản thân và vì sao muốn làm automation tester.', 'I briefly introduce my background, the testing and Java skills I have practised, a project example, and why I want to grow in automation.', 'Khoảng 1–2 phút, gắn với vị trí.', 'background|skills|project|automation', 'What will you learn in the next three months?', 'Kể tiểu sử dài, không liên quan công việc.'],
+    ['Phỏng vấn', 'How do you handle pressure and a tight deadline?', 'Bạn xử lý áp lực và deadline gấp thế nào?', 'I prioritise by risk, communicate early what can and cannot be finished, agree on the scope with the team and keep quality information visible.', 'Working mindset: ưu tiên, báo sớm, minh bạch.', 'prioritise|risk|communicate|scope', 'Would you work extra time? How do you avoid repeating the situation?', 'Hứa làm hết mọi thứ mà không có kế hoạch.'],
+    ['Phỏng vấn', 'Describe a conflict in your team and how you handled it.', 'Kể một mâu thuẫn trong nhóm và cách xử lý.', 'I listen to the other side, focus on facts and the shared goal, propose options and follow up after we agree.', 'Teamwork và Communication; dùng STAR với ví dụ thật.', 'listen|facts|goal|agree', 'What feedback have you received and what did you change?', 'Nói chưa bao giờ có bất đồng hoặc đổ lỗi.'],
+    ['Phỏng vấn', 'How do you approach a problem you have never seen before?', 'Gặp vấn đề chưa từng thấy, bạn làm gì?', 'I reproduce it, narrow down the cause, read logs and documentation, try one change at a time, and ask for help with what I have already tried.', 'Problem solving: có phương pháp.', 'reproduce|narrow|logs|documentation|ask', 'Give a real example.', 'Nói sẽ hỏi người khác ngay.']] });
+
+/* ===== CHƯƠNG TRÌNH: theo bảng kỹ năng và bảng đánh giá phỏng vấn ===== */
+/* items: [Software Engineer Skill, nội dung yêu cầu, bài đáp ứng] */
+var GROUPS = [
+  { n: 1, title: 'Programming & Unit Test', lessons: [21, 22, 23, 17, 18, 20, 24, 25, 26], items: [
+    ['Unit Test Framework Usage', 'Basic Java programming', [21, 22]],
+    ['Unit Test Framework Usage', 'Unit test with TestNG Java — @Test, @BeforeMethod, @AfterMethod, @BeforeClass, @AfterClass', [17]],
+    ['Unit Test Framework Usage', 'Assertion', [18]],
+    ['Unit Test Framework Usage', 'Data-driven', [20]],
+    ['Unit Test Framework Usage', 'Groups/Filter, Parameterized Test', [24]],
+    ['Unit Test Framework Usage', 'Exception Handling, Timeout & Retry', [25, 22]],
+    ['Unit Test Framework Usage', 'Parallel Test, ITestContext', [26]],
+    ['Design (bảng phỏng vấn)', 'OOP', [23]]
+  ] },
+  { n: 2, title: 'Web Automation Test', lessons: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 27], items: [
+    ['Automation test skills', 'Using id, xpath, css for finding & define elements', [3, 4, 5, 6]],
+    ['Automation test skills', 'Create automation test project', [27]],
+    ['Framework usage skills', 'Selenium Java — Working with Elements', [6, 7, 11]],
+    ['Framework usage skills', 'Working with Selenium API', [1, 2, 15, 16]],
+    ['Framework usage skills', 'Synchronizing Tests', [8, 9, 10]],
+    ['Framework usage skills', 'Alerts, Frames, and Windows', [12, 13, 14]],
+    ['Framework usage skills', 'Data Provider', [20]],
+    ['Design (bảng phỏng vấn)', 'Page Object Model', [19]]
+  ] },
+  { n: 3, title: 'API Testing', lessons: [33, 34, 35, 36, 37], items: [
+    ['API Testing skills', 'API Testing Fundamental', [33]],
+    ['API Testing skills', 'Curl request & response, url, body, headers, cookies, status code', [34, 33]],
+    ['API Testing skills', 'Design test case for API Testing', [35]],
+    ['Tool usage skills', 'Hoppscotch: create request, implement script, call API, parse response, assertion', [36]],
+    ['Tool usage skills', 'JMeter: create request, script, CSV data, parse response, assertion, report', [37]]
+  ] },
+  { n: 4, title: 'Database SQL', lessons: [38, 39, 40, 41, 42], items: [
+    ['Database SQL', 'ER Model and Database Concepts', [38]],
+    ['Database SQL', 'SQL Server Introduction – Postgres (Install, Datatypes)', [39]],
+    ['Database SQL', 'SQL Basic (DDL & DML Statements)', [40]],
+    ['Database SQL', 'SQL Operators', [41]],
+    ['Database SQL', 'SQL Joins', [42]]
+  ] },
+  { n: 5, title: 'AI for Tester', lessons: [43, 44, 45], items: [
+    ['AI for Tester', 'GenAI Foundations and Prompt Engineering for Testing', [43]],
+    ['AI for Tester', 'AI in Test Monitoring, Defect Analysis and Quality Reporting', [44]],
+    ['AI for Tester', 'Applying AI to Technical Testing: SQL, API and Automation', [45]]
+  ] },
+  { n: 6, title: 'Software Testing Foundation', lessons: [28, 29, 30, 31, 32], items: [
+    ['Software Testing Foundation', 'Tester Competency & Software Testing Concepts', [28]],
+    ['Software Testing Foundation', 'Fundamental test process & Test Plan', [29]],
+    ['Software Testing Foundation', 'Test Levels & Test Types', [30]],
+    ['Software Testing Foundation', 'Test Case and Test Design', [31]],
+    ['Software Testing Foundation', 'Test Execution', [32]]
+  ] },
+  { n: 7, title: 'Git & Phỏng vấn', lessons: [46, 47], items: [
+    ['Experience (bảng phỏng vấn)', 'GIT', [46]],
+    ['Work Hard, Soft skill, Language (bảng phỏng vấn)', 'Working mindset, Communication, Problem solving, Teamwork, English/Japanese', [47]]
+  ] }
+];
+
+/* Bảng Interview Evaluation: [category, sub-category, tỷ trọng %, bài ôn]. Tổng = 100. */
+var EVAL_ROWS = [
+  ['Work Hard', 'Working mindset', 5, [47]],
+  ['Software Technology', 'Basic language - Java', 10, [21, 22]],
+  ['Software Technology', 'Unit Test - TestNG', 10, [17, 18, 20, 24, 25, 26]],
+  ['Software Technology', 'SQL (ER Model, DML, DDL)', 10, [38, 39, 40, 41, 42]],
+  ['Software Technology', 'AI for Tester', 7, [43, 44, 45]],
+  ['Software Technology', 'Software Testing Foundation', 10, [28, 29, 30, 31, 32]],
+  ['Design', 'OOP', 5, [23]],
+  ['Design', 'Page Object Model', 5, [19]],
+  ['Experience', 'Web Automation Test', 10, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 27]],
+  ['Experience', 'API Testing', 10, [33, 34, 35, 36, 37]],
+  ['Experience', 'GIT', 5, [46]],
+  ['Soft skill', 'Communication', 3, [47]],
+  ['Soft skill', 'Problem solving', 3, [47]],
+  ['Soft skill', 'Teamwork', 3, [47]],
+  ['Language (English/Japanese)', 'Listening', 1, [47]],
+  ['Language (English/Japanese)', 'Speaking', 1, [47]],
+  ['Language (English/Japanese)', 'Writing', 1, [47]],
+  ['Language (English/Japanese)', 'Reading', 1, [47]]
+];
+
+CHEAT.push(
+  ['Overload vs Override', 'Cùng tên khác tham số / lớp con viết lại cùng chữ ký', 'type(String) , type(String, boolean) / @Override', 'Overloading changes the parameters; overriding redefines an inherited method.'],
+  ['Abstract class vs Interface', 'Kế thừa một, có trạng thái / cài đặt nhiều, không có instance field', 'extends BasePage / implements WebDriver', 'A class extends one abstract class but can implement many interfaces.'],
+  ['@Parameters vs @DataProvider', 'Giá trị từ testng.xml / nhiều bộ dữ liệu từ Java', '@Parameters("browser") / @Test(dataProvider="accounts")', 'Parameters come from XML; a DataProvider supplies many data sets.'],
+  ['Retesting vs Regression', 'Xác nhận bug đã sửa / kiểm tra phần khác không bị hỏng', 'chạy lại bước gây bug / chạy bộ regression', 'Retesting confirms the fix; regression looks for side effects.'],
+  ['Severity vs Priority', 'Mức ảnh hưởng / mức cần sửa gấp', 'Major, High', 'Severity is impact; priority is urgency.'],
+  ['QA vs QC', 'Quy trình, phòng ngừa / sản phẩm, phát hiện', 'cải tiến quy trình / thực thi test', 'QA is process-oriented; QC is product-oriented.'],
+  ['401 vs 403', 'Chưa xác thực hợp lệ / bị từ chối quyền', 'thiếu token / user thường gọi API admin', '401 is about authentication; 403 is about access rights.'],
+  ['PUT vs PATCH', 'Thay toàn bộ / sửa một phần', 'PUT /users/1 / PATCH /users/1', 'PUT replaces a resource; PATCH updates part of it.'],
+  ['DELETE vs TRUNCATE vs DROP', 'Xóa dòng chọn lọc / xóa hết dòng / xóa cả bảng', 'DELETE FROM t WHERE id=1; TRUNCATE t; DROP TABLE t;', 'DELETE removes rows, TRUNCATE empties the table, DROP removes it.'],
+  ['WHERE vs HAVING', 'Lọc dòng trước nhóm / lọc nhóm sau gộp', 'WHERE total > 0 ... HAVING COUNT(*) > 5', 'WHERE filters rows; HAVING filters groups.'],
+  ['INNER vs LEFT JOIN', 'Chỉ dòng khớp / mọi dòng bảng trái', 'a JOIN b ON ... / a LEFT JOIN b ON ...', 'LEFT JOIN also keeps unmatched left rows.'],
+  ['merge vs rebase', 'Gộp lịch sử / viết lại commit trên nền mới', 'git merge main / git rebase main', 'Merge preserves history; rebase rewrites commits.']
+);
+
+GLOSSARY.push(
+  ['JVM', 'Máy ảo chạy bytecode Java', 21], ['Collection', 'Cấu trúc chứa nhiều object: List, Set, Map...', 22], ['Exception handling', 'Xử lý lỗi bằng try/catch/finally', 22],
+  ['Encapsulation', 'Đóng gói', 23], ['Polymorphism', 'Đa hình', 23], ['Test group', 'Nhãn để lọc test TestNG', 24], ['IRetryAnalyzer', 'Interface chạy lại test fail', 25], ['ITestContext', 'Ngữ cảnh của một thẻ <test>', 26], ['pom.xml', 'File cấu hình Maven', 27],
+  ['Defect', 'Chỗ sai trong sản phẩm', 28], ['Test plan', 'Kế hoạch kiểm thử', 29], ['Regression testing', 'Kiểm tra thay đổi không làm hỏng chỗ khác', 30], ['Boundary value analysis', 'Phân tích giá trị biên', 31], ['Severity', 'Mức nghiêm trọng của defect', 32],
+  ['Status code', 'Mã trạng thái HTTP', 33], ['Cookie', 'Dữ liệu client gửi lại cho server', 33], ['cURL', 'Công cụ gửi request từ dòng lệnh', 34], ['Schema validation', 'Kiểm tra cấu trúc và kiểu dữ liệu', 35], ['Hoppscotch', 'Công cụ kiểm thử API mã nguồn mở', 36], ['Thread Group', 'Cấu hình user ảo trong JMeter', 37],
+  ['Primary key', 'Khóa chính', 38], ['Foreign key', 'Khóa ngoại', 38], ['PostgreSQL', 'Hệ quản trị CSDL quan hệ mã nguồn mở', 39], ['DDL', 'Lệnh định nghĩa cấu trúc dữ liệu', 40], ['DML', 'Lệnh thao tác dữ liệu', 40], ['NULL', 'Giá trị không có hoặc không biết', 41], ['JOIN', 'Kết hợp dòng từ nhiều bảng', 42],
+  ['LLM', 'Mô hình ngôn ngữ lớn', 43], ['Hallucination', 'AI tạo nội dung nghe hợp lý nhưng sai', 43], ['Triage', 'Phân loại, ưu tiên defect', 44], ['Merge conflict', 'Git không tự gộp được thay đổi', 46], ['STAR', 'Situation, Task, Action, Result', 47]
+);
+
 /* ===== ENGINE CORE (pure, deterministic, no DOM) ===== */
 function sbvabClone(o) { return JSON.parse(JSON.stringify(o)); }
 
@@ -1489,14 +2093,10 @@ if (typeof module !== 'undefined' && module.exports) {
 (function () {
   'use strict';
   var KEY = 'sbvab-v1';
-  var DAYS = [
-    { n: 1, title: 'Ngày 1 — Nền tảng Selenium', lessons: [1, 2, 3, 4, 5, 6, 7] },
-    { n: 2, title: 'Ngày 2 — Tương tác & Đồng bộ', lessons: [8, 9, 10, 11, 12, 13, 14, 15, 16] },
-    { n: 3, title: 'Ngày 3 — Framework tự động', lessons: [17, 18, 19, 20] },
-    { n: 4, title: 'Ngày 4 — Ôn tập & Mock Audit', lessons: [] }
-  ];
-  var DAY_OF = {};
-  DAYS.forEach(function (d) { d.lessons.forEach(function (l) { DAY_OF[l] = d.n; }); });
+  var GROUP_OF = {}, CODE_OF = {}, ORDER = [];
+  GROUPS.forEach(function (g) {
+    g.lessons.forEach(function (l, i) { GROUP_OF[l] = g.n; CODE_OF[l] = g.n + '.' + (i + 1); ORDER.push(l); });
+  });
 
   /* ---------- storage ---------- */
   function loadP() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
@@ -1504,7 +2104,7 @@ if (typeof module !== 'undefined' && module.exports) {
   var P = loadP();
   P.lessons = P.lessons || {}; P.sims = P.sims || {}; P.flash = P.flash || {}; P.quiz = P.quiz || {};
   P.audit = P.audit || []; P.bm = P.bm || []; P.check = P.check || {}; P.last = P.last || null;
-  P.quizSessions = P.quizSessions || [];
+  P.quizSessions = P.quizSessions || []; P.evalr = P.evalr || {};
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function $(sel, root) { return (root || document).querySelector(sel); }
@@ -1514,19 +2114,15 @@ if (typeof module !== 'undefined' && module.exports) {
 
   /* ---------- sidebar ---------- */
   function buildNav(route) {
-    var items = [
-      ['#/', 'Dashboard', '⌂'], ['#/day/1', 'Day 1', '1'], ['#/day/2', 'Day 2', '2'], ['#/day/3', 'Day 3', '3'], ['#/day/4', 'Day 4', '4'],
-      ['#/flash', 'Flashcards', '▤'], ['#/quiz', 'Quiz', '?'], ['#/audit', 'Mock Audit', '🎙'], ['#/cheat', 'Cheat Sheet', '⇄'],
-      ['#/glossary', 'Glossary', 'A'], ['#/weak', 'Weak Points', '!'], ['#/refs', 'References', '§'], ['#/extra', 'Kiến thức bổ sung', '+'], ['#/data', 'Dữ liệu & Cài đặt', '⚙']
-    ];
+    var learn = [['#/', 'Dashboard', '⌂']].concat(GROUPS.map(function (g) { return ['#/group/' + g.n, g.title, g.n]; }));
+    var review = [['#/eval', 'Đánh giá phỏng vấn', '★'], ['#/flash', 'Flashcards', '▤'], ['#/quiz', 'Quiz', '?'], ['#/audit', 'Mock Audit', '🎙'], ['#/cheat', 'Cheat Sheet', '⇄'], ['#/glossary', 'Glossary', 'A'], ['#/weak', 'Weak Points', '!']];
+    var other = [['#/refs', 'References', '§'], ['#/extra', 'Kiến thức bổ sung', '+'], ['#/data', 'Dữ liệu & Cài đặt', '⚙']];
     var html = '<div class="brand">Selenium Java Visual Audit Bootcamp<small>Học offline · Mô phỏng, không chạy Selenium thật</small></div>';
-    html += '<div class="nav-group">Học</div><nav class="nav" aria-label="Điều hướng chính">';
-    items.slice(0, 5).forEach(function (it) { html += navLink(it, route); });
-    html += '</nav><div class="nav-group">Ôn tập</div><nav class="nav" aria-label="Ôn tập">';
-    items.slice(5, 12).forEach(function (it) { html += navLink(it, route); });
-    html += '</nav><div class="nav-group">Khác</div><nav class="nav" aria-label="Khác">';
-    items.slice(12).forEach(function (it) { html += navLink(it, route); });
-    html += '</nav>';
+    [['Học theo nhóm kỹ năng', learn], ['Ôn tập', review], ['Khác', other]].forEach(function (grp) {
+      html += '<div class="nav-group">' + grp[0] + '</div><nav class="nav" aria-label="' + grp[0] + '">';
+      grp[1].forEach(function (it) { html += navLink(it, route); });
+      html += '</nav>';
+    });
     $('#side').innerHTML = html;
   }
   function navLink(it, route) {
@@ -1676,7 +2272,7 @@ if (typeof module !== 'undefined' && module.exports) {
     var s = c.snaps[c.idx], last = c.snaps.length - 1, N = c.sim.steps.length;
     var prev = c.snaps[Math.max(0, c.idx - 1)];
     var h = '';
-    h += '<div class="sim-head"><div><span class="pill ' + (c.sim.level === 'Dễ' ? 'green' : 'yellow') + '">' + esc(c.sim.level) + '</span> <span class="pill gray">Bài ' + c.sim.lesson + '</span><h3 style="margin-top:6px">' + esc(c.sim.title) + '</h3></div>' +
+    h += '<div class="sim-head"><div><span class="pill ' + (c.sim.level === 'Dễ' ? 'green' : 'yellow') + '">' + esc(c.sim.level) + '</span> <span class="pill gray">Bài ' + CODE_OF[c.sim.lesson] + '</span><h3 style="margin-top:6px">' + esc(c.sim.title) + '</h3></div>' +
       '<div class="statusbar"><span class="stepcount" aria-live="polite">Bước ' + c.idx + ' / ' + N + '</span>' + stPill(s.st) + '<span class="pill">⏱ t = ' + s.time + 's (mô phỏng)</span>' + (c.playing ? '<span class="pill blue">Đang tự chạy ' + c.speed + 'x</span>' : '') + '</div></div>';
     h += '<div class="sim-scen"><b>Kịch bản:</b> ' + esc(c.sim.scen) + '</div>';
     h += '<div class="sim-body"><div class="sim-left">' + leftHTML(s) + '</div><div class="sim-right">' + rightHTML(c) + '</div></div>';
@@ -1716,40 +2312,42 @@ if (typeof module !== 'undefined' && module.exports) {
     if (!L) return '<p>Không tìm thấy bài học.</p>';
     P.last = '#/lesson/' + id; saveP();
     var sims = simsOf(id);
-    var h = '<div class="lesson-head"><span class="pill blue">Ngày ' + L.day + '</span> <span class="pill gray">Bài ' + L.id + '/20</span><h1>' + esc(L.title) + '</h1><p class="muted">' + esc(L.sub) + '</p></div>';
-    h += '<div class="notice">Ứng dụng này <b>mô phỏng</b> hành vi Selenium bằng JavaScript. Code Java bên dưới là ví dụ để bạn đọc hiểu, không được chạy trong trình duyệt.</div>';
+    var h = '<div class="lesson-head"><span class="pill blue">' + esc(GROUPS[GROUP_OF[L.id] - 1].title) + '</span> <span class="pill gray">Bài ' + CODE_OF[L.id] + '</span><h1>' + esc(L.title) + '</h1><p class="muted">' + esc(L.sub) + '</p></div>';
+    h += '<div class="notice">Ví dụ code, lệnh và kết quả bên dưới chỉ để đọc hiểu; ứng dụng <b>không chạy</b> Java, Selenium, SQL, API hay công cụ AI thật. Mô phỏng (nếu có) viết bằng JavaScript.</div>';
+    var letter = 'ABCDEFGHI', li = 0;
+    function sec(title) { return letter.charAt(li++) + '. ' + title; }
     h += '<div class="card"><h2>Mục tiêu học</h2><ul>' + L.obj.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>';
     h += '<button data-lesson-done="' + id + '" class="' + (P.lessons[id] ? 'primary' : '') + '">' + (P.lessons[id] ? '✓ Đã đánh dấu hoàn thành' : 'Đánh dấu đã học xong') + '</button> ';
     h += '<button data-bm="' + id + '">' + (P.bm.indexOf(id) >= 0 ? '★ Đã ghim' : '☆ Ghim bài này') + '</button></div>';
-    h += '<section class="card"><h2>A. Lý thuyết</h2><dl class="kv">' +
+    h += '<section class="card"><h2>' + sec('Lý thuyết') + '</h2><dl class="kv">' +
       '<dt>Đây là gì?</dt><dd>' + esc(L.theory.what) + '</dd>' +
       '<dt>Vì sao cần?</dt><dd>' + esc(L.theory.why) + '</dd>' +
       '<dt>Khi nào nên dùng?</dt><dd>' + esc(L.theory.when) + '</dd>' +
       '<dt>Hoạt động thế nào?</dt><dd>' + esc(L.theory.how) + '</dd>' +
       '<dt>Khi nào KHÔNG nên dùng?</dt><dd>' + esc(L.theory.whenNot) + '</dd></dl></section>';
-    h += '<section class="card"><h2>B. Giải thích cho người mới</h2><p><b>Ví dụ đời thường:</b> ' + esc(L.beginner.analogy) + '</p><p>' + esc(L.beginner.text) + '</p>' +
+    h += '<section class="card"><h2>' + sec('Giải thích cho người mới') + '</h2><p><b>Ví dụ đời thường:</b> ' + esc(L.beginner.analogy) + '</p><p>' + esc(L.beginner.text) + '</p>' +
       '<h3>Thuật ngữ cần biết trước</h3><table><tr><th>Thuật ngữ</th><th>Nghĩa đơn giản</th></tr>' +
       L.beginner.terms.map(function (t) { return '<tr><td><b>' + esc(t[0]) + '</b></td><td>' + esc(t[1]) + '</td></tr>'; }).join('') + '</table></section>';
-    h += '<section class="card"><h2>C. Ví dụ Java (minh họa)</h2><div class="codebox"><pre style="margin:0">' + L.code.map(function (ln, i) { return '<span class="ln">' + (i + 1) + '</span>' + esc(ln); }).join('\n') + '</pre></div>' +
+    h += '<section class="card"><h2>' + sec(esc(L.codeTitle || 'Ví dụ Java (minh họa)')) + '</h2><div class="codebox"><pre style="margin:0">' + L.code.map(function (ln, i) { return '<span class="ln">' + (i + 1) + '</span>' + esc(ln); }).join('\n') + '</pre></div>' +
       '<h3>Giải thích từng dòng quan trọng</h3>' + L.codeExplain.map(function (x) {
         return '<div class="explain-row"><code>' + esc(x[0]) + '</code><div>' + esc(x[1]) + '</div></div>';
       }).join('') + '</section>';
-    h += '<section class="card"><h2>D. Mô phỏng tương tác (3 ví dụ)</h2><p class="muted">Ví dụ 1 là mức Dễ; ví dụ 2 và 3 là mức Trung bình. Bạn có thể dự đoán trước, rồi phát mô phỏng để kiểm tra.</p>' +
+    if (sims.length) h += '<section class="card"><h2>' + sec('Mô phỏng tương tác (' + sims.length + ' ví dụ)') + '</h2><p class="muted">Ví dụ 1 là mức Dễ; ví dụ 2 và 3 là mức Trung bình. Bạn có thể dự đoán trước, rồi phát mô phỏng để kiểm tra.</p>' +
       sims.map(function (s) { return simShell(s); }).join('') + '</section>';
-    h += '<section class="card"><h2>E. Lỗi thường gặp</h2><table><tr><th>Hiểu sai / dùng sai</th><th>Cách đúng</th></tr>' +
+    h += '<section class="card"><h2>' + sec('Lỗi thường gặp') + '</h2><table><tr><th>Hiểu sai / dùng sai</th><th>Cách đúng</th></tr>' +
       L.mistakes.map(function (m) { return '<tr><td>' + esc(m[0]) + '</td><td>' + esc(m[1]) + '</td></tr>'; }).join('') + '</table></section>';
     var aud = AUDIT.filter(function (a) { return a.lesson === +id; });
-    h += '<section class="card"><h2>F. Câu hỏi phỏng vấn / audit</h2>' + aud.map(function (a) {
+    h += '<section class="card"><h2>' + sec('Câu hỏi phỏng vấn / audit') + '</h2>' + aud.map(function (a) {
       return '<details><summary>[' + esc(a.cat) + '] ' + esc(a.en) + '</summary><p><i>' + esc(a.vi) + '</i></p><p><b>Gợi ý trả lời (EN):</b> ' + esc(a.model) + '</p><p><b>Giải thích (VI):</b> ' + esc(a.viExp) + '</p><p><b>Từ khóa:</b> ' + a.kw.map(function (k) { return '<span class="kw">' + esc(k) + '</span>'; }).join('') + '</p><p><b>Câu hỏi tiếp theo:</b> ' + esc(a.follow) + '</p><p><b>Trả lời sai thường gặp:</b> ' + esc(a.mistake) + '</p></details>';
     }).join('') + '<p class="muted">Luyện đầy đủ trong <a href="#/audit">Mock Audit</a>.</p></section>';
     var cards = CARDS.filter(function (c) { return c.lesson === +id; });
-    h += '<section class="card"><h2>G. Flashcards của bài này</h2>' + cards.map(function (c) {
+    h += '<section class="card"><h2>' + sec('Flashcards của bài này') + '</h2>' + cards.map(function (c) {
       return '<details><summary>' + esc(c.q) + '</summary><p><b>EN:</b> ' + esc(c.a) + '</p><p><b>VI:</b> ' + esc(c.vi) + '</p></details>';
     }).join('') + '<p><a href="#/flash">Ôn tất cả thẻ →</a></p></section>';
     var qs = QUIZ.filter(function (q) { return q.lesson === +id; });
-    h += '<section class="card"><h2>H. Mini quiz (3 câu)</h2><p class="muted">Làm bài tương tác tại <a href="#/quiz">Quiz</a>. Dưới đây là danh sách câu hỏi:</p><ol>' + qs.map(function (q) { return '<li>' + esc(q.q) + '</li>'; }).join('') + '</ol></section>';
-    h += '<section class="card"><h2>I. Tài liệu chính thức</h2>' + refsHTML(L.refs) + '<p class="muted">Xác minh ngày: ' + esc(REF_VERIFIED) + '. Chi tiết trong SOURCE_REFERENCES.md.</p></section>';
-    var prevL = lessonById(id - 1), nextL = lessonById(id + 1);
+    h += '<section class="card"><h2>' + sec('Mini quiz (' + qs.length + ' câu)') + '</h2><p class="muted">Làm bài tương tác tại <a href="#/quiz">Quiz</a>. Dưới đây là danh sách câu hỏi:</p><ol>' + qs.map(function (q) { return '<li>' + esc(q.q) + '</li>'; }).join('') + '</ol></section>';
+    h += '<section class="card"><h2>' + sec('Tài liệu chính thức') + '</h2>' + refsHTML(L.refs) + '<p class="muted">Xác minh ngày: ' + esc(REF_VERIFIED) + '. Chi tiết trong SOURCE_REFERENCES.md.</p></section>';
+    var at = ORDER.indexOf(+id), prevL = lessonById(ORDER[at - 1]), nextL = lessonById(ORDER[at + 1]);
     h += '<div class="row" style="justify-content:space-between">' + (prevL ? '<a href="#/lesson/' + prevL.id + '">← ' + esc(prevL.title) + '</a>' : '<span></span>') + (nextL ? '<a href="#/lesson/' + nextL.id + '">' + esc(nextL.title) + ' →</a>' : '<span></span>') + '</div>';
     return h;
   }
@@ -1765,8 +2363,8 @@ if (typeof module !== 'undefined' && module.exports) {
     var known = CARDS.filter(function (c) { return P.flash[c.id] && P.flash[c.id].r === 'known'; }).length;
     var answered = Object.keys(P.quiz).filter(function (k) { return P.quiz[k].n > 0; });
     var correct = answered.filter(function (k) { return P.quiz[k].c; }).length;
-    var h = '<h1>Selenium Java Visual Audit Bootcamp</h1><p class="muted">Lộ trình 4 ngày để ôn Selenium Java cho buổi audit. Tiến độ được lưu trong trình duyệt này (localStorage).</p>';
-    h += '<div class="row" style="margin:12px 0"><a class="pill blue" href="' + (P.last || '#/day/1') + '" style="text-decoration:none">▶ Tiếp tục học</a>' +
+    var h = '<h1>Selenium Java Visual Audit Bootcamp</h1><p class="muted">Ôn theo 6 nhóm kỹ năng, cùng Git và phỏng vấn. Tiến độ được lưu trong trình duyệt này (localStorage).</p>';
+    h += '<div class="row" style="margin:12px 0"><a class="pill blue" href="' + (P.last && P.last.indexOf('#/lesson/') === 0 ? P.last : '#/group/1') + '" style="text-decoration:none">▶ Tiếp tục học</a>' +
       (P.bm.length ? '<span class="muted">Đã ghim: ' + P.bm.map(function (b) { var l = lessonById(b); return l ? '<a href="#/lesson/' + b + '">' + esc(l.title) + '</a>' : ''; }).join(', ') + '</span>' : '') + '</div>';
     h += '<div class="card"><h3 style="margin-top:0">Đồng bộ giữa các thiết bị</h3>' +
       '<p class="muted">Tiến độ chỉ lưu trên trình duyệt này. Để học tiếp trên máy khác: tải file ở máy này, rồi nhập file đó ở máy kia.</p>' +
@@ -1774,23 +2372,23 @@ if (typeof module !== 'undefined' && module.exports) {
       '<input type="file" id="importfile" accept=".json,application/json" class="hidden" aria-label="Chọn file tiến độ"></div>' +
       '<p class="muted" style="margin-bottom:0">Lần tải file gần nhất: ' + (P.lastExport ? esc(new Date(P.lastExport).toLocaleString('vi-VN')) : 'chưa có — hãy tải file sau mỗi buổi học') + '</p></div>' +
       '<div class="kpis">' +
-      '<div class="kpi">Bài đã học<b>' + done + ' / 20</b><div class="progress"><span style="width:' + pct(done, 20) + '%"></span></div></div>' +
-      '<div class="kpi">Mô phỏng đã xem đến cuối<b>' + simsDone + ' / 60</b><div class="progress"><span style="width:' + pct(simsDone, 60) + '%"></span></div></div>' +
+      '<div class="kpi">Bài đã học<b>' + done + ' / ' + LESSONS.length + '</b><div class="progress"><span style="width:' + pct(done, LESSONS.length) + '%"></span></div></div>' +
+      '<div class="kpi">Mô phỏng đã xem đến cuối<b>' + simsDone + ' / ' + SIMS.length + '</b><div class="progress"><span style="width:' + pct(simsDone, SIMS.length) + '%"></span></div></div>' +
       '<div class="kpi">Flashcard "Đã nhớ"<b>' + known + ' / ' + CARDS.length + '</b><div class="progress"><span style="width:' + pct(known, CARDS.length) + '%"></span></div></div>' +
       '<div class="kpi">Độ chính xác Quiz<b>' + (answered.length ? pct(correct, answered.length) + '%' : 'Chưa có') + '</b><span class="muted">' + correct + '/' + answered.length + ' câu đã làm</span></div></div>';
-    h += '<h2 style="margin-top:20px">Lộ trình 4 ngày</h2><div class="roadmap">';
-    DAYS.forEach(function (d) {
-      var dn = d.lessons.filter(lessonDone).length;
-      h += '<div class="day"><h3 style="margin-top:0"><a href="#/day/' + d.n + '">' + esc(d.title) + '</a></h3><div class="muted">' +
-        (d.lessons.length ? dn + '/' + d.lessons.length + ' bài hoàn thành' : 'Ôn tập tổng hợp') + '</div>';
-      h += '<div class="progress" style="margin:6px 0"><span style="width:' + pct(dn, d.lessons.length || 1) + '%"></span></div>';
-      h += d.lessons.map(function (l) { return '<div><a href="#/lesson/' + l + '">' + (lessonDone(l) ? '✓ ' : '○ ') + esc(lessonById(l).title) + '</a></div>'; }).join('') + '</div>';
+    h += '<div class="card" style="margin-top:16px"><h3 style="margin-top:0">Mức sẵn sàng phỏng vấn (tự đánh giá theo tỷ trọng)</h3><p><b>' + evalScore() + '%</b> — <a href="#/eval">Mở bảng đánh giá →</a></p></div>';
+    h += '<h2 style="margin-top:20px">Lộ trình theo nhóm kỹ năng</h2><div class="roadmap">';
+    GROUPS.forEach(function (g) {
+      var dn = g.lessons.filter(lessonDone).length;
+      h += '<div class="day"><h3 style="margin-top:0"><a href="#/group/' + g.n + '">' + g.n + '. ' + esc(g.title) + '</a></h3><div class="muted">' + dn + '/' + g.lessons.length + ' bài hoàn thành</div>';
+      h += '<div class="progress" style="margin:6px 0"><span style="width:' + pct(dn, g.lessons.length) + '%"></span></div>';
+      h += g.lessons.map(function (l) { return '<div><a href="#/lesson/' + l + '">' + (lessonDone(l) ? '✓ ' : '○ ') + CODE_OF[l] + ' ' + esc(lessonById(l).title) + '</a></div>'; }).join('') + '</div>';
     });
     h += '</div>';
-    var mins = (20 - done) * 45 + (60 - simsDone) * 3 + (CARDS.length - known) * 0.5;
+    var mins = (LESSONS.length - done) * 45 + (SIMS.length - simsDone) * 3 + (CARDS.length - known) * 0.5;
     h += '<div class="card"><h3 style="margin-top:0">Ước tính thời gian còn lại</h3><p>Khoảng <b>' + Math.max(0, Math.round(mins / 60 * 10) / 10) + ' giờ</b> (ước tính thô: 45 phút/bài chưa học, 3 phút/mô phỏng chưa xem, 30 giây/thẻ chưa nhớ).</p></div>';
     var today = new Date().toISOString().slice(0, 10);
-    var items = [['sim', 'Xem đủ 3 mô phỏng của 1 bài hôm nay'], ['card', 'Ôn 10 flashcard'], ['quiz', 'Làm 1 bộ quiz'], ['audit', 'Trả lời 3 câu Mock Audit và tự đánh giá']];
+    var items = [['sim', 'Học xong 1 bài (xem mô phỏng nếu bài có)'], ['card', 'Ôn 10 flashcard'], ['quiz', 'Làm 1 bộ quiz'], ['audit', 'Trả lời 3 câu Mock Audit và tự đánh giá']];
     h += '<div class="card checklist"><h3 style="margin-top:0">Checklist hôm nay (' + today + ')</h3>' + items.map(function (it) {
       var key = today + ':' + it[0];
       return '<label><input type="checkbox" data-check="' + key + '"' + (P.check[key] ? ' checked' : '') + '> ' + esc(it[1]) + '</label>';
@@ -1813,31 +2411,50 @@ if (typeof module !== 'undefined' && module.exports) {
     }).filter(function (x) { return x.v > 0; }).sort(function (a, b) { return b.v - a.v; });
   }
 
-  function dayView(n) {
-    var d = DAYS[n - 1];
-    if (!d) return '<p>Không có ngày này.</p>';
-    if (n === 4) {
-      return '<h1>' + esc(d.title) + '</h1><p class="muted">Không học thêm khái niệm mới. Hãy ôn những gì bạn đã học và làm Mock Audit.</p>' +
-        '<div class="grid2"><div class="card"><h3>1. Ôn lỗi quiz</h3><p>Làm lại các câu đã sai.</p><a href="#/quiz">Mở Quiz (Lỗi & làm lại) →</a></div>' +
-        '<div class="card"><h3>2. Thẻ khó</h3><p>Ôn các thẻ "Chưa nhớ" và "Chưa chắc".</p><a href="#/flash">Mở Flashcards →</a></div>' +
-        '<div class="card"><h3>3. So sánh dễ nhầm</h3><p>findElement vs findElements, close vs quit, Hard vs Soft Assert...</p><a href="#/cheat">Mở Cheat Sheet →</a></div>' +
-        '<div class="card"><h3>4. Mock Audit</h3><p>Trả lời câu hỏi mở, tự đánh giá, rồi xem chủ đề yếu.</p><a href="#/audit">Bắt đầu Mock Audit →</a></div></div>' +
-        '<div class="card"><h3>5. Khoảng trống kiến thức</h3><p>Danh sách chủ đề cần ôn lại dựa trên dữ liệu của bạn.</p><a href="#/weak">Xem Weak Points →</a></div>';
-    }
-    return '<h1>' + esc(d.title) + '</h1><table><tr><th>Bài</th><th>Tên bài</th><th>Mô phỏng</th><th>Trạng thái</th></tr>' + d.lessons.map(function (l) {
-      var L = lessonById(l), done = simsOf(l).filter(function (s) { return P.sims[s.id]; }).length;
-      return '<tr><td>' + l + '</td><td><a href="#/lesson/' + l + '">' + esc(L.title) + '</a></td><td>' + done + '/3 đã xem đến cuối</td><td>' + (lessonDone(l) ? '✓ Đã học xong' : '○ Chưa đánh dấu') + '</td></tr>';
+  function lessonLink(id) { return '<a href="#/lesson/' + id + '" title="' + esc(lessonById(id).title) + '">' + CODE_OF[id] + '</a>'; }
+  function groupView(n) {
+    var g = GROUPS[n - 1];
+    if (!g) return '<p>Không có nhóm này.</p>';
+    return '<h1>' + g.n + '. ' + esc(g.title) + '</h1>' +
+      '<div class="card"><h3 style="margin-top:0">Yêu cầu kỹ năng → bài đáp ứng</h3><table><tr><th>Nhóm con</th><th>Yêu cầu</th><th>Bài</th></tr>' + g.items.map(function (it) {
+        return '<tr><td>' + esc(it[0]) + '</td><td>' + esc(it[1]) + '</td><td>' + it[2].map(lessonLink).join(', ') + '</td></tr>';
+      }).join('') + '</table></div>' +
+      '<table><tr><th>Bài</th><th>Tên bài</th><th>Mô phỏng</th><th>Trạng thái</th></tr>' + g.lessons.map(function (l) {
+        var L = lessonById(l), total = simsOf(l).length, done = simsOf(l).filter(function (s) { return P.sims[s.id]; }).length;
+        return '<tr><td>' + CODE_OF[l] + '</td><td><a href="#/lesson/' + l + '">' + esc(L.title) + '</a></td><td>' + (total ? done + '/' + total + ' đã xem đến cuối' : 'Không có mô phỏng') + '</td><td>' + (lessonDone(l) ? '✓ Đã học xong' : '○ Chưa đánh dấu') + '</td></tr>';
+      }).join('') + '</table>';
+  }
+
+  /* ---------- interview evaluation ---------- */
+  var EVAL_LEVELS = ['0 — Chưa biết', '1 — Biết sơ', '2 — Hiểu cơ bản', '3 — Trả lời tốt', '4 — Giải thích kèm ví dụ'];
+  function evalScore() {
+    var sum = EVAL_ROWS.reduce(function (a, r) { return a + r[2] * (+P.evalr[r[1]] || 0) / 4; }, 0);
+    return Math.round(sum * 10) / 10;
+  }
+  function evalView() {
+    var h = '<h1>Đánh giá phỏng vấn</h1><p class="muted">Tỷ trọng lấy theo bảng Interview Evaluation. Điểm dưới đây là <b>bạn tự đánh giá</b> để chọn chỗ cần ôn, không phải kết quả chấm thật.</p>';
+    h += '<div class="card"><h3 style="margin-top:0">Mức sẵn sàng: ' + evalScore() + '%</h3><div class="progress"><span style="width:' + evalScore() + '%"></span></div></div>';
+    h += '<table><tr><th>Category</th><th>Sub-category</th><th>Rate</th><th>Bài ôn</th><th>Đã học</th><th>Tự đánh giá</th></tr>' + EVAL_ROWS.map(function (r) {
+      var v = +P.evalr[r[1]] || 0;
+      return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td style="white-space:nowrap">' + r[2] + '%</td><td>' + r[3].map(lessonLink).join(', ') + '</td><td>' + r[3].filter(lessonDone).length + '/' + r[3].length + '</td><td><select data-eval="' + esc(r[1]) + '" style="min-width:15em" aria-label="Tự đánh giá ' + esc(r[1]) + '">' +
+        EVAL_LEVELS.map(function (t, i) { return '<option value="' + i + '"' + (v === i ? ' selected' : '') + '>' + t + '</option>'; }).join('') + '</select></td></tr>';
     }).join('') + '</table>';
+    var gaps = EVAL_ROWS.map(function (r) { return { name: r[1], lost: r[2] * (4 - (+P.evalr[r[1]] || 0)) / 4, ids: r[3] }; })
+      .filter(function (x) { return x.lost > 0; }).sort(function (a, b) { return b.lost - a.lost; }).slice(0, 5);
+    if (gaps.length) h += '<div class="card"><h3 style="margin-top:0">Nên ôn trước (còn thiếu nhiều điểm nhất)</h3><ol>' + gaps.map(function (x) {
+      return '<li>' + esc(x.name) + ' — còn thiếu ' + (Math.round(x.lost * 10) / 10) + '% · ' + x.ids.slice(0, 6).map(lessonLink).join(', ') + '</li>';
+    }).join('') + '</ol></div>';
+    return h;
   }
 
   /* ---------- flashcards ---------- */
-  var FC = { list: [], i: 0, flipped: false, filter: { day: 'all', diff: 'all', mode: 'all' } };
+  var FC = { list: [], i: 0, flipped: false, filter: { group: 'all', diff: 'all', mode: 'all' } };
   function cardState(c) { return P.flash[c.id] || { r: 'new', h: [], due: 0, bm: false, wrong: 0, streak: 0 }; }
   function cardPriority(c) { var s = cardState(c); return (s.wrong * 2) + (s.r === 'forgot' ? 3 : s.r === 'unsure' ? 2 : s.r === 'new' ? 1 : 0); }
   function buildFC() {
     var f = FC.filter, now = Date.now();
     var list = CARDS.filter(function (c) {
-      if (f.day !== 'all' && DAY_OF[c.lesson] !== +f.day) return false;
+      if (f.group !== 'all' && GROUP_OF[c.lesson] !== +f.group) return false;
       if (f.diff !== 'all' && c.diff !== f.diff) return false;
       var s = cardState(c);
       if (f.mode === 'due' && !(s.due <= now && s.r !== 'new')) return false;
@@ -1861,7 +2478,7 @@ if (typeof module !== 'undefined' && module.exports) {
     if (!FC.list.length) buildFC();
     var f = FC.filter;
     var h = '<h1>Flashcards</h1><p class="muted">Lật thẻ để xem đáp án. Tự đánh giá: <b>Chưa nhớ</b> (sẽ hiện lại trong phiên này), <b>Chưa chắc</b> (ôn lại sau 1 ngày), <b>Đã nhớ</b> (khoảng cách tăng dần: 1, 2, 4, 7 ngày).</p>';
-    h += '<div class="card row"><label>Ngày <select data-fcf="day">' + ['all', '1', '2', '3', '4'].map(function (v) { return '<option value="' + v + '"' + (f.day === v ? ' selected' : '') + '>' + (v === 'all' ? 'Tất cả' : 'Ngày ' + v) + '</option>'; }).join('') + '</select></label>' +
+    h += '<div class="card row"><label>Nhóm <select data-fcf="group"><option value="all">Tất cả</option>' + GROUPS.map(function (g) { return '<option value="' + g.n + '"' + (f.group === String(g.n) ? ' selected' : '') + '>' + esc(g.title) + '</option>'; }).join('') + '</select></label>' +
       '<label>Độ khó <select data-fcf="diff">' + ['all', 'Dễ', 'Vừa', 'Khó'].map(function (v) { return '<option value="' + v + '"' + (f.diff === v ? ' selected' : '') + '>' + (v === 'all' ? 'Tất cả' : v) + '</option>'; }).join('') + '</select></label>' +
       '<label>Chế độ <select data-fcf="mode">' + [['all', 'Tất cả'], ['due', 'Đến hạn ôn'], ['wrong', 'Thẻ đã sai / khó'], ['bm', 'Đã ghim']].map(function (v) { return '<option value="' + v[0] + '"' + (f.mode === v[0] ? ' selected' : '') + '>' + v[1] + '</option>'; }).join('') + '</select></label>' +
       '<button data-fca="apply">Áp dụng bộ lọc</button><button data-fca="shuffle">🔀 Xáo trộn</button></div>';
@@ -1870,7 +2487,7 @@ if (typeof module !== 'undefined' && module.exports) {
     var c = FC.list[FC.i], s = cardState(c), L = lessonById(c.lesson);
     h += '<div class="statusbar"><span class="pill">Thẻ ' + (FC.i + 1) + ' / ' + FC.list.length + '</span><span class="pill ' + (c.diff === 'Khó' ? 'red' : c.diff === 'Vừa' ? 'yellow' : 'green') + '">Độ khó: ' + c.diff + '</span>' +
       '<span class="pill gray">Trạng thái: ' + ({ new: 'Mới', forgot: 'Chưa nhớ', unsure: 'Chưa chắc', known: 'Đã nhớ' })[s.r] + '</span>' +
-      '<a class="pill blue" href="#/lesson/' + c.lesson + '">Bài ' + c.lesson + ': ' + esc(L.title) + '</a></div>';
+      '<a class="pill blue" href="#/lesson/' + c.lesson + '">Bài ' + CODE_OF[c.lesson] + ': ' + esc(L.title) + '</a></div>';
     h += '<div class="fc-wrap"><div class="fc' + (FC.flipped ? ' flipped' : '') + '" data-fc="flip" role="button" tabindex="0" aria-label="Lật thẻ" aria-pressed="' + FC.flipped + '">' +
       '<div class="fc-face"><span class="muted">Câu hỏi (EN)</span><h3>' + esc(c.q) + '</h3><span class="muted">Chạm để lật thẻ</span></div>' +
       '<div class="fc-face fc-back"><span class="muted">Đáp án mẫu (EN)</span><p><b>' + esc(c.a) + '</b></p><span class="muted">Giải thích (VI)</span><p>' + esc(c.vi) + '</p>' +
@@ -1889,16 +2506,22 @@ if (typeof module !== 'undefined' && module.exports) {
   function pickQuiz(mode, arg) {
     var set;
     if (mode === 'lesson') set = QUIZ.filter(function (q) { return q.lesson === +arg; });
-    else if (mode === 'day') set = QUIZ.filter(function (q) { return DAY_OF[q.lesson] === +arg; });
+    else if (mode === 'group') set = QUIZ.filter(function (q) { return GROUP_OF[q.lesson] === +arg; });
     else if (mode === 'random') { set = QUIZ.slice().sort(function () { return Math.random() - 0.5; }).slice(0, 10); }
     else if (mode === 'wrong') set = QUIZ.filter(function (q) { var r = P.quiz[q.id]; return r && r.n > 0 && !r.c; });
     else set = QUIZ.slice();
     QZ.set = set; QZ.answers = {}; QZ.submitted = false; QZ.perm = {}; QZ.mode = mode; QZ.arg = arg;
   }
+  function qzArgOptions(mode, arg) {
+    var list = mode === 'group'
+      ? GROUPS.map(function (g) { return [g.n, g.title]; })
+      : ORDER.map(function (id) { return [id, CODE_OF[id] + ' ' + lessonById(id).title]; });
+    return list.map(function (o) { return '<option value="' + o[0] + '"' + (String(arg) === String(o[0]) ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('');
+  }
   function quizView() {
     var h = '<h1>Quiz</h1><p class="muted">Mỗi câu có 4 đáp án. Đáp án chỉ hiện sau khi bạn bấm <b>Nộp bài</b>. Thứ tự đáp án được xáo trộn.</p>';
-    h += '<div class="card row"><label>Chọn bộ câu <select data-qz="mode">' + [['lesson', 'Theo bài'], ['day', 'Theo ngày'], ['random', 'Ngẫu nhiên 10 câu'], ['wrong', 'Ôn câu đã sai'], ['all', 'Toàn bộ']].map(function (m) { return '<option value="' + m[0] + '"' + (QZ.mode === m[0] ? ' selected' : '') + '>' + m[1] + '</option>'; }).join('') + '</select></label>' +
-      '<label>Giá trị <select data-qz="arg">' + (QZ.mode === 'day' ? [1, 2, 3, 4].map(function (d) { return '<option value="' + d + '"' + (QZ.arg == d ? ' selected' : '') + '>Ngày ' + d + '</option>'; }) : LESSONS.map(function (l) { return '<option value="' + l.id + '"' + (QZ.arg == l.id ? ' selected' : '') + '>Bài ' + l.id + ': ' + esc(l.title) + '</option>'; })).join('') + '</select></label>' +
+    h += '<div class="card row"><label>Chọn bộ câu <select data-qz="mode">' + [['lesson', 'Theo bài'], ['group', 'Theo nhóm kỹ năng'], ['random', 'Ngẫu nhiên 10 câu'], ['wrong', 'Ôn câu đã sai'], ['all', 'Toàn bộ']].map(function (m) { return '<option value="' + m[0] + '"' + (QZ.mode === m[0] ? ' selected' : '') + '>' + m[1] + '</option>'; }).join('') + '</select></label>' +
+      '<label>Giá trị <select data-qz="arg">' + qzArgOptions(QZ.mode, QZ.arg) + '</select></label>' +
       '<button data-qz="start" class="primary">Bắt đầu bộ câu</button></div>';
     if (!QZ.set.length) { pickQuiz(QZ.mode, QZ.arg); }
     if (!QZ.set.length) return h + '<div class="card"><p>Chưa có câu sai nào để ôn. Hãy làm một bộ quiz trước.</p></div>';
@@ -1906,7 +2529,7 @@ if (typeof module !== 'undefined' && module.exports) {
     h += '<form id="quizform">';
     QZ.set.forEach(function (q, qi) {
       var perm = permFor(q), sel = QZ.answers[q.id];
-      h += '<div class="card"><h3 style="margin-top:0">Câu ' + (qi + 1) + '. ' + esc(q.q) + '</h3><p class="muted" style="font-size:.85rem">Bài ' + q.lesson + ' · Ngày ' + DAY_OF[q.lesson] + (q.ref ? ' · Tham chiếu: ' + esc(q.ref) : '') + '</p>';
+      h += '<div class="card"><h3 style="margin-top:0">Câu ' + (qi + 1) + '. ' + esc(q.q) + '</h3><p class="muted" style="font-size:.85rem">Bài ' + CODE_OF[q.lesson] + ' · ' + esc(GROUPS[GROUP_OF[q.lesson] - 1].title) + (q.ref ? ' · Tham chiếu: ' + esc(q.ref) : '') + '</p>';
       perm.forEach(function (oi, di) {
         var cls = '';
         if (QZ.submitted) cls = oi === q.ans ? ' right' : (sel === oi ? ' wrong' : '');
@@ -1948,11 +2571,11 @@ if (typeof module !== 'undefined' && module.exports) {
   function auditView() {
     var h = '<h1>Mock Audit</h1><p class="muted">Trả lời bằng lời hoặc gõ ra. Không có chấm điểm AI: bạn tự so với đáp án mẫu và từ khóa, rồi tự đánh giá. Đây là công cụ học, không phải đánh giá ngữ nghĩa tự động.</p>';
     if (!AU.started) {
-      var cats = ['all', 'Định nghĩa', 'So sánh', 'Ứng dụng', 'Xử lý lỗi'];
+      var cats = ['all', 'Định nghĩa', 'So sánh', 'Ứng dụng', 'Xử lý lỗi', 'Phỏng vấn'];
       h += '<div class="card"><h3 style="margin-top:0">Thiết lập buổi thi thử</h3><div class="grid2">' +
         '<label>Số câu <select data-au="count">' + [5, 10, 15, 30].map(function (n) { return '<option value="' + n + '"' + (AU.sessionCount === n ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>' +
         '<label>Loại câu <select data-au="cat">' + cats.map(function (c) { return '<option value="' + c + '"' + (AU.cat === c ? ' selected' : '') + '>' + (c === 'all' ? 'Tất cả' : c) + '</option>'; }).join('') + '</select></label>' +
-        '<label>Bài <select data-au="lesson"><option value="all">Tất cả</option>' + LESSONS.map(function (l) { return '<option value="' + l.id + '"' + (AU.lesson == l.id ? ' selected' : '') + '>' + l.id + '. ' + esc(l.title) + '</option>'; }).join('') + '</select></label>' +
+        '<label>Bài <select data-au="lesson"><option value="all">Tất cả</option>' + ORDER.map(lessonById).map(function (l) { return '<option value="' + l.id + '"' + (AU.lesson == l.id ? ' selected' : '') + '>' + CODE_OF[l.id] + ' ' + esc(l.title) + '</option>'; }).join('') + '</select></label>' +
         '<label><input type="checkbox" data-au="timer"' + (AU.timerOn ? ' checked' : '') + '> Bật đồng hồ áp lực (mỗi câu)</label>' +
         '<label>Số phút mỗi câu <select data-au="mins">' + [1, 2, 3].map(function (m) { return '<option value="' + m + '"' + (AU.mins === m ? ' selected' : '') + '>' + m + '</option>'; }).join('') + '</select></label></div>' +
         '<p class="muted">Có ' + auditBank().length + ' câu khớp bộ lọc.</p><button class="primary" data-au="start" ' + (auditBank().length ? '' : 'disabled') + '>Bắt đầu Mock Audit</button></div>';
@@ -1967,7 +2590,7 @@ if (typeof module !== 'undefined' && module.exports) {
       return h + '<div class="card"><h2>Hoàn thành buổi thi thử</h2><p>Tự đánh giá: <span class="pill red">Chưa trả lời được: ' + n1 + '</span> <span class="pill yellow">Một phần: ' + n2 + '</span> <span class="pill green">Tốt: ' + n3 + '</span></p><p>Xem chủ đề cần ôn ở <a href="#/weak">Weak Points</a>.</p><button class="primary" data-au="restart">Thiết lập buổi mới</button></div>';
     }
     var q = AU.list[AU.i];
-    h += '<div class="statusbar"><span class="pill">Câu ' + (AU.i + 1) + ' / ' + AU.list.length + '</span><span class="pill purple">' + esc(q.cat) + '</span><a class="pill blue" href="#/lesson/' + q.lesson + '">Bài ' + q.lesson + '</a>' +
+    h += '<div class="statusbar"><span class="pill">Câu ' + (AU.i + 1) + ' / ' + AU.list.length + '</span><span class="pill purple">' + esc(q.cat) + '</span><a class="pill blue" href="#/lesson/' + q.lesson + '">Bài ' + CODE_OF[q.lesson] + '</a>' +
       (AU.timerOn ? '<span class="pill yellow" id="au-time">⏱ ' + fmtT(AU.left) + '</span>' : '') + '</div>';
     h += '<div class="card"><h3 style="margin-top:0">' + esc(q.en) + '</h3><p><i>' + esc(q.vi) + '</i></p>' +
       '<label for="au-ans"><b>Câu trả lời của bạn (có thể để trống nếu trả lời bằng lời):</b></label><textarea id="au-ans" data-au="typed" placeholder="Gõ câu trả lời của bạn...">' + esc(AU.typed) + '</textarea>' +
@@ -2001,18 +2624,18 @@ if (typeof module !== 'undefined' && module.exports) {
     var items = GLOSSARY.filter(function (g) { return !q || (g[0] + ' ' + g[1] + ' ' + g[2]).toLowerCase().indexOf(q) >= 0; });
     return '<h1>Glossary — Từ điển thuật ngữ</h1><div class="card"><input type="text" id="gsearch" data-gsearch placeholder="Tìm thuật ngữ (ví dụ: wait, locator)" value="' + esc(q) + '" aria-label="Tìm thuật ngữ"></div>' +
       '<table><tr><th>Thuật ngữ (EN)</th><th>Giải thích (VI)</th><th>Bài</th></tr>' + items.map(function (g) {
-        return '<tr><td><b>' + esc(g[0]) + '</b></td><td>' + esc(g[1]) + '</td><td><a href="#/lesson/' + g[2] + '">' + g[2] + '</a></td></tr>';
+        return '<tr><td><b>' + esc(g[0]) + '</b></td><td>' + esc(g[1]) + '</td><td><a href="#/lesson/' + g[2] + '">' + CODE_OF[g[2]] + '</a></td></tr>';
       }).join('') + '</table><p class="muted">' + items.length + ' thuật ngữ.</p>';
   }
   function refsView() {
-    return '<h1>References — Tài liệu chính thức</h1><p class="muted">Các liên kết được kiểm tra HTTP 200 vào ' + esc(REF_VERIFIED) + '. Nội dung mô tả tóm tắt theo tài liệu; không sao chép nguyên văn.</p>' +
-      LESSONS.map(function (l) { return '<section class="card"><h3 style="margin-top:0">Bài ' + l.id + ': ' + esc(l.title) + '</h3>' + refsHTML(l.refs) + '</section>'; }).join('');
+    return '<h1>References — Tài liệu chính thức</h1><p class="muted">Ngày kiểm tra liên kết gần nhất: ' + esc(REF_VERIFIED) + '. Nội dung mô tả tóm tắt theo tài liệu; không sao chép nguyên văn.</p>' +
+      ORDER.map(lessonById).map(function (l) { return '<section class="card"><h3 style="margin-top:0">Bài ' + CODE_OF[l.id] + ': ' + esc(l.title) + '</h3>' + refsHTML(l.refs) + '</section>'; }).join('');
   }
   function weakView() {
     var w = weakTopics();
     var sim = P.audit.length, quizTotal = Object.keys(P.quiz).filter(function (k) { return P.quiz[k].n > 0; }).length;
     return '<h1>Weak Points — Chủ đề yếu & khoảng trống</h1><p class="muted">Dựa trên: câu quiz đã sai, thẻ "Chưa nhớ/Chưa chắc", và tự đánh giá Mock Audit. Không có dữ liệu thì không có điểm yếu được tính.</p>' +
-      '<div class="card">' + (w.length ? '<table><tr><th>Bài</th><th>Điểm yếu</th><th>Lý do</th></tr>' + w.map(function (x) { return '<tr><td><a href="#/lesson/' + x.id + '">' + x.id + '. ' + esc(x.title) + '</a></td><td>' + x.v + '</td><td>' + x.reason + '</td></tr>'; }).join('') + '</table>' : '<p>Chưa có dữ liệu. Đã làm ' + quizTotal + ' câu quiz và ' + sim + ' lượt tự đánh giá Mock Audit.</p>') + '</div>' +
+      '<div class="card">' + (w.length ? '<table><tr><th>Bài</th><th>Điểm yếu</th><th>Lý do</th></tr>' + w.map(function (x) { return '<tr><td><a href="#/lesson/' + x.id + '">' + CODE_OF[x.id] + ' ' + esc(x.title) + '</a></td><td>' + x.v + '</td><td>' + x.reason + '</td></tr>'; }).join('') + '</table>' : '<p>Chưa có dữ liệu. Đã làm ' + quizTotal + ' câu quiz và ' + sim + ' lượt tự đánh giá Mock Audit.</p>') + '</div>' +
       '<div class="card"><h3 style="margin-top:0">Hành động gợi ý</h3><ol><li>Mở các bài có điểm cao nhất, xem lại mô phỏng và Lỗi thường gặp.</li><li>Làm <a href="#/quiz">Quiz → Ôn câu đã sai</a>.</li><li>Ôn <a href="#/flash">flashcard chế độ "Thẻ đã sai / khó"</a>.</li></ol></div>';
   }
   function dataView() {
@@ -2025,7 +2648,7 @@ if (typeof module !== 'undefined' && module.exports) {
   }
 
   function extraView() {
-    return '<h1>Kiến thức bổ sung</h1><p class="muted">Giới thiệu ngắn các chủ đề thường được hỏi nhưng không nằm trong 20 bài chính. Mục tiêu: hiểu khái niệm và công dụng; không cần thuộc cú pháp.</p>' +
+    return '<h1>Kiến thức bổ sung</h1><p class="muted">Giới thiệu ngắn các chủ đề thường được hỏi nhưng hỗ trợ cho nhóm Web Automation, không nằm trong bài chính. Mục tiêu: hiểu khái niệm và công dụng; không cần thuộc cú pháp.</p>' +
       EXTRA_TOPICS.map(function (t) {
         return '<section class="card"><h2>' + esc(t.title) + '</h2><p><b>Là gì / làm gì:</b> ' + esc(t.what) + '</p><p><b>Vì sao cần:</b> ' + esc(t.why) + '</p><p><b>Cách làm:</b> ' + esc(t.how) + '</p>' +
           '<div class="codebox"><pre style="margin:0">' + t.code.map(esc).join('\n') + '</pre></div><p class="muted">' + esc(t.note) + '</p>' + refsHTML(t.refs) + '</section>';
@@ -2038,18 +2661,19 @@ if (typeof module !== 'undefined' && module.exports) {
     var h = location.hash || '#/';
     var m;
     if ((m = h.match(/^#\/lesson\/(\d+)/))) return { r: '#/lesson', id: +m[1] };
-    if ((m = h.match(/^#\/day\/(\d)/))) return { r: '#/day', id: +m[1] };
+    if ((m = h.match(/^#\/group\/(\d)/))) return { r: '#/group', id: +m[1] };
     return { r: h.split('?')[0] || '#/' };
   }
   function render_page() {
     var rt = parse(), main = $('#main');
     stopAll();
     stopAuditTimer();
-    var route = rt.r === '#/lesson' ? '#/lesson/' + rt.id : rt.r === '#/day' ? '#/day/' + rt.id : rt.r;
-    buildNav(route === '#/lesson/' + rt.id ? '#/day/' + DAY_OF[rt.id] : route);
+    var route = rt.r === '#/lesson' ? '#/lesson/' + rt.id : rt.r === '#/group' ? '#/group/' + rt.id : rt.r;
+    buildNav(route === '#/lesson/' + rt.id ? '#/group/' + GROUP_OF[rt.id] : route);
     var html = '';
     if (rt.r === '#/lesson') { html = lessonView(rt.id); main.innerHTML = html; mountSims(rt.id); }
-    else if (rt.r === '#/day') main.innerHTML = dayView(rt.id);
+    else if (rt.r === '#/group') main.innerHTML = groupView(rt.id);
+    else if (rt.r === '#/eval') main.innerHTML = evalView();
     else if (rt.r === '#/flash') main.innerHTML = fcView();
     else if (rt.r === '#/quiz') main.innerHTML = quizView();
     else if (rt.r === '#/audit') main.innerHTML = auditView();
@@ -2137,7 +2761,7 @@ if (typeof module !== 'undefined' && module.exports) {
         var o = JSON.parse(reader.result);
         if (!o || o.sbvab !== 1 || typeof o.progress !== 'object') throw new Error('File không đúng định dạng tiến độ của ứng dụng này.');
         if (!window.confirm('Thay tiến độ hiện tại trên máy này bằng nội dung file "' + file.name + '"?')) return;
-        P = o.progress; P.lessons = P.lessons || {}; P.sims = P.sims || {}; P.flash = P.flash || {}; P.quiz = P.quiz || {}; P.audit = P.audit || []; P.bm = P.bm || []; P.check = P.check || {};
+        P = o.progress; P.lessons = P.lessons || {}; P.sims = P.sims || {}; P.flash = P.flash || {}; P.quiz = P.quiz || {}; P.audit = P.audit || []; P.bm = P.bm || []; P.check = P.check || {}; P.evalr = P.evalr || {};
         saveP(); FC.list = []; render_page();
         var msg = $('#syncmsg'); if (msg) msg.textContent = 'Đã nhập tiến độ từ file.';
       } catch (x) { window.alert('Không nhập được: ' + x.message); }
@@ -2160,7 +2784,7 @@ if (typeof module !== 'undefined' && module.exports) {
       try {
         var o = JSON.parse($('#jsonbox').value);
         if (!o || o.sbvab !== 1 || typeof o.progress !== 'object') throw new Error('Định dạng không đúng (cần {sbvab:1, progress:{...}}).');
-        P = o.progress; P.lessons = P.lessons || {}; P.sims = P.sims || {}; P.flash = P.flash || {}; P.quiz = P.quiz || {}; P.audit = P.audit || []; P.bm = P.bm || []; P.check = P.check || {};
+        P = o.progress; P.lessons = P.lessons || {}; P.sims = P.sims || {}; P.flash = P.flash || {}; P.quiz = P.quiz || {}; P.audit = P.audit || []; P.bm = P.bm || []; P.check = P.check || {}; P.evalr = P.evalr || {};
         saveP(); FC.list = []; if (msg) msg.textContent = 'Đã nhập tiến độ thành công.'; render_page();
       } catch (x) { if (msg) msg.textContent = 'Lỗi nhập: ' + x.message; }
     } else if (dt === 'download') {
@@ -2181,7 +2805,7 @@ if (typeof module !== 'undefined' && module.exports) {
     } else if (dt === 'reset') {
       if (window.confirm('Xóa toàn bộ tiến độ trên trình duyệt này? Thao tác không thể hoàn tác.')) {
         if (window.prompt('Gõ RESET (chữ hoa) để xác nhận:') === 'RESET') {
-          P = { lessons: {}, sims: {}, flash: {}, quiz: {}, audit: [], bm: [], check: {}, last: null, quizSessions: [] };
+          P = { lessons: {}, sims: {}, flash: {}, quiz: {}, audit: [], bm: [], check: {}, last: null, quizSessions: [], evalr: {} };
           saveP(); FC.list = []; render_page();
         }
       }
@@ -2197,7 +2821,8 @@ if (typeof module !== 'undefined' && module.exports) {
     if (t.id === 'importfile') { handleImportFile(t.files && t.files[0]); t.value = ''; return; }
     if (t.matches('[data-check]')) { P.check[t.getAttribute('data-check')] = t.checked; saveP(); return; }
     if (t.matches('[data-au="mode"]')) return;
-    if (t.matches('[data-qz="mode"]')) { var sel = $('[data-qz="arg"]'); var opts = t.value === 'day' ? [1, 2, 3, 4] : LESSONS.map(function (l) { return l.id; }); sel.innerHTML = opts.map(function (v) { return '<option value="' + v + '">' + (t.value === 'day' ? 'Ngày ' + v : 'Bài ' + v + ': ' + lessonById(v).title) + '</option>'; }).join(''); return; }
+    if (t.matches('[data-qz="mode"]')) { $('[data-qz="arg"]').innerHTML = qzArgOptions(t.value, ''); return; }
+    if (t.matches('[data-eval]')) { P.evalr[t.getAttribute('data-eval')] = +t.value; saveP(); return render_page(); }
     if (t.matches('[data-au="count"]')) { AU.sessionCount = +t.value; return render_page(); }
     if (t.matches('[data-au="cat"]')) { AU.cat = t.value; return render_page(); }
     if (t.matches('[data-au="lesson"]')) { AU.lesson = t.value; return render_page(); }

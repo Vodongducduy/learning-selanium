@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-core');
 const URL = 'file:///D:/typescript/selanium-project-learn/index.html';
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const SHOTS = 'C:/Users/Swam/AppData/Local/Temp/claude/99890638cad08cc6/b74e7aaf-515a-4ce3-aac6-e5d82a549cc5/scratchpad';
+const SHOTS = require('os').tmpdir().split(require('path').sep).join('/');
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 (async () => {
@@ -20,9 +20,9 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
   // 1. Dashboard and navigation
   let txt = await page.$eval('#main', e => e.textContent);
-  check('Dashboard renders', /Selenium Java Visual Audit Bootcamp/.test(txt) && /Lộ trình 4 ngày/.test(txt));
+  check('Dashboard renders', /Selenium Java Visual Audit Bootcamp/.test(txt) && /Lộ trình theo nhóm kỹ năng/.test(txt));
   const navCount = await page.$$eval('#side nav a', a => a.length);
-  check('Sidebar has 14 navigation links', navCount === 14, navCount);
+  check('Sidebar has 18 navigation links', navCount === 18, navCount);
 
   // 2. Every lesson renders with exactly three simulations
   let lessonProblems = [];
@@ -121,7 +121,7 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   // 7. Quiz: answers hidden until submit, score after submit
   await page.goto(URL + '#/quiz', { waitUntil: 'load' });
   await sleep(60);
-  await page.select('[data-qz="mode"]', 'day');
+  await page.select('[data-qz="mode"]', 'group');
   await sleep(40);
   await page.select('[data-qz="arg"]', '1');
   await page.click('[data-qz="start"]');
@@ -133,7 +133,7 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   await page.click('[data-qz="submit"]');
   await sleep(60);
   quizText = await page.$eval('#main', e => e.textContent);
-  check('Quiz reveals answers and score after submit', /Điểm:/.test(quizText) && /Đáp án đúng:/.test(quizText), names.length + ' questions in Day 1');
+  check('Quiz reveals answers and score after submit', /Điểm:/.test(quizText) && /Đáp án đúng:/.test(quizText), names.length + ' questions in group 1');
   const quizStore = await page.evaluate(() => JSON.parse(localStorage.getItem('sbvab-v1')).quiz);
   check('Quiz results saved', Object.keys(quizStore).length === names.length);
 
@@ -192,6 +192,40 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   await sleep(120);
   await page.screenshot({ path: SHOTS + '/shot-dark.png' });
   await page.evaluate(() => localStorage.removeItem('sbvab-theme'));
+
+  // 12. Nhóm kỹ năng, bài 21-47 và bảng đánh giá phỏng vấn
+  const newProblems = [];
+  for (let i = 21; i <= 47; i++) {
+    await page.goto(URL + '#/lesson/' + i, { waitUntil: 'load' });
+    const t = await page.$eval('#main', e => e.textContent);
+    if (!t.includes('A. Lý thuyết') || !t.includes('Tài liệu chính thức') || t.includes('Mô phỏng tương tác') || /undefined/.test(await page.$eval('#main .lesson-head', e => e.textContent))) newProblems.push(i);
+    const o = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    if (o > 1) newProblems.push(i + ':overflow');
+  }
+  check('Lessons 21-47 render without simulations section', newProblems.length === 0, newProblems.join(' '));
+  for (let g = 1; g <= 7; g++) {
+    await page.goto(URL + '#/group/' + g, { waitUntil: 'load' });
+    check('Group page ' + g + ' lists its requirements', /Yêu cầu kỹ năng/.test(await page.$eval('#main', e => e.textContent)));
+  }
+  await page.goto(URL + '#/eval', { waitUntil: 'load' });
+  await page.select('select[data-eval="Basic language - Java"]', '4');
+  await page.select('select[data-eval="Work Hard"], select[data-eval="Working mindset"]', '2');
+  await page.reload({ waitUntil: 'load' });
+  check('Interview evaluation is weighted and persists', /Mức sẵn sàng: 12.5%/.test(await page.$eval('#main', e => e.textContent)));
+  await page.setViewport({ width: 390, height: 844, isMobile: true });
+  const wide = [];
+  for (const r of ['#/eval', '#/group/1', '#/group/2', '#/lesson/37', '#/lesson/40']) {
+    await page.goto(URL + r, { waitUntil: 'load' });
+    await sleep(60);
+    const o = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    if (o > 1) wide.push(r + '=' + o);
+  }
+  check('New pages fit 390px width', wide.length === 0, wide.join(' '));
+  await page.screenshot({ path: SHOTS + '/shot-new-mobile.png' });
+  await page.setViewport({ width: 1280, height: 900 });
+  await page.goto(URL + '#/eval', { waitUntil: 'load' });
+  await sleep(100);
+  await page.screenshot({ path: SHOTS + '/shot-eval.png' });
 
   check('No console errors or uncaught exceptions', errors.length === 0, errors.slice(0, 5).join(' | '));
   await browser.close();

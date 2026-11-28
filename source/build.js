@@ -1,7 +1,7 @@
 const fs = require('fs'), path = require('path');
 const S = __dirname + '/src/';
 const css = fs.readFileSync(S + '02-style.css', 'utf8');
-const js = ['03-lessons.js', '05-sims-a.js', '06-sims-b.js', '05c-extra.js', '10-extra.js', '07-cards.js', '08-quiz.js', '09-audit.js', '01-core.js', '04-app.js']
+const js = ['03-lessons.js', '05-sims-a.js', '06-sims-b.js', '05c-extra.js', '10-extra.js', '07-cards.js', '08-quiz.js', '09-audit.js', '11-add-lesson.js', '12-lessons-java.js', '13-lessons-testing.js', '14-lessons-api.js', '15-lessons-sql.js', '16-lessons-ai-git.js', '17-curriculum.js', '01-core.js', '04-app.js']
   .map(f => fs.readFileSync(S + f, 'utf8')).join('\n');
 let html = fs.readFileSync(S + '00-shell.html', 'utf8').replace('/*__CSS__*/', () => css).replace('/*__JS__*/', () => js);
 const out = process.argv[2];
